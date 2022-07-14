@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<groupId>io.catalyte.training.automated-parking-attendant-api</groupId>
+	<artifactId>automated-parking-attendant-api</artifactId>
+	<modelVersion>4.0.0</modelVersion>
+	<version>1.1-SNAPSHOT</version>
+
+	<parent>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<groupId>org.springframework.boot</groupId>
+		<relativePath/>
+		<version>2.2.4.RELEASE</version> <!-- lookup parent from repository -->
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<artifactId>spring-boot-starter</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring-boot-starter-logging</artifactId>
+					<groupId>org.springframework.boot</groupId>
+				</exclusion>
+			</exclusions>
+			<groupId>org.springframework.boot</groupId>
+			<version>2.1.0.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.api-client</groupId>
+			<artifactId>google-api-client</artifactId>
+			<version>1.32.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
+
+		<dependency>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<version>2.1.0.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<groupId>org.springframework.boot</groupId>
+		</dependency>
+
+		<dependency>
+			<artifactId>postgresql</artifactId>
+			<groupId>org.postgresql</groupId>
+		</dependency>
+
+		<dependency>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<artifactId>validation-api</artifactId>
+			<groupId>javax.validation</groupId>
+			<version>2.0.1.Final</version>
+		</dependency>
+
+		<dependency>
+			<artifactId>persistence-api</artifactId>
+			<groupId>javax.persistence</groupId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<artifactId>assertj-core</artifactId>
+			<groupId>org.assertj</groupId>
+		</dependency>
+
+		<dependency>
+			<artifactId>mockito-core</artifactId>
+			<groupId>org.mockito</groupId>
+			<scope>test</scope>
+			<version>2.23.0</version>
+		</dependency>
+
+		<dependency>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<groupId>org.junit.jupiter</groupId>
+			<scope>test</scope>
+			<version>5.6.0</version>
+		</dependency>
+
+		<dependency>
+			<artifactId>junit-jupiter-api</artifactId>
+			<groupId>org.junit.jupiter</groupId>
+			<scope>test</scope>
+			<version>5.6.0</version>
+		</dependency>
+
+		<dependency>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+			<groupId>org.springframework.boot</groupId>
+		</dependency>
+
+		<dependency>
+			<artifactId>log4j-core</artifactId>
+			<groupId>org.apache.logging.log4j</groupId>
+			<version>2.12.1</version>
+		</dependency>
+
+		<dependency>
+			<artifactId>log4j-api</artifactId>
+			<groupId>org.apache.logging.log4j</groupId>
+			<version>2.12.1</version>
+		</dependency>
+
+		<dependency>
+			<artifactId>commons-lang3</artifactId>
+			<groupId>org.apache.commons</groupId>
+			<version>3.10</version>
+		</dependency>
+
+		<dependency>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+			<groupId>org.springframework.boot</groupId>
+		</dependency>
+
+		<dependency>
+			<artifactId>h2</artifactId>
+			<groupId>com.h2database</groupId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+</project>
