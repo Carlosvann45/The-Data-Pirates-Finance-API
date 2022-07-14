@@ -1,6 +1,9 @@
 server:
   port: 8085
 
+jwt:
+  secret: 23data3pirate809
+
 customers:
   number: 1
   load: true

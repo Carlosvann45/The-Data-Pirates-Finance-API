@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import theDataPiratesFinanceAPI.constants.Paths;
+import theDataPiratesFinanceAPI.domains.jwt.JwtResponse;
 
 @RestController
 @RequestMapping(value = Paths.CUSTOMER_PATH)
@@ -60,5 +61,20 @@ public class CustomerController {
     CustomerDTO customerDTO = mapper.convertValue(createdCustomer, CustomerDTO.class);
 
     return new ResponseEntity<>(customerDTO, HttpStatus.CREATED);
+  }
+
+  /**
+   * Authenticates a given customer
+   *
+   * @param customer customer to authenticate
+   * @return Jwt token response
+   */
+  @PostMapping("authenticate")
+  public JwtResponse authenticateCustomer(@RequestBody CustomerDTO customer) {
+    ObjectMapper mapper = new ObjectMapper();
+
+    Customer customerToAuth = mapper.convertValue(customer, Customer.class);
+
+    return customerService.authenticateCustomer(customerToAuth);
   }
 }
