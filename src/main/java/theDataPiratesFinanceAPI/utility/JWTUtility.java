@@ -27,6 +27,7 @@ public class JWTUtility implements Serializable {
 
     /**
      * Gets username from given token
+     *
      * @param token token to get username from
      * @return username from token
      */

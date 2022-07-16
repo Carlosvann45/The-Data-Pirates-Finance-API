@@ -10,17 +10,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import theDataPiratesFinanceAPI.constants.StringConstants;
 import theDataPiratesFinanceAPI.domains.jwt.JwtResponse;
 import theDataPiratesFinanceAPI.exceptions.BadRequest;
+import theDataPiratesFinanceAPI.exceptions.NotFound;
 import theDataPiratesFinanceAPI.exceptions.ServerUnavailable;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import theDataPiratesFinanceAPI.utility.JWTUtility;
 
@@ -42,38 +40,26 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
   private CustomerRepository customerRepository;
 
   /**
-   * Gets all customers from the customer repository
-   * @param customer base customer to search for
-   * @return a list of customers
+   * Gets a customer from the customer repository by username
+   *
+   * @param username username to search for
+   * @return customer with given username
    */
   @Override
-  public List<Customer> getCustomers(Customer customer) {
+  public Customer getCustomer(String username) {
+    Customer customer;
     try {
-      return customerRepository.findAll(Example.of(customer));
+      customer = customerRepository.findCustomerByUsername(username);
     } catch (DataAccessException e) {
       logger.error(e.getMessage());
 
       throw new ServerUnavailable(e.getMessage());
     }
-  }
 
-  /**
-   * Saves customer to repository
-   * @param customer customer to save
-   * @return saved customer from repository
-   */
-  @Override
-  public Customer saveCustomer(Customer customer) {
-    if (customer.getUsername() == null) throw new BadRequest(StringConstants.CUSTOMER_USERNAME_NULL_400);
-    else if (customer.getPassword() == null) throw new BadRequest(StringConstants.CUSTOMER_PASSWORD_NULL_400);
+    if (customer == null) throw new NotFound(StringConstants.CUSTOMER_NOT_FOUND);
 
-    try {
-      return customerRepository.save(customer);
-    } catch (DataAccessException e) {
-      logger.error(e.getMessage());
+    return customer;
 
-      throw new ServerUnavailable(e.getMessage());
-    }
   }
 
   /**

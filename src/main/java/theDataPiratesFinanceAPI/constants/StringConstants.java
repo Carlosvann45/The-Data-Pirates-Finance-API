@@ -8,12 +8,12 @@ public class StringConstants {
   // Exceptions
   public static final String SERVICE_UNAVAILABLE = "503 Service Unavailable";
   public static final String BAD_REQUEST = "400 Bad Request";
+  public static final String NOT_FOUND = "404 Not Found";
 
   // Logger
-  public static final String LOG_GET_CUSTOMERS = "Request received for getCustomers.";
-  public static final String LOG_SAVE_CUSTOMER= "Request received for saveCustomer.";
+  public static final String LOG_GET_CUSTOMER = "Request received for getCustomers.";
+  public static final String LOG_AUTH_CUSTOMER = "Request received for authenticateCustomer.";
 
-  // Error Messages
-  public static final String CUSTOMER_USERNAME_NULL_400 = "Username can not be empty.";
-  public static final String CUSTOMER_PASSWORD_NULL_400 = "Password can not be empty.";
+  // Error
+  public static final String CUSTOMER_NOT_FOUND = "Customer with given username does not exist.";
 }

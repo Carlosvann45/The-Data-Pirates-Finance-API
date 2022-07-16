@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import theDataPiratesFinanceAPI.domains.customers.CustomerServiceImpl;
-import theDataPiratesFinanceAPI.domains.jwt.JwtFilter;
+import theDataPiratesFinanceAPI.utility.JwtFilter;
 
 /**
  * Configuration setup for spring boot web security

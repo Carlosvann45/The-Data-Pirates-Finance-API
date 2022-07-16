@@ -1,19 +1,13 @@
 package theDataPiratesFinanceAPI.domains.customers;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.web.bind.annotation.*;
 import theDataPiratesFinanceAPI.constants.StringConstants;
-import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import theDataPiratesFinanceAPI.constants.Paths;
 import theDataPiratesFinanceAPI.domains.jwt.JwtResponse;
 
@@ -27,40 +21,22 @@ public class CustomerController {
   private CustomerService customerService;
 
   /**
-   * Get method to retrieve all customer
-   * @return A list of customerDTOs
+   * Get request to get a customer by username
+   *
+   * @param username username to search for
+   * @return a user with the given username
    */
-  @GetMapping
-  public ResponseEntity<List<CustomerDTO>> getCustomers(Customer customer) {
-    logger.info(StringConstants.LOG_GET_CUSTOMERS);
+  @GetMapping("{username}")
+  public ResponseEntity<CustomerDTO> getCustomer(@PathVariable String username) {
+    logger.info(StringConstants.LOG_GET_CUSTOMER);
 
     ObjectMapper mapper = new ObjectMapper();
 
-    List<Customer> customers = customerService.getCustomers(customer);
+    Customer customer = customerService.getCustomer(username);
 
-    List<CustomerDTO> customerDTOS = mapper.convertValue(customers, new TypeReference<List<CustomerDTO>>() {});
+    CustomerDTO customerDTO = mapper.convertValue(customer, CustomerDTO.class);
 
-    return new ResponseEntity<>(customerDTOS, HttpStatus.OK);
-  }
-
-  /**
-   * Creates a customer in the database
-   * @param customer customer to create
-   * @return created customer
-   */
-  @PostMapping
-  public ResponseEntity<CustomerDTO> saveCustomer(@RequestBody CustomerDTO customer) {
-    logger.info(StringConstants.LOG_SAVE_CUSTOMER);
-
-    ObjectMapper mapper = new ObjectMapper();
-
-    Customer newCustomer = mapper.convertValue(customer, Customer.class);
-
-    Customer createdCustomer = customerService.saveCustomer(newCustomer);
-
-    CustomerDTO customerDTO = mapper.convertValue(createdCustomer, CustomerDTO.class);
-
-    return new ResponseEntity<>(customerDTO, HttpStatus.CREATED);
+    return new ResponseEntity<>(customerDTO, HttpStatus.OK);
   }
 
   /**
@@ -71,6 +47,8 @@ public class CustomerController {
    */
   @PostMapping("authenticate")
   public JwtResponse authenticateCustomer(@RequestBody CustomerDTO customer) {
+    logger.info(StringConstants.LOG_AUTH_CUSTOMER);
+
     ObjectMapper mapper = new ObjectMapper();
 
     Customer customerToAuth = mapper.convertValue(customer, Customer.class);

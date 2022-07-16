@@ -1,4 +1,4 @@
-package theDataPiratesFinanceAPI.domains.jwt;
+package theDataPiratesFinanceAPI.utility;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -8,7 +8,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import theDataPiratesFinanceAPI.domains.customers.CustomerServiceImpl;
-import theDataPiratesFinanceAPI.utility.JWTUtility;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -31,6 +30,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     /**
      * Handles validating any jwt bearer tokens passed through the authorization header
+     *
      * @param request request to validate authorization header
      * @param response servlet response
      * @param filterChain filter chain to pass to after validation
