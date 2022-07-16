@@ -14,6 +14,8 @@ public class StringConstants {
   public static final String LOG_GET_CUSTOMER = "Request received for getCustomers.";
   public static final String LOG_AUTH_JWT_REQUEST = "Request received for authenticateJwtRequest.";
 
-  // Error
+  // Error Messages
   public static final String CUSTOMER_NOT_FOUND = "Customer with given username does not exist.";
+  public static final String INVALID_LOGIN = "Invalid Credentials. Please try again.";
+  public static final String BAD_TOKEN = "Invalid Jwt token.";
 }

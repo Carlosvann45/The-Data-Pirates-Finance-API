@@ -49,6 +49,7 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
   @Override
   public Customer getCustomer(String username) {
     Customer customer;
+
     try {
       customer = customerRepository.findCustomerByUsername(username);
     } catch (DataAccessException e) {
@@ -60,7 +61,6 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
     if (customer == null) throw new NotFound(StringConstants.CUSTOMER_NOT_FOUND);
 
     return customer;
-
   }
 
   /**
@@ -77,7 +77,7 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
               new UsernamePasswordAuthenticationToken(jwtRequest.getUsername(), jwtRequest.getPassword())
       );
     } catch (BadCredentialsException e) {
-      throw new BadRequest("INVALID CREDENTIALS");
+      throw new BadRequest(StringConstants.INVALID_LOGIN);
     }
 
     final UserDetails userDetails = loadUserByUsername(jwtRequest.getUsername());

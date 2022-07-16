@@ -1,12 +1,15 @@
 package theDataPiratesFinanceAPI.utility;
 
+import com.google.api.client.http.HttpStatusCodes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import theDataPiratesFinanceAPI.constants.StringConstants;
 import theDataPiratesFinanceAPI.domains.customers.CustomerServiceImpl;
 
 import javax.servlet.FilterChain;
@@ -44,14 +47,27 @@ public class JwtFilter extends OncePerRequestFilter {
         String username = null;
 
         if (authorization != null && authorization.startsWith("Bearer ")) {
-            token =  authorization.substring(7);
-            username = jwtUtility.getUsernameFromToken(token);
+            token =  authorization.substring(7).trim();
+
+            try {
+                username = jwtUtility.getUsernameFromToken(token);
+            } catch (Exception e) {
+                response.sendError(HttpStatusCodes.STATUS_CODE_BAD_REQUEST, StringConstants.BAD_TOKEN);
+            }
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = customerService.loadUserByUsername(username);
 
-            if (jwtUtility.validateToken(token, userDetails)) {
+            boolean validToken = false;
+
+            try {
+                validToken = jwtUtility.validateToken(token, userDetails);
+            } catch (Exception e) {
+                response.sendError(HttpStatusCodes.STATUS_CODE_BAD_REQUEST, StringConstants.BAD_TOKEN);
+            }
+
+            if (validToken) {
                 UsernamePasswordAuthenticationToken AuthToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
