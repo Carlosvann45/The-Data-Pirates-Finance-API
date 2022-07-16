@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import theDataPiratesFinanceAPI.constants.Paths;
+import theDataPiratesFinanceAPI.domains.jwt.JwtRequest;
 import theDataPiratesFinanceAPI.domains.jwt.JwtResponse;
 
 @RestController
@@ -40,19 +41,15 @@ public class CustomerController {
   }
 
   /**
-   * Authenticates a given customer
+   * Authenticates a given jwt request
    *
-   * @param customer customer to authenticate
+   * @param jwtRequest jwt request to authenticate
    * @return Jwt token response
    */
   @PostMapping("authenticate")
-  public JwtResponse authenticateCustomer(@RequestBody CustomerDTO customer) {
-    logger.info(StringConstants.LOG_AUTH_CUSTOMER);
+  public JwtResponse authenticateJwtRequest(@RequestBody JwtRequest jwtRequest) {
+    logger.info(StringConstants.LOG_AUTH_JWT_REQUEST);
 
-    ObjectMapper mapper = new ObjectMapper();
-
-    Customer customerToAuth = mapper.convertValue(customer, Customer.class);
-
-    return customerService.authenticateCustomer(customerToAuth);
+    return customerService.authenticateJwtRequest(jwtRequest);
   }
 }

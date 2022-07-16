@@ -12,7 +12,7 @@ public class StringConstants {
 
   // Logger
   public static final String LOG_GET_CUSTOMER = "Request received for getCustomers.";
-  public static final String LOG_AUTH_CUSTOMER = "Request received for authenticateCustomer.";
+  public static final String LOG_AUTH_JWT_REQUEST = "Request received for authenticateJwtRequest.";
 
   // Error
   public static final String CUSTOMER_NOT_FOUND = "Customer with given username does not exist.";

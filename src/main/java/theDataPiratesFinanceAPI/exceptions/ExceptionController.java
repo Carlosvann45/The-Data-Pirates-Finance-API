@@ -37,7 +37,7 @@ public class ExceptionController {
    * @param exception exception that was thrown
    * @return new response entity the represents the error response
    */
-  @ExceptionHandler(ServerUnavailable.class)
+  @ExceptionHandler(NotFound.class)
   protected ResponseEntity<ExceptionResponseMessage> notFound(NotFound exception) {
     ExceptionResponseMessage response = new ExceptionResponseMessage(exception.getMessage(), new Date(), StringConstants.NOT_FOUND);
 

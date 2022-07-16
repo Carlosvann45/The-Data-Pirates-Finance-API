@@ -1,5 +1,8 @@
 package theDataPiratesFinanceAPI.domains.jwt;
 
+/**
+ * A class to represent a Jwt token response
+ */
 public class JwtResponse {
     private String jwtToken;
 

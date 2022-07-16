@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import theDataPiratesFinanceAPI.constants.StringConstants;
+import theDataPiratesFinanceAPI.domains.jwt.JwtRequest;
 import theDataPiratesFinanceAPI.domains.jwt.JwtResponse;
 import theDataPiratesFinanceAPI.exceptions.BadRequest;
 import theDataPiratesFinanceAPI.exceptions.NotFound;
@@ -63,23 +64,23 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
   }
 
   /**
-   * Authenticates given user and generates a Jwt token
+   * Authenticates given jwt request and generates a Jwt token
    *
-   * @param customer customer to authenticate
+   * @param jwtRequest jwt request to authenticate
    * @return Jwt token
    */
   @Override
-  public JwtResponse authenticateCustomer(Customer customer) {
+  public JwtResponse authenticateJwtRequest(JwtRequest jwtRequest) {
 
     try {
       authenticationManager.authenticate(
-              new UsernamePasswordAuthenticationToken(customer.getUsername(), customer.getPassword())
+              new UsernamePasswordAuthenticationToken(jwtRequest.getUsername(), jwtRequest.getPassword())
       );
     } catch (BadCredentialsException e) {
       throw new BadRequest("INVALID CREDENTIALS");
     }
 
-    final UserDetails userDetails = loadUserByUsername(customer.getUsername());
+    final UserDetails userDetails = loadUserByUsername(jwtRequest.getUsername());
 
     final String token = jwtUtility.generateToken(userDetails);
 

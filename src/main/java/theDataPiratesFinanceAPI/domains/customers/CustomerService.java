@@ -1,5 +1,6 @@
 package theDataPiratesFinanceAPI.domains.customers;
 
+import theDataPiratesFinanceAPI.domains.jwt.JwtRequest;
 import theDataPiratesFinanceAPI.domains.jwt.JwtResponse;
 
 /**
@@ -9,5 +10,5 @@ public interface CustomerService {
 
   Customer getCustomer(String username);
 
-  JwtResponse authenticateCustomer(Customer customer);
+  JwtResponse authenticateJwtRequest(JwtRequest jwtRequest);
 }
