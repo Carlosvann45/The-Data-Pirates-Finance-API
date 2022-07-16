@@ -45,6 +45,19 @@ public class ExceptionController {
   }
 
   /**
+   * Handles any exceptions that are thrown with the conflict class
+   *
+   * @param exception exception that was thrown
+   * @return new response entity the represents the error response
+   */
+  @ExceptionHandler(Conflict.class)
+  protected ResponseEntity<ExceptionResponseMessage> conflict(Conflict exception) {
+    ExceptionResponseMessage response = new ExceptionResponseMessage(exception.getMessage(), new Date(), StringConstants.CONFLICT);
+
+    return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+  }
+
+  /**
    * Handles any exceptions that are thrown with the bad request class
    *
    * @param exception exception that was thrown

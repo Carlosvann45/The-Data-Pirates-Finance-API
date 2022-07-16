@@ -8,7 +8,9 @@ import theDataPiratesFinanceAPI.domains.jwt.JwtResponse;
  */
 public interface CustomerService {
 
-  Customer getCustomer(String username);
+  Customer getCustomer(String username, String token);
+
+  Customer createCustomer(Customer newCustomer);
 
   JwtResponse authenticateJwtRequest(JwtRequest jwtRequest);
 }

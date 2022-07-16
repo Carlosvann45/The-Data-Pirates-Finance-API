@@ -11,10 +11,12 @@ import theDataPiratesFinanceAPI.constants.StringConstants;
 import theDataPiratesFinanceAPI.domains.jwt.JwtRequest;
 import theDataPiratesFinanceAPI.domains.jwt.JwtResponse;
 import theDataPiratesFinanceAPI.exceptions.BadRequest;
+import theDataPiratesFinanceAPI.exceptions.Conflict;
 import theDataPiratesFinanceAPI.exceptions.NotFound;
 import theDataPiratesFinanceAPI.exceptions.ServerUnavailable;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,7 +49,7 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
    * @return customer with given username
    */
   @Override
-  public Customer getCustomer(String username) {
+  public Customer getCustomer(String username, String token) {
     Customer customer;
 
     try {
@@ -58,9 +60,41 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
       throw new ServerUnavailable(e.getMessage());
     }
 
+    String actualUsername = jwtUtility.getUsernameFromToken(token);
+
     if (customer == null) throw new NotFound(StringConstants.CUSTOMER_NOT_FOUND);
+    else if (!Objects.equals(customer.getUsername(), actualUsername)) throw new BadRequest(StringConstants.USERNAME_MISMATCH);
 
     return customer;
+  }
+
+  /**
+   * Creates customer in database if username doesn't exist
+   *
+   * @param newCustomer customer to add to database
+   * @return new customer created
+   */
+  @Override
+  public Customer createCustomer(Customer newCustomer) {
+    Customer existingCustomer;
+
+    try {
+      existingCustomer = customerRepository.findCustomerByUsername(newCustomer.getUsername());
+    } catch(DataAccessException e) {
+      logger.error(e.getMessage());
+
+      throw new ServerUnavailable(e.getMessage());
+    }
+
+    if (existingCustomer != null) throw new Conflict(StringConstants.USERNAME_CONFLICT);
+
+    try {
+      return customerRepository.save(newCustomer);
+    } catch(DataAccessException e) {
+      logger.error(e.getMessage());
+
+      throw new ServerUnavailable(e.getMessage());
+    }
   }
 
   /**
@@ -104,6 +138,8 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 
       throw new ServerUnavailable(e.getMessage());
     }
+
+    if (customer == null) customer = new Customer(" ", " ");
 
     return new User(customer.getUsername(), customer.getPassword(), new ArrayList<>());
   }

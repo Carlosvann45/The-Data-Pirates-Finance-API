@@ -12,6 +12,9 @@ import theDataPiratesFinanceAPI.constants.Paths;
 import theDataPiratesFinanceAPI.domains.jwt.JwtRequest;
 import theDataPiratesFinanceAPI.domains.jwt.JwtResponse;
 
+/**
+ * Controller for customer endpoints
+ */
 @RestController
 @RequestMapping(value = Paths.CUSTOMER_PATH)
 public class CustomerController {
@@ -28,16 +31,39 @@ public class CustomerController {
    * @return a user with the given username
    */
   @GetMapping("{username}")
-  public ResponseEntity<CustomerDTO> getCustomer(@PathVariable String username) {
+  public ResponseEntity<CustomerDTO> getCustomer(@RequestHeader("Authorization") String token, @PathVariable String username) {
     logger.info(StringConstants.LOG_GET_CUSTOMER);
+
+    token = token.substring(7).trim();
 
     ObjectMapper mapper = new ObjectMapper();
 
-    Customer customer = customerService.getCustomer(username);
+    Customer customer = customerService.getCustomer(username, token);
 
     CustomerDTO customerDTO = mapper.convertValue(customer, CustomerDTO.class);
 
     return new ResponseEntity<>(customerDTO, HttpStatus.OK);
+  }
+
+  /**
+   * Creates a customer in the database
+   *
+   * @param customerDTO customer to create
+   * @return newly created customer
+   */
+  @PostMapping("create")
+  public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO) {
+    logger.info(StringConstants.LOG_CREATE_CUSTOMER);
+
+    ObjectMapper mapper = new ObjectMapper();
+
+    Customer newCustomer = mapper.convertValue(customerDTO, Customer.class);
+
+    Customer createdCustomer = customerService.createCustomer(newCustomer);
+
+    CustomerDTO createdCustomerDTO = mapper.convertValue(createdCustomer, CustomerDTO.class);
+
+    return new ResponseEntity<>(createdCustomerDTO, HttpStatus.CREATED);
   }
 
   /**
@@ -47,9 +73,11 @@ public class CustomerController {
    * @return Jwt token response
    */
   @PostMapping("authenticate")
-  public JwtResponse authenticateJwtRequest(@RequestBody JwtRequest jwtRequest) {
+  public ResponseEntity<JwtResponse> authenticateJwtRequest(@RequestBody JwtRequest jwtRequest) {
     logger.info(StringConstants.LOG_AUTH_JWT_REQUEST);
 
-    return customerService.authenticateJwtRequest(jwtRequest);
+    JwtResponse jwtResponse = customerService.authenticateJwtRequest(jwtRequest);
+
+    return new ResponseEntity<>(jwtResponse, HttpStatus.OK);
   }
 }
