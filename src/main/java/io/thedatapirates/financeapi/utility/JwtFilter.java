@@ -1,8 +1,11 @@
 package io.thedatapirates.financeapi.utility;
 
 import com.google.api.client.http.HttpStatusCodes;
+import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.CustomerServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,11 +22,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static org.apache.http.HttpHeaders.AUTHORIZATION;
+
 /**
  * Class used for filtering through header Jwt tokens when request come through
  */
 @Component
 public class JwtFilter extends OncePerRequestFilter {
+
+    private final Logger logger = LogManager.getLogger(JwtFilter.class);
 
     @Autowired
     private JWTUtility jwtUtility;
@@ -47,44 +54,52 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(
             HttpServletRequest request, HttpServletResponse response, FilterChain filterChain
     ) throws ServletException, IOException {
-        String authorization = request.getHeader("Authorization");
-        String token = null;
-        String username = null;
+        if (!request.getServletPath().equals(Paths.CUSTOMER_PATH.concat(Paths.LOGIN_PATH)) || !request.getServletPath().equals(Paths.CUSTOMER_PATH.concat(Paths.REFRESH_TOKEN_PATH))) {
+            String authorization = request.getHeader(AUTHORIZATION);
+            String token = null;
+            String username = null;
 
-        if (authorization != null && authorization.startsWith("Bearer ")) {
-            token = authorization.substring(7).trim();
+            if (authorization != null && authorization.startsWith(StringConstants.BEARER_BEGINNING)) {
+                token = authorization.substring(7).trim();
 
-            try {
-                username = jwtUtility.getUsernameFromToken(token);
-            } catch (Exception e) {
-                response.sendError(HttpStatusCodes.STATUS_CODE_BAD_REQUEST, StringConstants.BAD_TOKEN);
-            }
-        }
+                try {
+                    username = jwtUtility.getUsernameFromToken(token);
+                } catch (Exception e) {
+                    logger.error(StringConstants.JWT_ERROR_BEGINNING.concat(e.getMessage()));
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = customerService.loadUserByUsername(username);
-
-            boolean validToken = false;
-
-            try {
-                validToken = jwtUtility.validateToken(token, userDetails);
-            } catch (Exception e) {
-                response.sendError(HttpStatusCodes.STATUS_CODE_BAD_REQUEST, StringConstants.BAD_TOKEN);
+                    response.sendError(HttpStatusCodes.STATUS_CODE_BAD_REQUEST, StringConstants.BAD_TOKEN);
+                }
             }
 
-            if (validToken) {
-                UsernamePasswordAuthenticationToken AuthToken =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = customerService.loadUserByUsername(username);
 
-                AuthToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                boolean validToken = false;
 
-                SecurityContextHolder.getContext().setAuthentication(AuthToken);
+                try {
+                    validToken = jwtUtility.validateToken(token, userDetails);
+                } catch (Exception e) {
+                    logger.error(StringConstants.JWT_ERROR_BEGINNING.concat(e.getMessage()));
+
+                    response.sendError(HttpStatusCodes.STATUS_CODE_BAD_REQUEST, StringConstants.BAD_TOKEN);
+                }
+
+                if (validToken) {
+                    UsernamePasswordAuthenticationToken AuthToken =
+                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
+                    AuthToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                    SecurityContextHolder.getContext().setAuthentication(AuthToken);
+                }
             }
         }
 
         try {
             filterChain.doFilter(request, response);
         } catch (Exception e) {
+            logger.error(StringConstants.JWT_ERROR_BEGINNING.concat(e.getMessage()));
+
             resolver.resolveException(request, response, null, e);
         }
     }

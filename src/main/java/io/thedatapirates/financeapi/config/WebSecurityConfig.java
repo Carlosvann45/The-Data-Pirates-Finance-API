@@ -1,5 +1,6 @@
 package io.thedatapirates.financeapi.config;
 
+import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.domains.customers.CustomerServiceImpl;
 import io.thedatapirates.financeapi.utility.CustomAuthenticationFilter;
 import io.thedatapirates.financeapi.utility.JWTUtility;
@@ -15,6 +16,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
 
 /**
  * Configuration setup for spring boot web security
@@ -42,19 +46,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
    * */
   @Override
   protected void configure(HttpSecurity security) throws Exception {
-    security.csrf()
-            .disable()
-            .authorizeRequests()
-            .antMatchers("/customers/create")
-            .permitAll()
+    CustomAuthenticationFilter customAuthFilter = new CustomAuthenticationFilter(authenticationManagerBean(), jwtUtility);
+
+    customAuthFilter.setFilterProcessesUrl(Paths.CUSTOMER_PATH.concat(Paths.LOGIN_PATH));
+
+    security.csrf().disable();
+
+    security.authorizeRequests()
+            .antMatchers(POST, Paths.CUSTOMER_PATH.concat(Paths.CREATE_PATH))
+            .permitAll();
+
+    security.authorizeRequests()
+            .antMatchers(GET, Paths.CUSTOMER_PATH.concat(Paths.REFRESH_TOKEN_PATH))
+            .permitAll();
+
+    security.authorizeRequests()
             .anyRequest()
             .authenticated()
             .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+    security.addFilter(customAuthFilter);
     security.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-    security.addFilter(new CustomAuthenticationFilter(authenticationManagerBean(), jwtUtility));
   }
 
   /**

@@ -4,6 +4,10 @@ package io.thedatapirates.financeapi.constants;
  * A class to represent constant string variables
  */
 public class StringConstants {
+  // JWT
+  public static final String BEARER_BEGINNING = "Bearer ";
+  public static final String USERNAME_PARAM_NAME = "username";
+  public static final String PASSWORD_PARAM_NAME = "password";
 
   // Exceptions
   public static final String SERVICE_UNAVAILABLE = "503 Service Unavailable";
@@ -13,7 +17,7 @@ public class StringConstants {
 
   // Logger
   public static final String LOG_GET_CUSTOMER = "Request received for getCustomers.";
-  public static final String LOG_AUTH_JWT_REQUEST = "Request received for authenticateJwtRequest.";
+  public static final String LOG_REFRESH_CUSTOMER_TOKEN = "Request received for refreshCustomerToken.";
   public static final String LOG_CREATE_CUSTOMER = "Request received for createCustomer.";
 
   // Error Messages
@@ -22,4 +26,10 @@ public class StringConstants {
   public static final String BAD_TOKEN = "Invalid token.";
   public static final String USERNAME_CONFLICT = "Customer with username already exist.";
   public static final String USERNAME_MISMATCH = "Username in pathway does not match username from token";
+  public static final String JWT_ERROR_BEGINNING = "Jwt token error: ";
+  public static final String JWT_CREDENTIAL_BEGINNING = "Bad credentials error: ";
+
+  // Misc
+  public static final String EMPTY_STRING = " ";
+
 }

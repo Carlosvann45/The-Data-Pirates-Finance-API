@@ -1,5 +1,6 @@
 package io.thedatapirates.financeapi.domains.customers;
 
+import io.thedatapirates.financeapi.domains.jwt.JwtResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -69,6 +70,49 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
   }
 
   /**
+   * Validates refresh token and generates new access token
+   *
+   * @param refreshToken refresh token to validate
+   * @param url url to use for access token creation
+   * @return Jwt response with access/refresher tokens
+   */
+  @Override
+  public JwtResponse refreshCustomerToken(String refreshToken, String url) {
+    String token = null;
+    String username = null;
+
+    if (refreshToken.startsWith(StringConstants.BEARER_BEGINNING)) {
+      token = refreshToken.substring(7).trim();
+
+      try {
+        username = jwtUtility.getUsernameFromToken(token);
+      } catch (Exception e) {
+        logger.error(StringConstants.JWT_ERROR_BEGINNING.concat(e.getMessage()));
+
+        throw new BadRequest(StringConstants.BAD_TOKEN);
+      }
+
+      if (username != null) {
+        UserDetails userDetails = loadUserByUsername(username);
+
+        boolean validToken = false;
+
+        try {
+          validToken = jwtUtility.validateToken(token, userDetails);
+        } catch (Exception e) {
+          logger.error(StringConstants.JWT_ERROR_BEGINNING.concat(e.getMessage()));
+
+          throw new BadRequest(StringConstants.BAD_TOKEN);
+        }
+
+        if (validToken) return new JwtResponse(jwtUtility.generateToken(userDetails, url), refreshToken);
+      }
+    }
+
+    throw new BadRequest(StringConstants.BAD_TOKEN);
+  }
+
+  /**
    * Creates customer in database if username doesn't exist
    *
    * @param newCustomer customer to add to database
@@ -116,7 +160,7 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
       throw new ServerUnavailable(e.getMessage());
     }
 
-    if (customer == null) customer = new Customer(" ", " ");
+    if (customer == null) customer = new Customer(StringConstants.EMPTY_STRING, StringConstants.EMPTY_STRING);
 
     return new User(customer.getUsername(), customer.getPassword(), new ArrayList<>());
   }
