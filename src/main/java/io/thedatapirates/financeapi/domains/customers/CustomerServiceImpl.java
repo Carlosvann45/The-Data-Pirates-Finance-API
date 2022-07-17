@@ -1,19 +1,15 @@
-package theDataPiratesFinanceAPI.domains.customers;
+package io.thedatapirates.financeapi.domains.customers;
 
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import theDataPiratesFinanceAPI.constants.StringConstants;
-import theDataPiratesFinanceAPI.domains.jwt.JwtRequest;
-import theDataPiratesFinanceAPI.domains.jwt.JwtResponse;
-import theDataPiratesFinanceAPI.exceptions.BadRequest;
-import theDataPiratesFinanceAPI.exceptions.Conflict;
-import theDataPiratesFinanceAPI.exceptions.NotFound;
-import theDataPiratesFinanceAPI.exceptions.ServerUnavailable;
+import io.thedatapirates.financeapi.constants.StringConstants;
+import io.thedatapirates.financeapi.exceptions.BadRequest;
+import io.thedatapirates.financeapi.exceptions.Conflict;
+import io.thedatapirates.financeapi.exceptions.NotFound;
+import io.thedatapirates.financeapi.exceptions.ServerUnavailable;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -22,8 +18,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import theDataPiratesFinanceAPI.utility.JWTUtility;
+import io.thedatapirates.financeapi.utility.JWTUtility;
 
 /**
  * A class to implement all methods from the customer service interface
@@ -35,6 +32,9 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 
   @Autowired
   private JWTUtility jwtUtility;
+
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
   @Autowired
   private AuthenticationManager authenticationManager;
@@ -87,6 +87,7 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
     }
 
     if (existingCustomer != null) throw new Conflict(StringConstants.USERNAME_CONFLICT);
+    else newCustomer.setPassword(passwordEncoder.encode(newCustomer.getPassword()));
 
     try {
       return customerRepository.save(newCustomer);
@@ -95,30 +96,6 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 
       throw new ServerUnavailable(e.getMessage());
     }
-  }
-
-  /**
-   * Authenticates given jwt request and generates a Jwt token
-   *
-   * @param jwtRequest jwt request to authenticate
-   * @return Jwt token
-   */
-  @Override
-  public JwtResponse authenticateJwtRequest(JwtRequest jwtRequest) {
-
-    try {
-      authenticationManager.authenticate(
-              new UsernamePasswordAuthenticationToken(jwtRequest.getUsername(), jwtRequest.getPassword())
-      );
-    } catch (BadCredentialsException e) {
-      throw new BadRequest(StringConstants.INVALID_LOGIN);
-    }
-
-    final UserDetails userDetails = loadUserByUsername(jwtRequest.getUsername());
-
-    final String token = jwtUtility.generateToken(userDetails);
-
-    return new JwtResponse(token);
   }
 
   /**

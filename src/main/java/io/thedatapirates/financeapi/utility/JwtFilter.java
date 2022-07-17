@@ -1,6 +1,8 @@
-package theDataPiratesFinanceAPI.utility;
+package io.thedatapirates.financeapi.utility;
 
 import com.google.api.client.http.HttpStatusCodes;
+import io.thedatapirates.financeapi.constants.StringConstants;
+import io.thedatapirates.financeapi.domains.customers.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,11 +12,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
-import theDataPiratesFinanceAPI.constants.StringConstants;
-import theDataPiratesFinanceAPI.domains.customers.CustomerServiceImpl;
-import theDataPiratesFinanceAPI.exceptions.BadRequest;
-import theDataPiratesFinanceAPI.exceptions.ExceptionController;
-import theDataPiratesFinanceAPI.exceptions.ServerUnavailable;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

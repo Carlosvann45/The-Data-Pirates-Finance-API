@@ -1,4 +1,4 @@
-package theDataPiratesFinanceAPI.domains.jwt;
+package io.thedatapirates.financeapi.domains.jwt;
 
 /**
  * A class to represent a Jwt token request

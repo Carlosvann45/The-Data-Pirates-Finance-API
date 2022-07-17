@@ -1,4 +1,4 @@
-package theDataPiratesFinanceAPI.constants;
+package io.thedatapirates.financeapi.constants;
 
 /**
  * A class to represent constant string variables

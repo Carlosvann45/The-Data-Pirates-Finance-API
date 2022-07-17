@@ -1,4 +1,4 @@
-package theDataPiratesFinanceAPI.exceptions;
+package io.thedatapirates.financeapi.exceptions;
 
 /**
  * A custom exception for if a request causes a conflict

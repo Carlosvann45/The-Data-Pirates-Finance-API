@@ -1,4 +1,4 @@
-package theDataPiratesFinanceAPI.domains.customers;
+package io.thedatapirates.financeapi.domains.customers;
 
 import java.util.Objects;
 import javax.persistence.Entity;

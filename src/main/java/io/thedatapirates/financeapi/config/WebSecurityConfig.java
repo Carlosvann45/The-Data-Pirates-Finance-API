@@ -1,5 +1,9 @@
-package theDataPiratesFinanceAPI.config;
+package io.thedatapirates.financeapi.config;
 
+import io.thedatapirates.financeapi.domains.customers.CustomerServiceImpl;
+import io.thedatapirates.financeapi.utility.CustomAuthenticationFilter;
+import io.thedatapirates.financeapi.utility.JWTUtility;
+import io.thedatapirates.financeapi.utility.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,9 +13,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import theDataPiratesFinanceAPI.domains.customers.CustomerServiceImpl;
-import theDataPiratesFinanceAPI.utility.JwtFilter;
 
 /**
  * Configuration setup for spring boot web security
@@ -21,7 +24,13 @@ import theDataPiratesFinanceAPI.utility.JwtFilter;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
+  private BCryptPasswordEncoder passwordEncoder;
+
+  @Autowired
   private CustomerServiceImpl customerService;
+
+  @Autowired
+  private JWTUtility jwtUtility;
 
   @Autowired
   private JwtFilter jwtFilter;
@@ -36,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     security.csrf()
             .disable()
             .authorizeRequests()
-            .antMatchers("/customers/authenticate", "/customers/create")
+            .antMatchers("/customers/create")
             .permitAll()
             .anyRequest()
             .authenticated()
@@ -45,6 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     security.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+    security.addFilter(new CustomAuthenticationFilter(authenticationManagerBean(), jwtUtility));
   }
 
   /**
@@ -54,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
    */
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(customerService);
+    auth.userDetailsService(customerService).passwordEncoder(passwordEncoder);
   }
 
   /**

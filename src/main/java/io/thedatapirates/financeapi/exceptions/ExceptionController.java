@@ -1,6 +1,7 @@
-package theDataPiratesFinanceAPI.exceptions;
+package io.thedatapirates.financeapi.exceptions;
 
-import theDataPiratesFinanceAPI.constants.StringConstants;
+import io.thedatapirates.financeapi.constants.StringConstants;
+
 import java.util.Date;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

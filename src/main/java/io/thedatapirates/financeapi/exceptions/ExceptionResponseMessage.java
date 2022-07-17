@@ -1,4 +1,4 @@
-package theDataPiratesFinanceAPI.exceptions;
+package io.thedatapirates.financeapi.exceptions;
 
 import java.util.Date;
 

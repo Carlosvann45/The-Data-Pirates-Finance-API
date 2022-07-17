@@ -1,8 +1,9 @@
-package theDataPiratesFinanceAPI;
+package io.thedatapirates.financeapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -13,6 +14,7 @@ public class AppRunner {
 
 	/**
 	 * The main method
+	 *
 	 * @param args arguments needed to run application
 	 */
 	public static void main(String[] args) {
@@ -35,11 +37,13 @@ public class AppRunner {
 	}
 
 	/**
-	 * Password encoder
-	 * @return instance of no op password encoder
+	 * Creates a password encoder
+	 *
+	 * @return instance of BCrypt password encoder
 	 */
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-		return NoOpPasswordEncoder.getInstance();
+
+		return new BCryptPasswordEncoder();
 	}
 }

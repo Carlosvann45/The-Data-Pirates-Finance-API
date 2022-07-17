@@ -1,4 +1,4 @@
-package theDataPiratesFinanceAPI.utility;
+package io.thedatapirates.financeapi.utility;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -85,9 +85,9 @@ public class JWTUtility implements Serializable {
      * @param userDetails user details to create token with
      * @return newly created Jwt token
      */
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails, String url) {
         Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(claims, userDetails.getUsername());
+        return doGenerateToken(claims, userDetails.getUsername(), url);
     }
 
     /**
@@ -97,8 +97,12 @@ public class JWTUtility implements Serializable {
      * @param subject subject to set token generated subject to
      * @return newly generated Jwt token
      */
-    private String doGenerateToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+    private String doGenerateToken(Map<String, Object> claims, String subject, String url) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuer(url)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
                 .signWith(SignatureAlgorithm.HS256, secretKey).compact();
     }

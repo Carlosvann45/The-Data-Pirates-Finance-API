@@ -1,14 +1,16 @@
-package theDataPiratesFinanceAPI.data;
+package io.thedatapirates.financeapi.data;
 
 import java.util.Objects;
+
+import io.thedatapirates.financeapi.domains.customers.Customer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.env.Environment;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import theDataPiratesFinanceAPI.domains.customers.Customer;
-import theDataPiratesFinanceAPI.domains.customers.CustomerRepository;
+import io.thedatapirates.financeapi.domains.customers.CustomerRepository;
 
 /**
  * This class handles Seeding selected data into the database depending on the application.yml
@@ -23,6 +25,9 @@ public class SeedData implements CommandLineRunner {
 
   @Autowired
   private Environment env;
+
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
   public static final int DEFAULT_NUMBER_OF_CUSTOMER = 1;
 
@@ -65,7 +70,7 @@ public class SeedData implements CommandLineRunner {
     }
 
 
-    Customer customer1 = new Customer("carlosvann45@gmail.com", "password123");
+    Customer customer1 = new Customer("carlosvann45@gmail.com", passwordEncoder.encode("password123"));
 
     // Persist user to database
     logger.info("Loading " + numberOfCustomers + " customer(s)...");

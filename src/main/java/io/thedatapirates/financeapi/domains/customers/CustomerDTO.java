@@ -1,4 +1,4 @@
-package theDataPiratesFinanceAPI.domains.customers;
+package io.thedatapirates.financeapi.domains.customers;
 
 /**
  * An object to represent a Data Transfer Object for a vehicle

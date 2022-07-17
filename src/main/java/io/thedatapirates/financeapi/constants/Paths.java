@@ -1,4 +1,4 @@
-package theDataPiratesFinanceAPI.constants;
+package io.thedatapirates.financeapi.constants;
 
 /**
  * Constant variables for api paths

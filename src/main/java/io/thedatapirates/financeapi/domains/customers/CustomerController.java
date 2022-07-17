@@ -1,16 +1,14 @@
-package theDataPiratesFinanceAPI.domains.customers;
+package io.thedatapirates.financeapi.domains.customers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
-import theDataPiratesFinanceAPI.constants.StringConstants;
+import io.thedatapirates.financeapi.constants.StringConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import theDataPiratesFinanceAPI.constants.Paths;
-import theDataPiratesFinanceAPI.domains.jwt.JwtRequest;
-import theDataPiratesFinanceAPI.domains.jwt.JwtResponse;
+import io.thedatapirates.financeapi.constants.Paths;
 
 /**
  * Controller for customer endpoints
@@ -64,20 +62,5 @@ public class CustomerController {
     CustomerDTO createdCustomerDTO = mapper.convertValue(createdCustomer, CustomerDTO.class);
 
     return new ResponseEntity<>(createdCustomerDTO, HttpStatus.CREATED);
-  }
-
-  /**
-   * Authenticates a given jwt request
-   *
-   * @param jwtRequest jwt request to authenticate
-   * @return Jwt token response
-   */
-  @PostMapping("authenticate")
-  public ResponseEntity<JwtResponse> authenticateJwtRequest(@RequestBody JwtRequest jwtRequest) {
-    logger.info(StringConstants.LOG_AUTH_JWT_REQUEST);
-
-    JwtResponse jwtResponse = customerService.authenticateJwtRequest(jwtRequest);
-
-    return new ResponseEntity<>(jwtResponse, HttpStatus.OK);
   }
 }

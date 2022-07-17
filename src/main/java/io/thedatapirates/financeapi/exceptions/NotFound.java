@@ -1,4 +1,4 @@
-package theDataPiratesFinanceAPI.exceptions;
+package io.thedatapirates.financeapi.exceptions;
 
 /**
  * A custom exception for if something is not found

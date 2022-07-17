@@ -1,9 +1,7 @@
-package theDataPiratesFinanceAPI.domains.customers;
+package io.thedatapirates.financeapi.domains.customers;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 /**
  * Interface to access and query the database
