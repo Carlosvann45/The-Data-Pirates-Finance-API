@@ -9,4 +9,5 @@ public class Paths {
   public static final String REFRESH_TOKEN_PATH = "/refresh/token";
   public static final String CREATE_PATH = "/create";
   public static final String LOGIN_PATH = "/login";
+  public static final String ALL_EXTENSIONS = "/**";
 }

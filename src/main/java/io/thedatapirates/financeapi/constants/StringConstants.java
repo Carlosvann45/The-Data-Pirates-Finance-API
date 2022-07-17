@@ -31,5 +31,6 @@ public class StringConstants {
 
   // Misc
   public static final String EMPTY_STRING = " ";
+  public static final String STAR = "*";
 
 }
