@@ -22,6 +22,8 @@ public class JWTUtility implements Serializable {
 
     private static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
+    private static final long JWT_REFRESHER_TOKEN_VALIDITY = 86400000;
+
     @Value("${jwt.secret}")
     private String secretKey;
 
@@ -91,6 +93,17 @@ public class JWTUtility implements Serializable {
     }
 
     /**
+     * Generates a new Refresher Jwt token
+     *
+     * @param userDetails user details to create token with
+     * @return newly created refresher Jwt token
+     */
+    public String generateRefresherToken(UserDetails userDetails, String url) {
+        Map<String, Object> claims = new HashMap<>();
+        return doGenerateRefresherToken(claims, userDetails.getUsername(), url);
+    }
+
+    /**
      * Uses Jwt builder to generate a token
      *
      * @param claims claims to set token generated claims to
@@ -104,6 +117,23 @@ public class JWTUtility implements Serializable {
                 .setIssuer(url)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+                .signWith(SignatureAlgorithm.HS256, secretKey).compact();
+    }
+
+    /**
+     * Uses Jwt builder to generate a refresher token
+     *
+     * @param claims claims to set token generated claims to
+     * @param subject subject to set token generated subject to
+     * @return newly generated refresher Jwt token
+     */
+    private String doGenerateRefresherToken(Map<String, Object> claims, String subject, String url) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuer(url)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_REFRESHER_TOKEN_VALIDITY))
                 .signWith(SignatureAlgorithm.HS256, secretKey).compact();
     }
 
