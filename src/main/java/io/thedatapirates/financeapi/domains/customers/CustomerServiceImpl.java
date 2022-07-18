@@ -13,6 +13,7 @@ import io.thedatapirates.financeapi.exceptions.NotFound;
 import io.thedatapirates.financeapi.exceptions.ServerUnavailable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
@@ -131,7 +132,10 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
     }
 
     if (existingCustomer != null) throw new Conflict(StringConstants.USERNAME_CONFLICT);
-    else newCustomer.setPassword(passwordEncoder.encode(newCustomer.getPassword()));
+
+    newCustomer.setPassword(passwordEncoder.encode(newCustomer.getPassword()));
+    newCustomer.setDateCreated(new Date(System.currentTimeMillis()));
+    newCustomer.setDateUpdated(new Date(System.currentTimeMillis()));
 
     try {
       return customerRepository.save(newCustomer);

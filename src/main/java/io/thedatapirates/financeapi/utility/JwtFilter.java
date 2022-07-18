@@ -54,7 +54,12 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(
             HttpServletRequest request, HttpServletResponse response, FilterChain filterChain
     ) throws ServletException, IOException {
-        if (!request.getServletPath().equals(Paths.CUSTOMER_PATH.concat(Paths.LOGIN_PATH)) || !request.getServletPath().equals(Paths.CUSTOMER_PATH.concat(Paths.REFRESH_TOKEN_PATH))) {
+        String url = request.getServletPath();
+        String loginPath = Paths.CUSTOMER_PATH.concat(Paths.LOGIN_PATH);
+        String tokenPath = Paths.CUSTOMER_PATH.concat(Paths.REFRESH_TOKEN_PATH);
+        String createPath = Paths.CUSTOMER_PATH.concat((Paths.CREATE_PATH));
+
+        if (!url.equals(loginPath) || !url.equals(tokenPath) || !url.equals(createPath)) {
             String authorization = request.getHeader(AUTHORIZATION);
             String token = null;
             String username = null;

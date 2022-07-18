@@ -1,6 +1,7 @@
 package io.thedatapirates.financeapi.exceptions;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * A class to represent an object to hold error information that the server will return to clients
@@ -8,13 +9,13 @@ import java.util.Date;
 public class ExceptionResponseMessage {
 
   private Date timestamp;
-  private String error;
   private String errorMessage;
+  private List<String> errors;
 
   public ExceptionResponseMessage() { }
 
-  public ExceptionResponseMessage(String error, Date timestamp, String errorMessage) {
-    this.error = error;
+  public ExceptionResponseMessage(List<String> errors, Date timestamp, String errorMessage) {
+    this.errors = errors;
     this.timestamp = timestamp;
     this.errorMessage = errorMessage;
   }
@@ -27,12 +28,12 @@ public class ExceptionResponseMessage {
     this.timestamp = timestamp;
   }
 
-  public String getError() {
-    return error;
+  public List<String> getErrors() {
+    return errors;
   }
 
-  public void setError(String error) {
-    this.error = error;
+  public void setErrors(List<String> errors) {
+    this.errors = errors;
   }
 
   public String getErrorMessage() {

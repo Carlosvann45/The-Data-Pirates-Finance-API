@@ -1,24 +1,48 @@
 package io.thedatapirates.financeapi.domains.customers;
 
+import io.thedatapirates.financeapi.domains.categories.Category;
+
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * This class is that represents a vehicle entity
  */
 @Entity
-public class Customer {
+public class Customer{
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
+
+  private Date dateCreated;
+
+  private Date dateUpdated;
 
   private String username;
 
   private String password;
+
+  @OneToMany(mappedBy = "customer")
+  private List<Category> categories;
+
+  public Customer() { }
+
+  public Customer(String username, String password) {
+    this.username = username;
+    this.password = password;
+  }
+
+  public Customer(Long id, Date dateCreated, Date dateUpdated, String username, String password, List<Category> categories) {
+    this.id = id;
+    this.dateCreated = dateCreated;
+    this.dateUpdated = dateUpdated;
+    this.username = username;
+    this.password = password;
+    this.categories = categories;
+  }
 
   public Long getId() {
     return id;
@@ -26,6 +50,22 @@ public class Customer {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public Date getDateCreated() {
+    return dateCreated;
+  }
+
+  public void setDateCreated(Date dateCreated) {
+    this.dateCreated = dateCreated;
+  }
+
+  public Date getDateUpdated() {
+    return dateUpdated;
+  }
+
+  public void setDateUpdated(Date dateUpdated) {
+    this.dateUpdated = dateUpdated;
   }
 
   public String getUsername() {
@@ -44,37 +84,36 @@ public class Customer {
     this.password = password;
   }
 
-  public Customer() { }
+  public List<Category> getCategories() {
+    return categories;
+  }
 
-  public Customer(String username, String password) {
-    this.username = username;
-    this.password = password;
+  public void setCategories(List<Category> categories) {
+    this.categories = categories;
   }
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof Customer)) {
-      return false;
-    }
-    Customer user = (Customer) o;
-    return Objects.equals(id, user.id) && Objects.equals(username, user.username)
-        && Objects.equals(password, user.password);
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Customer customer = (Customer) o;
+    return Objects.equals(id, customer.id) && Objects.equals(dateCreated, customer.dateCreated) && Objects.equals(dateUpdated, customer.dateUpdated) && Objects.equals(username, customer.username) && Objects.equals(password, customer.password) && Objects.equals(categories, customer.categories);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, username, password);
+    return Objects.hash(id, dateCreated, dateUpdated, username, password, categories);
   }
 
   @Override
   public String toString() {
-    return "User{" +
-        "id=" + id +
-        ", username='" + username + '\'' +
-        ", password='" + password + '\'' +
-        '}';
+    return "Customer{" +
+            "id=" + id +
+            ", dateCreated=" + dateCreated +
+            ", dateUpdated=" + dateUpdated +
+            ", username='" + username + '\'' +
+            ", password='" + password + '\'' +
+            ", categories=" + categories +
+            '}';
   }
 }

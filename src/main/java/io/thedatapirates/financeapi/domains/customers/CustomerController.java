@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import io.thedatapirates.financeapi.constants.Paths;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import static org.apache.http.HttpHeaders.AUTHORIZATION;
 
@@ -70,7 +71,7 @@ public class CustomerController {
    * @return newly created customer
    */
   @PostMapping(Paths.CREATE_PATH)
-  public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO) {
+  public ResponseEntity<CustomerDTO> createCustomer(@Valid @RequestBody CustomerDTO customerDTO) {
     logger.info(StringConstants.LOG_CREATE_CUSTOMER);
 
     ObjectMapper mapper = new ObjectMapper();

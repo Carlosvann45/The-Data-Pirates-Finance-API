@@ -28,6 +28,10 @@ public class StringConstants {
   public static final String USERNAME_MISMATCH = "Username in pathway does not match username from token";
   public static final String JWT_ERROR_BEGINNING = "Jwt token error: ";
   public static final String JWT_CREDENTIAL_BEGINNING = "Bad credentials error: ";
+  public static final String USERNAME_NULL = "Username for customer can not be null or empty.";
+  public static final String USERNAME_BAD_EMAIL = "Username for customer must follow proper email format.";
+  public static final String PASSWORD_NULL = "Password for customer can not be null or empty.";
+  public static final String PASSWORD_BAD_SIZE = "Password must be between 8 and 20 characters long.";
 
   // Misc
   public static final String EMPTY_STRING = " ";

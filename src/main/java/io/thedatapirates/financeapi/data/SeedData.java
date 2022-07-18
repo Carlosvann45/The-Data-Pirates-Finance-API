@@ -1,5 +1,6 @@
 package io.thedatapirates.financeapi.data;
 
+import java.util.Date;
 import java.util.Objects;
 
 import io.thedatapirates.financeapi.domains.customers.Customer;
@@ -71,6 +72,9 @@ public class SeedData implements CommandLineRunner {
 
 
     Customer customer1 = new Customer("carlosvann45@gmail.com", passwordEncoder.encode("password123"));
+
+    customer1.setDateCreated(new Date(System.currentTimeMillis()));
+    customer1.setDateUpdated(new Date(System.currentTimeMillis()));
 
     // Persist user to database
     logger.info("Loading " + numberOfCustomers + " customer(s)...");
