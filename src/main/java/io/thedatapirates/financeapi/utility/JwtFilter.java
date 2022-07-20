@@ -3,6 +3,7 @@ package io.thedatapirates.financeapi.utility;
 import static org.apache.http.HttpHeaders.AUTHORIZATION;
 
 import com.google.api.client.http.HttpStatusCodes;
+import io.micrometer.core.lang.NonNullApi;
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.CustomerServiceImpl;
@@ -26,6 +27,8 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 /**
  * Class used for filtering through header Jwt tokens when request come through
  */
+
+@NonNullApi
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
@@ -38,7 +41,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private CustomerServiceImpl customerService;
 
     @Autowired
-    @Qualifier("handlerExceptionResolver")
+    @Qualifier(StringConstants.EXCEPTION_RESOLVER)
     private HandlerExceptionResolver resolver;
 
 
@@ -51,7 +54,7 @@ public class JwtFilter extends OncePerRequestFilter {
      */
     @Override
     protected void doFilterInternal(
-            HttpServletRequest request, HttpServletResponse response, FilterChain filterChain
+            HttpServletRequest request,HttpServletResponse response, FilterChain filterChain
     ) throws ServletException, IOException {
         String url = request.getServletPath();
         String loginPath = Paths.CUSTOMERS_PATH.concat(Paths.LOGIN_PATH);

@@ -4,6 +4,7 @@ import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.Customer;
 import io.thedatapirates.financeapi.domains.customers.CustomerRepository;
 import io.thedatapirates.financeapi.domains.customers.CustomerServiceImpl;
+import io.thedatapirates.financeapi.exceptions.BadRequest;
 import io.thedatapirates.financeapi.exceptions.Conflict;
 import io.thedatapirates.financeapi.exceptions.NotFound;
 import io.thedatapirates.financeapi.exceptions.ServerUnavailable;
@@ -86,16 +87,61 @@ public class CategoryServiceImpl implements CategoryService{
         if(existingCategory != null) throw new Conflict(StringConstants.CATEGORY_NAME_CONFLICT);
 
         try {
-            newCategory = categoryRepository.save(newCategory);
+            return categoryRepository.save(newCategory);
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
 
             throw new ServerUnavailable(e.getMessage());
         }
+    }
 
-        newCategory.setCustomer(existingCustomer);
+    /**
+     * Updates a category for a customer from a token id customer and category
+     * exist in the database
+     *
+     * @param token token to get customer from
+     * @param categoryId category id to retrieve category
+     * @param updatedCategory updated category
+     * @return newly updated category
+     */
+    @Override
+    public Category updateCategoryForCustomer(String token, Long categoryId, Category updatedCategory) {
+        Category existingCategory;
+        Category existingName;
+        Customer existingCustomer = getCustomerFromToken(token);
+        String catName = updatedCategory.getName();
 
-        return newCategory;
+        updatedCategory.setCustomer(existingCustomer);
+        updatedCategory.setName(catName
+            .substring(0,1)
+            .toUpperCase() + catName.substring(1).toLowerCase());
+        updatedCategory.setDateUpdated(new Date(System.currentTimeMillis()));
+
+        try {
+            existingCategory = categoryRepository.findCategoryById(categoryId);
+            existingName = categoryRepository.findCategoryByName(updatedCategory.getName());
+        }  catch (DataAccessException e) {
+            logger.error(e.getMessage());
+
+            throw new ServerUnavailable(e.getMessage());
+        }
+
+        if (existingCategory == null) throw new NotFound(StringConstants.CATEGORY_NOT_FOUND);
+        else if(existingName != null) throw new Conflict(StringConstants.CATEGORY_NAME_CONFLICT);
+        else if (!existingCustomer.getCategories().contains(existingCategory)) throw new BadRequest(
+            StringConstants.CATEGORY_DIFF_CUSTOMER
+        );
+
+        updatedCategory.setDateCreated(existingCategory.getDateCreated());
+        updatedCategory.setId(categoryId);
+
+        try {
+            return categoryRepository.save(updatedCategory);
+        } catch (DataAccessException e) {
+            logger.error(e.getMessage());
+
+            throw new ServerUnavailable(e.getMessage());
+        }
     }
 
     /**

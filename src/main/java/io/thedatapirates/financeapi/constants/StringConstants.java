@@ -21,6 +21,7 @@ public class StringConstants {
   public static final String LOG_CREATE_CUSTOMER = "Request received for createCustomer.";
   public static final String LOG_GET_CATEGORIES_CUSTOMER = "Request received for getCategoriesByCustomer.";
   public static final String LOG_CREATE_CATEGORIES_CUSTOMER = "Request received for createCategoryForCustomer.";
+  public static final String LOG_UPDATE_CATEGORIES_CUSTOMER = "Request received for updateCategoryForCustomer.";
 
   // Error Messages
   public static final String CUSTOMER_NOT_FOUND = "Customer with given username does not exist.";
@@ -35,10 +36,13 @@ public class StringConstants {
   public static final String PASSWORD_NULL = "Password for customer can not be null or empty.";
   public static final String PASSWORD_BAD_SIZE = "Password must be between 8 and 20 characters long.";
   public static final String CATEGORY_NAME_CONFLICT = "Category with name already exist.";
+  public static final String CATEGORY_NOT_FOUND = "Category with given id does not exist.";
+  public static final String CATEGORY_DIFF_CUSTOMER = "The supplied category id does not belong to customer from token";
 
   // Misc
   public static final String EMPTY_STRING = " ";
   public static final String STAR = "*";
   public static final String CUSTOMER_ID = "customer_id";
+  public static final String EXCEPTION_RESOLVER = "handlerExceptionResolver";
 
 }

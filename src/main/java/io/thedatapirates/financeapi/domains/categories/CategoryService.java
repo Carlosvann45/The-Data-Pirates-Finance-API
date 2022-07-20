@@ -9,4 +9,6 @@ public interface CategoryService {
     List<Category> getCategoriesByCustomer(String token);
 
     Category createCategoryForCustomer(String token, Category newCategory);
+
+    Category updateCategoryForCustomer(String token, Long categoryId, Category updatedCategory);
 }
