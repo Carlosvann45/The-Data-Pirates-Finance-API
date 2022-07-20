@@ -1,5 +1,6 @@
 package io.thedatapirates.financeapi.domains.customers;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.thedatapirates.financeapi.domains.categories.Category;
 
 import java.util.Date;
@@ -14,7 +15,7 @@ import javax.persistence.*;
 public class Customer{
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private Date dateCreated;
@@ -26,6 +27,7 @@ public class Customer{
   private String password;
 
   @OneToMany(mappedBy = "customer")
+  @JsonManagedReference
   private List<Category> categories;
 
   public Customer() { }

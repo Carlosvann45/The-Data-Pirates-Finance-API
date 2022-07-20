@@ -48,16 +48,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity security) throws Exception {
     CustomAuthenticationFilter customAuthFilter = new CustomAuthenticationFilter(authenticationManagerBean(), jwtUtility);
 
-    customAuthFilter.setFilterProcessesUrl(Paths.CUSTOMER_PATH.concat(Paths.LOGIN_PATH));
+    customAuthFilter.setFilterProcessesUrl(Paths.CUSTOMERS_PATH.concat(Paths.LOGIN_PATH));
 
     security.csrf().disable();
 
     security.authorizeRequests()
-            .antMatchers(POST, Paths.CUSTOMER_PATH.concat(Paths.CREATE_PATH))
+            .antMatchers(POST, Paths.CUSTOMERS_PATH.concat(Paths.CREATE_PATH))
             .permitAll();
 
     security.authorizeRequests()
-            .antMatchers(GET, Paths.CUSTOMER_PATH.concat(Paths.REFRESH_TOKEN_PATH))
+            .antMatchers(GET, Paths.CUSTOMERS_PATH.concat(Paths.REFRESH_TOKEN_PATH))
             .permitAll();
 
     security.authorizeRequests()

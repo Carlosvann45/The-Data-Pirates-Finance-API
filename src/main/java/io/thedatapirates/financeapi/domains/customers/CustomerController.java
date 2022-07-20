@@ -20,10 +20,10 @@ import static org.apache.http.HttpHeaders.AUTHORIZATION;
  * Controller for customer endpoints
  */
 @RestController
-@RequestMapping(value = Paths.CUSTOMER_PATH)
+@RequestMapping(value = Paths.CUSTOMERS_PATH)
 public class CustomerController {
 
-  Logger logger = LogManager.getLogger(CustomerController.class);
+  private final Logger logger = LogManager.getLogger(CustomerController.class);
 
   @Autowired
   private CustomerService customerService;

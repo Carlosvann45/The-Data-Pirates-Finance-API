@@ -1,8 +1,5 @@
 package io.thedatapirates.financeapi.domains.categories;
 
-import io.thedatapirates.financeapi.domains.customers.Customer;
-
-import javax.persistence.*;
 import java.util.Date;
 
 public class CategoryDTO {
@@ -15,8 +12,6 @@ public class CategoryDTO {
 
     private String name;
 
-    private Customer customer;
-
     public CategoryDTO() {
     }
 
@@ -24,12 +19,11 @@ public class CategoryDTO {
         this.name = name;
     }
 
-    public CategoryDTO(Long id, Date dateCreated, Date dateUpdated, String name, Customer customer) {
+    public CategoryDTO(Long id, Date dateCreated, Date dateUpdated, String name) {
         this.id = id;
         this.dateCreated = dateCreated;
         this.dateUpdated = dateUpdated;
         this.name = name;
-        this.customer = customer;
     }
 
     public Long getId() {
@@ -62,13 +56,5 @@ public class CategoryDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
     }
 }

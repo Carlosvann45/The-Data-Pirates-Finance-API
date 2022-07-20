@@ -1,5 +1,7 @@
 package io.thedatapirates.financeapi.domains.categories;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.Customer;
 
 import javax.persistence.*;
@@ -9,7 +11,7 @@ import java.util.Objects;
 @Entity
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Date dateCreated;
@@ -19,7 +21,8 @@ public class Category {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = StringConstants.CUSTOMER_ID, nullable = false)
+    @JsonBackReference
     private Customer customer;
 
     public Category() {

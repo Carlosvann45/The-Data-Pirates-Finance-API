@@ -19,6 +19,8 @@ public class StringConstants {
   public static final String LOG_GET_CUSTOMER = "Request received for getCustomers.";
   public static final String LOG_REFRESH_CUSTOMER_TOKEN = "Request received for refreshCustomerToken.";
   public static final String LOG_CREATE_CUSTOMER = "Request received for createCustomer.";
+  public static final String LOG_GET_CATEGORIES_CUSTOMER = "Request received for getCategoriesByCustomer.";
+  public static final String LOG_CREATE_CATEGORIES_CUSTOMER = "Request received for createCategoryForCustomer.";
 
   // Error Messages
   public static final String CUSTOMER_NOT_FOUND = "Customer with given username does not exist.";
@@ -32,9 +34,11 @@ public class StringConstants {
   public static final String USERNAME_BAD_EMAIL = "Username for customer must follow proper email format.";
   public static final String PASSWORD_NULL = "Password for customer can not be null or empty.";
   public static final String PASSWORD_BAD_SIZE = "Password must be between 8 and 20 characters long.";
+  public static final String CATEGORY_NAME_CONFLICT = "Category with name already exist.";
 
   // Misc
   public static final String EMPTY_STRING = " ";
   public static final String STAR = "*";
+  public static final String CUSTOMER_ID = "customer_id";
 
 }
