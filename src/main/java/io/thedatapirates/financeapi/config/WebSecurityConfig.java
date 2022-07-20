@@ -1,5 +1,8 @@
 package io.thedatapirates.financeapi.config;
 
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.domains.customers.CustomerServiceImpl;
 import io.thedatapirates.financeapi.utility.CustomAuthenticationFilter;
@@ -16,9 +19,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
 
 /**
  * Configuration setup for spring boot web security
@@ -46,7 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
    * */
   @Override
   protected void configure(HttpSecurity security) throws Exception {
-    CustomAuthenticationFilter customAuthFilter = new CustomAuthenticationFilter(authenticationManagerBean(), jwtUtility);
+    CustomAuthenticationFilter customAuthFilter =
+        new CustomAuthenticationFilter(authenticationManagerBean(), jwtUtility);
 
     customAuthFilter.setFilterProcessesUrl(Paths.CUSTOMERS_PATH.concat(Paths.LOGIN_PATH));
 

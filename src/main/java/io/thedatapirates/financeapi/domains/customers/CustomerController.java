@@ -1,20 +1,25 @@
 package io.thedatapirates.financeapi.domains.customers;
 
+import static org.apache.http.HttpHeaders.AUTHORIZATION;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.thedatapirates.financeapi.domains.jwt.JwtResponse;
-import org.springframework.web.bind.annotation.*;
+import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
+import io.thedatapirates.financeapi.domains.jwt.JwtResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import io.thedatapirates.financeapi.constants.Paths;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import static org.apache.http.HttpHeaders.AUTHORIZATION;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Controller for customer endpoints
@@ -35,7 +40,9 @@ public class CustomerController {
    * @return a user with the given username
    */
   @GetMapping(Paths.USERNAME_PATH)
-  public ResponseEntity<CustomerDTO> getCustomer(@RequestHeader(AUTHORIZATION) String token, @PathVariable String username) {
+  public ResponseEntity<CustomerDTO> getCustomer(
+      @RequestHeader(AUTHORIZATION) String token, @PathVariable String username
+  ) {
     logger.info(StringConstants.LOG_GET_CUSTOMER);
 
     token = token.substring(7).trim();
@@ -56,10 +63,14 @@ public class CustomerController {
    * @return new jwt response with new access and original refresh token
    */
   @GetMapping(Paths.REFRESH_TOKEN_PATH)
-  public ResponseEntity<JwtResponse> refreshCustomerToken(@RequestHeader(AUTHORIZATION) String refreshToken, HttpServletRequest request) {
+  public ResponseEntity<JwtResponse> refreshCustomerToken(
+      @RequestHeader(AUTHORIZATION) String refreshToken, HttpServletRequest request
+  ) {
     logger.info(StringConstants.LOG_REFRESH_CUSTOMER_TOKEN);
 
-    JwtResponse jwtResponse = customerService.refreshCustomerToken(refreshToken, request.getRequestURL().toString());
+    JwtResponse jwtResponse = customerService.refreshCustomerToken(
+        refreshToken, request.getRequestURL().toString()
+    );
 
     return new ResponseEntity<>(jwtResponse, HttpStatus.OK);
   }
