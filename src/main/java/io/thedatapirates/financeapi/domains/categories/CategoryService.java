@@ -11,4 +11,6 @@ public interface CategoryService {
     Category createCategoryForCustomer(String token, Category newCategory);
 
     Category updateCategoryForCustomer(String token, Long categoryId, Category updatedCategory);
+
+    void deleteCategoryForCustomer(String token, Long categoryId);
 }

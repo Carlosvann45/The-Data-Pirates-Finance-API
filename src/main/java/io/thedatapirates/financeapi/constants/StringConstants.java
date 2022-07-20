@@ -22,6 +22,7 @@ public class StringConstants {
   public static final String LOG_GET_CATEGORIES_CUSTOMER = "Request received for getCategoriesByCustomer.";
   public static final String LOG_CREATE_CATEGORIES_CUSTOMER = "Request received for createCategoryForCustomer.";
   public static final String LOG_UPDATE_CATEGORIES_CUSTOMER = "Request received for updateCategoryForCustomer.";
+  public static final String LOG_DELETE_CATEGORIES_CUSTOMER = "Request received for deleteCategoryForCustomer.";
 
   // Error Messages
   public static final String CUSTOMER_NOT_FOUND = "Customer with given username does not exist.";

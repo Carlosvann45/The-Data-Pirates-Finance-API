@@ -145,6 +145,40 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     /**
+     * Deletes a given category if it exists on a customer
+     *
+     * @param token token to get user from
+     * @param categoryId category id for category to delete
+     */
+    @Override
+    public void deleteCategoryForCustomer(String token, Long categoryId) {
+        Category existingCategory;
+        Customer existingCustomer = getCustomerFromToken(token);
+
+
+        try {
+            existingCategory = categoryRepository.findCategoryById(categoryId);
+        }  catch (DataAccessException e) {
+            logger.error(e.getMessage());
+
+            throw new ServerUnavailable(e.getMessage());
+        }
+
+        if (existingCategory == null) throw new NotFound(StringConstants.CATEGORY_NOT_FOUND);
+        else if (!existingCustomer.getCategories().contains(existingCategory)) throw new BadRequest(
+            StringConstants.CATEGORY_DIFF_CUSTOMER
+        );
+
+        try {
+            categoryRepository.deleteById(categoryId);
+        }  catch (DataAccessException e) {
+            logger.error(e.getMessage());
+
+            throw new ServerUnavailable(e.getMessage());
+        }
+    }
+
+    /**
      * Helper method to retrieve customer from token
      *
      * @param token token to get customer from

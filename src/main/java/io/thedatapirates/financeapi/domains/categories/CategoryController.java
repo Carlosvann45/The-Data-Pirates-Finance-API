@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -108,5 +109,23 @@ public class CategoryController {
 
         return new ResponseEntity<>(updatedCategoryDTO, HttpStatus.OK);
 
+    }
+
+    /**
+     * Deletes a category from a user with a specified id
+     *
+     * @param token token to get user from
+     * @param categoryId category id to get category
+     * @return no content
+     */
+    @DeleteMapping(Paths.CATEGORY_ID)
+    public ResponseEntity<?> deleteCategoryForCustomer(
+        @RequestHeader(AUTHORIZATION) String token, @PathVariable Long categoryId
+    ) {
+        logger.info(StringConstants.LOG_DELETE_CATEGORIES_CUSTOMER);
+
+        categoryService.deleteCategoryForCustomer(token, categoryId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

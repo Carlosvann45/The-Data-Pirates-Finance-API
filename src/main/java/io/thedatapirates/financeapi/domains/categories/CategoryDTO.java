@@ -2,8 +2,8 @@ package io.thedatapirates.financeapi.domains.categories;
 
 import io.thedatapirates.financeapi.constants.StringConstants;
 import java.util.Date;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 public class CategoryDTO {
 
@@ -14,7 +14,7 @@ public class CategoryDTO {
     private Date dateUpdated;
 
     @NotBlank(message = StringConstants.NAME_REQUIRED)
-    @Min(value = 3, message = StringConstants.NAME_MIN)
+    @Size(min = 3, message = StringConstants.NAME_MIN)
     private String name;
 
     public CategoryDTO() {
