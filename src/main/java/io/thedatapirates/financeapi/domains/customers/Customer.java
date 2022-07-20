@@ -3,6 +3,7 @@ package io.thedatapirates.financeapi.domains.customers;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.thedatapirates.financeapi.domains.categories.Category;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +29,7 @@ public class Customer{
 
   @OneToMany(mappedBy = "customer")
   @JsonManagedReference
-  private List<Category> categories;
+  private List<Category> categories = new ArrayList<>();
 
   public Customer() { }
 

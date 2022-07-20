@@ -27,17 +27,19 @@ public class StringConstants {
   public static final String CUSTOMER_NOT_FOUND = "Customer with given username does not exist.";
   public static final String INVALID_LOGIN = "Invalid Credentials. Please try again.";
   public static final String BAD_TOKEN = "Invalid token.";
-  public static final String USERNAME_CONFLICT = "Customer with username already exist.";
+  public static final String USERNAME_CONFLICT = "Username is a required field.";
   public static final String USERNAME_MISMATCH = "Username in pathway does not match username from token";
   public static final String JWT_ERROR_BEGINNING = "Jwt token error: ";
   public static final String JWT_CREDENTIAL_BEGINNING = "Bad credentials error: ";
-  public static final String USERNAME_NULL = "Username for customer can not be null or empty.";
+  public static final String USERNAME_NULL = "Username is a required field.";
   public static final String USERNAME_BAD_EMAIL = "Username for customer must follow proper email format.";
   public static final String PASSWORD_NULL = "Password for customer can not be null or empty.";
   public static final String PASSWORD_BAD_SIZE = "Password must be between 8 and 20 characters long.";
   public static final String CATEGORY_NAME_CONFLICT = "Category with name already exist.";
   public static final String CATEGORY_NOT_FOUND = "Category with given id does not exist.";
   public static final String CATEGORY_DIFF_CUSTOMER = "The supplied category id does not belong to customer from token";
+  public static final String NAME_REQUIRED = "Name is a required field.";
+  public static final String NAME_MIN = "Name must be at least 3 characters long.";
 
   // Misc
   public static final String EMPTY_STRING = " ";

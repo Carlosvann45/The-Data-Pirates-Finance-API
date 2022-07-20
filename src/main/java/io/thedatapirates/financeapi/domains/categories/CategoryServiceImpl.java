@@ -132,8 +132,8 @@ public class CategoryServiceImpl implements CategoryService{
             StringConstants.CATEGORY_DIFF_CUSTOMER
         );
 
-        updatedCategory.setDateCreated(existingCategory.getDateCreated());
         updatedCategory.setId(categoryId);
+        updatedCategory.setDateCreated(existingCategory.getDateCreated());
 
         try {
             return categoryRepository.save(updatedCategory);

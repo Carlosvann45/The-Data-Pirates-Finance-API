@@ -3,6 +3,7 @@ package io.thedatapirates.financeapi.domains.customers;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.categories.Category;
 
+import java.util.ArrayList;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -28,7 +29,7 @@ public class CustomerDTO {
  @Size(min = 8, max = 20, message = StringConstants.PASSWORD_BAD_SIZE)
  private String password;
 
- private List<Category> categories;
+ private List<Category> categories = new ArrayList<>();
 
     public CustomerDTO() {
     }
