@@ -25,6 +25,8 @@ public class StringConstants {
   public static final String LOG_DELETE_CATEGORIES_CUSTOMER = "Request received for deleteCategoryForCustomer.";
   public static final String LOG_GET_FREQUENCIES = "Request received for getFrequencies.";
   public static final String LOG_GET_FREQUENCIES_ID = "Request received for getFrequencyById.";
+  public static final String LOG_GET_PRIORITY_LEVELS = "Request received for getPriorityLevels.";
+  public static final String LOG_GET_PRIORItY_LEVEL_ID = "Request received for getPriorityLevelById.";
 
   // Error Messages
   public static final String CUSTOMER_NOT_FOUND = "Customer with given username does not exist.";
@@ -44,6 +46,7 @@ public class StringConstants {
   public static final String NAME_REQUIRED = "Name is a required field.";
   public static final String NAME_MIN = "Name must be at least 3 characters long.";
   public static final String FREQUENCY_NOT_FOUND = "Frequency with given id does not exist.";
+  public static final String PRIORITY_LEVEL_NOT_FOUND = "Priority Level with given id does not exist.";
 
   // Misc
   public static final String EMPTY_STRING = " ";

@@ -17,6 +17,11 @@ public class Paths {
   public static final String FREQUENCY_PATH = "/frequencies";
   public static final String FREQUENCY_ID = "{frequencyId}";
 
+  // Priority Levels
+  public static final String PRIORITY_LEVEL_PATH = "/priorityLevels";
+  public static final String PRIORITY_LEVEL_ID = "{priorityLevelId}";
+
+
   // Misc
   public static final String CREATE_PATH = "/create";
   public static final String ALL_EXTENSIONS = "/**";

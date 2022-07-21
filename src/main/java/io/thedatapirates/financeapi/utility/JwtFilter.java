@@ -63,7 +63,8 @@ public class JwtFilter extends OncePerRequestFilter {
                 Paths.CUSTOMERS_PATH.concat(Paths.LOGIN_PATH),
                 Paths.CUSTOMERS_PATH.concat(Paths.REFRESH_TOKEN_PATH),
                 Paths.CUSTOMERS_PATH.concat((Paths.CREATE_PATH)),
-                Paths.FREQUENCY_PATH.concat(Paths.ALL_EXTENSIONS)
+                Paths.FREQUENCY_PATH.concat(Paths.ALL_EXTENSIONS),
+                Paths.PRIORITY_LEVEL_PATH.concat(Paths.ALL_EXTENSIONS)
         };
 
         if (Arrays.stream(pathArray).noneMatch(url::contains)) {

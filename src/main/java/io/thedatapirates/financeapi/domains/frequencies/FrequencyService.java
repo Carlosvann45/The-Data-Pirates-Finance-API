@@ -1,7 +1,5 @@
 package io.thedatapirates.financeapi.domains.frequencies;
 
-import org.springframework.http.ResponseEntity;
-
 import java.util.List;
 
 /**

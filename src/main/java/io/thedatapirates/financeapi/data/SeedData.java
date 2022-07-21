@@ -8,6 +8,8 @@ import java.util.Objects;
 import io.thedatapirates.financeapi.domains.customers.Customer;
 import io.thedatapirates.financeapi.domains.frequencies.Frequency;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyRepository;
+import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevel;
+import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevelRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class SeedData implements CommandLineRunner {
 
   @Autowired
   private FrequencyRepository frequencyRepository;
+
+  @Autowired
+  private PriorityLevelRepository priorityLevelRepository;
 
   @Autowired
   private Environment env;
@@ -89,7 +94,6 @@ public class SeedData implements CommandLineRunner {
 
     customerRepository.save(customer1);
 
-    // Persist user to database
     logger.info("Loading frequencies...");
     List<Frequency> frequencyList = new ArrayList<>();
 
@@ -114,6 +118,35 @@ public class SeedData implements CommandLineRunner {
             "Yearly"));
 
     frequencyRepository.saveAll(frequencyList);
+
+    logger.info("Loading frequencies...");
+    List<PriorityLevel> priorityLevelList = new ArrayList<>();
+
+    priorityLevelList.add(new PriorityLevel(
+            new Date(System.currentTimeMillis()),
+            new Date(System.currentTimeMillis()),
+            "Low",
+            "Lowest level of priority. Its not really at the top of your TODO list."));
+
+    priorityLevelList.add(new PriorityLevel(
+            new Date(System.currentTimeMillis()),
+            new Date(System.currentTimeMillis()),
+            "Medium",
+            "Second lowest level of priority. Its important enough that it's in the middle of your TODO list."));
+
+    priorityLevelList.add(new PriorityLevel(
+            new Date(System.currentTimeMillis()),
+            new Date(System.currentTimeMillis()),
+            "High",
+            "High level of priority. Its important and its towards the top of your TODO list."));
+
+    priorityLevelList.add(new PriorityLevel(
+            new Date(System.currentTimeMillis()),
+            new Date(System.currentTimeMillis()),
+            "Very High",
+            "Top level of priority. Its very important and at the top of your TODO list."));
+
+    priorityLevelRepository.saveAll(priorityLevelList);
 
     logger.info("Data load is complete. You can now make request");
   }
