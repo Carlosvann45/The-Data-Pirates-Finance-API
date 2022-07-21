@@ -10,7 +10,7 @@ import java.util.Objects;
 import javax.persistence.*;
 
 /**
- * This class is that represents a vehicle entity
+ * This class that represents a customer entity in the database
  */
 @Entity
 public class Customer{

@@ -1,14 +1,12 @@
-package io.thedatapirates.financeapi.domains.categories;
+package io.thedatapirates.financeapi.domains.frequencies;
 
-import io.thedatapirates.financeapi.constants.StringConstants;
+
 import java.util.Date;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 /**
- * An object to represent a Data Transfer Object for a category
+ * An object to represent a Data Transfer Object for a frequency
  */
-public class CategoryDTO {
+public class FrequencyDTO {
 
     private Long id;
 
@@ -16,18 +14,16 @@ public class CategoryDTO {
 
     private Date dateUpdated;
 
-    @NotBlank(message = StringConstants.NAME_REQUIRED)
-    @Size(min = 3, message = StringConstants.NAME_MIN)
     private String name;
 
-    public CategoryDTO() {
+    public FrequencyDTO() {
     }
 
-    public CategoryDTO(String name) {
+    public FrequencyDTO(String name) {
         this.name = name;
     }
 
-    public CategoryDTO(Long id, Date dateCreated, Date dateUpdated, String name) {
+    public FrequencyDTO(Long id, Date dateCreated, Date dateUpdated, String name) {
         this.id = id;
         this.dateCreated = dateCreated;
         this.dateUpdated = dateUpdated;

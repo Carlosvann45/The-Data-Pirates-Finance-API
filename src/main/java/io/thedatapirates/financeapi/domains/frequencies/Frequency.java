@@ -1,18 +1,18 @@
-package io.thedatapirates.financeapi.domains.categories;
+package io.thedatapirates.financeapi.domains.frequencies;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import io.thedatapirates.financeapi.constants.StringConstants;
-import io.thedatapirates.financeapi.domains.customers.Customer;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 import java.util.Objects;
 
 /**
- * Entity class to represent a category in the database
+ * Entity class to represent a frequency in the database
  */
 @Entity
-public class Category {
+public class Frequency {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,24 +23,24 @@ public class Category {
 
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = StringConstants.CUSTOMER_ID, nullable = false)
-    @JsonBackReference
-    private Customer customer;
-
-    public Category() {
+    public Frequency() {
     }
 
-    public Category(String name) {
+    public Frequency(String name) {
         this.name = name;
     }
 
-    public Category(Long id, Date dateCreated, Date dateUpdated, String name, Customer customer) {
+    public Frequency(Date dateCreated, Date dateUpdated, String name) {
+        this.dateCreated = dateCreated;
+        this.dateUpdated = dateUpdated;
+        this.name = name;
+    }
+
+    public Frequency(Long id, Date dateCreated, Date dateUpdated, String name) {
         this.id = id;
         this.dateCreated = dateCreated;
         this.dateUpdated = dateUpdated;
         this.name = name;
-        this.customer = customer;
     }
 
     public Long getId() {
@@ -75,35 +75,26 @@ public class Category {
         this.name = name;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Category category = (Category) o;
-        return Objects.equals(id, category.id) && Objects.equals(dateCreated, category.dateCreated) && Objects.equals(dateUpdated, category.dateUpdated) && Objects.equals(name, category.name) && Objects.equals(customer, category.customer);
+        Frequency frequency = (Frequency) o;
+        return Objects.equals(id, frequency.id) && Objects.equals(dateCreated, frequency.dateCreated) && Objects.equals(dateUpdated, frequency.dateUpdated) && Objects.equals(name, frequency.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dateCreated, dateUpdated, name, customer);
+        return Objects.hash(id, dateCreated, dateUpdated, name);
     }
 
     @Override
     public String toString() {
-        return "Category{" +
+        return "Frequency{" +
                 "id=" + id +
                 ", dateCreated=" + dateCreated +
                 ", dateUpdated=" + dateUpdated +
                 ", name='" + name + '\'' +
-                ", customer=" + customer +
                 '}';
     }
 }

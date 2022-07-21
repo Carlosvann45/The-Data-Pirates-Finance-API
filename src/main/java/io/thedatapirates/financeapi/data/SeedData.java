@@ -1,15 +1,20 @@
 package io.thedatapirates.financeapi.data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import io.thedatapirates.financeapi.domains.customers.Customer;
+import io.thedatapirates.financeapi.domains.frequencies.Frequency;
+import io.thedatapirates.financeapi.domains.frequencies.FrequencyRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import io.thedatapirates.financeapi.domains.customers.CustomerRepository;
 
@@ -23,6 +28,9 @@ public class SeedData implements CommandLineRunner {
 
   @Autowired
   private CustomerRepository customerRepository;
+
+  @Autowired
+  private FrequencyRepository frequencyRepository;
 
   @Autowired
   private Environment env;
@@ -80,6 +88,32 @@ public class SeedData implements CommandLineRunner {
     logger.info("Loading " + numberOfCustomers + " customer(s)...");
 
     customerRepository.save(customer1);
+
+    // Persist user to database
+    logger.info("Loading frequencies...");
+    List<Frequency> frequencyList = new ArrayList<>();
+
+    frequencyList.add(new Frequency(
+            new Date(System.currentTimeMillis()),
+            new Date(System.currentTimeMillis()),
+            "Daily"));
+
+    frequencyList.add(new Frequency(
+            new Date(System.currentTimeMillis()),
+            new Date(System.currentTimeMillis()),
+            "Weekly"));
+
+    frequencyList.add(new Frequency(
+            new Date(System.currentTimeMillis()),
+            new Date(System.currentTimeMillis()),
+            "Monthly"));
+
+    frequencyList.add(new Frequency(
+            new Date(System.currentTimeMillis()),
+            new Date(System.currentTimeMillis()),
+            "Yearly"));
+
+    frequencyRepository.saveAll(frequencyList);
 
     logger.info("Data load is complete. You can now make request");
   }

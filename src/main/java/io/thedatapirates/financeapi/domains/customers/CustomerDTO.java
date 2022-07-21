@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * An object to represent a Data Transfer Object for a vehicle
+ * An object to represent a Data Transfer Object for a customer
  */
 public class CustomerDTO {
 

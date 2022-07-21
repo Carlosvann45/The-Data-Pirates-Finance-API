@@ -13,6 +13,10 @@ public class Paths {
   public static final String CATEGORY_PATH = "/categories";
   public static final String CATEGORY_ID = "{categoryId}";
 
+  // Frequencies
+  public static final String FREQUENCY_PATH = "/frequencies";
+  public static final String FREQUENCY_ID = "{frequencyId}";
+
   // Misc
   public static final String CREATE_PATH = "/create";
   public static final String ALL_EXTENSIONS = "/**";

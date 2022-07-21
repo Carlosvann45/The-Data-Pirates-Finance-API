@@ -23,6 +23,8 @@ public class StringConstants {
   public static final String LOG_CREATE_CATEGORIES_CUSTOMER = "Request received for createCategoryForCustomer.";
   public static final String LOG_UPDATE_CATEGORIES_CUSTOMER = "Request received for updateCategoryForCustomer.";
   public static final String LOG_DELETE_CATEGORIES_CUSTOMER = "Request received for deleteCategoryForCustomer.";
+  public static final String LOG_GET_FREQUENCIES = "Request received for getFrequencies.";
+  public static final String LOG_GET_FREQUENCIES_ID = "Request received for getFrequencyById.";
 
   // Error Messages
   public static final String CUSTOMER_NOT_FOUND = "Customer with given username does not exist.";
@@ -41,6 +43,7 @@ public class StringConstants {
   public static final String CATEGORY_DIFF_CUSTOMER = "The supplied category id does not belong to customer from token";
   public static final String NAME_REQUIRED = "Name is a required field.";
   public static final String NAME_MIN = "Name must be at least 3 characters long.";
+  public static final String FREQUENCY_NOT_FOUND = "Frequency with given id does not exist.";
 
   // Misc
   public static final String EMPTY_STRING = " ";
