@@ -147,7 +147,7 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * Deletes a given category if it exists on a customer
      *
-     * @param token      token to get user from
+     * @param token      token to get customer from
      * @param categoryId category id for category to delete
      */
     @Override

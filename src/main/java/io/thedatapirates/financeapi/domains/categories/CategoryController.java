@@ -110,7 +110,6 @@ public class CategoryController {
         CategoryDTO updatedCategoryDTO = mapper.convertValue(updatedCategory, CategoryDTO.class);
 
         return new ResponseEntity<>(updatedCategoryDTO, HttpStatus.OK);
-
     }
 
     /**

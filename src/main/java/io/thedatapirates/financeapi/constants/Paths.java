@@ -21,6 +21,9 @@ public class Paths {
     public static final String PRIORITY_LEVEL_PATH = "/priorityLevels";
     public static final String PRIORITY_LEVEL_ID = "{priorityLevelId}";
 
+    // Investments
+    public static final String INVESTMENTS_PATH = "/investments";
+    public static final String INVESTMENT_ID = "{investmentId}";
 
     // Misc
     public static final String CREATE_PATH = "/create";

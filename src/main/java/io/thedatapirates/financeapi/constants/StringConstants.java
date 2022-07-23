@@ -27,6 +27,10 @@ public class StringConstants {
     public static final String LOG_GET_FREQUENCIES_ID = "Request received for getFrequencyById.";
     public static final String LOG_GET_PRIORITY_LEVELS = "Request received for getPriorityLevels.";
     public static final String LOG_GET_PRIORItY_LEVEL_ID = "Request received for getPriorityLevelById.";
+    public static final String LOG_GET_INVESTMENTS_CUSTOMER = "Request received for getInvestmentsByCustomer.";
+    public static final String LOG_CREATE_INVESTMENTS_CUSTOMER = "Request received for createInvestmentForCustomer.";
+    public static final String LOG_UPDATE_INVESTMENT_CUSTOMER = "Request received for updateInvestmentForCustomer.";
+    public static final String LOG_DELETE_INVESTMENT_CUSTOMER = "Request received for deleteInvestmentForCustomer.";
 
     // Error Messages
     public static final String CUSTOMER_NOT_FOUND = "Customer with given username does not exist.";
@@ -42,16 +46,21 @@ public class StringConstants {
     public static final String PASSWORD_BAD_SIZE = "Password must be between 8 and 20 characters long.";
     public static final String CATEGORY_NAME_CONFLICT = "Category with name already exist.";
     public static final String CATEGORY_NOT_FOUND = "Category with given id does not exist.";
-    public static final String CATEGORY_DIFF_CUSTOMER = "The supplied category id does not belong to customer from token";
+    public static final String CATEGORY_DIFF_CUSTOMER = "The supplied category id does not belong to customer from the token";
     public static final String NAME_REQUIRED = "Name is a required field.";
     public static final String NAME_MIN = "Name must be at least 3 characters long.";
     public static final String FREQUENCY_NOT_FOUND = "Frequency with given id does not exist.";
     public static final String PRIORITY_LEVEL_NOT_FOUND = "Priority Level with given id does not exist.";
+    public static final String INVESTMENT_NOT_FOUND = "Investment with given id does not exist.";
+    public static final String INVESTMENT_DIFF_CUSTOMER = "The supplied investment id does not belong to customer from the token";
+    public static final String INVESTMENT_NAME_CONFLICT = "Investment with name already exist.";
 
     // Misc
     public static final String EMPTY_STRING = " ";
     public static final String STAR = "*";
     public static final String CUSTOMER_ID = "customer_id";
+    public static final String CUSTOMER = "customer";
     public static final String EXCEPTION_RESOLVER = "handlerExceptionResolver";
+    public static final String STOCK = "Stock";
 
 }
