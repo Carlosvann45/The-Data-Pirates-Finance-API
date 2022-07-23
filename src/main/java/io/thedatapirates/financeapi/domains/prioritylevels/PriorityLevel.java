@@ -1,9 +1,8 @@
 package io.thedatapirates.financeapi.domains.prioritylevels;
 
+import io.thedatapirates.financeapi.domains.entity.BaseEntity;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.util.Date;
 import java.util.Objects;
 
@@ -11,14 +10,7 @@ import java.util.Objects;
  * Entity class to represent a priority level in the database
  */
 @Entity
-public class PriorityLevel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private Date dateCreated;
-
-    private Date dateUpdated;
+public class PriorityLevel extends BaseEntity {
 
     private String level;
 
@@ -33,42 +25,15 @@ public class PriorityLevel {
     }
 
     public PriorityLevel(Date dateCreated, Date dateUpdated, String level, String description) {
-        this.dateCreated = dateCreated;
-        this.dateUpdated = dateUpdated;
+        super(dateCreated, dateUpdated);
         this.level = level;
         this.description = description;
     }
 
     public PriorityLevel(Long id, Date dateCreated, Date dateUpdated, String level, String description) {
-        this.id = id;
-        this.dateCreated = dateCreated;
-        this.dateUpdated = dateUpdated;
+        super(id, dateCreated, dateUpdated);
         this.level = level;
         this.description = description;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public Date getDateUpdated() {
-        return dateUpdated;
-    }
-
-    public void setDateUpdated(Date dateUpdated) {
-        this.dateUpdated = dateUpdated;
     }
 
     public String getLevel() {
@@ -91,22 +56,20 @@ public class PriorityLevel {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         PriorityLevel that = (PriorityLevel) o;
-        return Objects.equals(id, that.id) && Objects.equals(dateCreated, that.dateCreated) && Objects.equals(dateUpdated, that.dateUpdated) && Objects.equals(level, that.level) && Objects.equals(description, that.description);
+        return Objects.equals(level, that.level) && Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dateCreated, dateUpdated, level, description);
+        return Objects.hash(super.hashCode(), level, description);
     }
 
     @Override
     public String toString() {
         return "PriorityLevel{" +
-                "id=" + id +
-                ", dateCreated=" + dateCreated +
-                ", dateUpdated=" + dateUpdated +
-                ", level='" + level + '\'' +
+                "level='" + level + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }

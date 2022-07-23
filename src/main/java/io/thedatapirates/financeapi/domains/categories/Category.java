@@ -3,6 +3,7 @@ package io.thedatapirates.financeapi.domains.categories;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.Customer;
+import io.thedatapirates.financeapi.domains.entity.BaseEntity;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,14 +13,7 @@ import java.util.Objects;
  * Entity class to represent a category in the database
  */
 @Entity
-public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private Date dateCreated;
-
-    private Date dateUpdated;
+public class Category extends BaseEntity {
 
     private String name;
 
@@ -36,35 +30,9 @@ public class Category {
     }
 
     public Category(Long id, Date dateCreated, Date dateUpdated, String name, Customer customer) {
-        this.id = id;
-        this.dateCreated = dateCreated;
-        this.dateUpdated = dateUpdated;
+        super(id, dateCreated, dateUpdated);
         this.name = name;
         this.customer = customer;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public Date getDateUpdated() {
-        return dateUpdated;
-    }
-
-    public void setDateUpdated(Date dateUpdated) {
-        this.dateUpdated = dateUpdated;
     }
 
     public String getName() {
@@ -87,22 +55,20 @@ public class Category {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         Category category = (Category) o;
-        return Objects.equals(id, category.id) && Objects.equals(dateCreated, category.dateCreated) && Objects.equals(dateUpdated, category.dateUpdated) && Objects.equals(name, category.name) && Objects.equals(customer, category.customer);
+        return Objects.equals(name, category.name) && Objects.equals(customer, category.customer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dateCreated, dateUpdated, name, customer);
+        return Objects.hash(super.hashCode(), name, customer);
     }
 
     @Override
     public String toString() {
         return "Category{" +
-                "id=" + id +
-                ", dateCreated=" + dateCreated +
-                ", dateUpdated=" + dateUpdated +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", customer=" + customer +
                 '}';
     }

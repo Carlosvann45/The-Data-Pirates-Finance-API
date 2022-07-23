@@ -1,17 +1,13 @@
 package io.thedatapirates.financeapi.domains.prioritylevels;
 
+import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
+
 import java.util.Date;
 
 /**
  * An object to represent a Data Transfer Object for a priority level
  */
-public class PriorityLevelDTO {
-
-    private Long id;
-
-    private Date dateCreated;
-
-    private Date dateUpdated;
+public class PriorityLevelDTO extends BaseEntityDTO {
 
     private String level;
 
@@ -26,42 +22,15 @@ public class PriorityLevelDTO {
     }
 
     public PriorityLevelDTO(Date dateCreated, Date dateUpdated, String level, String description) {
-        this.dateCreated = dateCreated;
-        this.dateUpdated = dateUpdated;
+        super(dateCreated,dateUpdated);
         this.level = level;
         this.description = description;
     }
 
     public PriorityLevelDTO(Long id, Date dateCreated, Date dateUpdated, String level, String description) {
-        this.id = id;
-        this.dateCreated = dateCreated;
-        this.dateUpdated = dateUpdated;
+        super(id, dateCreated, dateUpdated);
         this.level = level;
         this.description = description;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public Date getDateUpdated() {
-        return dateUpdated;
-    }
-
-    public void setDateUpdated(Date dateUpdated) {
-        this.dateUpdated = dateUpdated;
     }
 
     public String getLevel() {

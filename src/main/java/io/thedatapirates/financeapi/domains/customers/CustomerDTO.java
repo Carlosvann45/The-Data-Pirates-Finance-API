@@ -2,6 +2,7 @@ package io.thedatapirates.financeapi.domains.customers;
 
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.categories.Category;
+import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
 
 import java.util.ArrayList;
 import javax.validation.constraints.Email;
@@ -13,13 +14,7 @@ import java.util.List;
 /**
  * An object to represent a Data Transfer Object for a customer
  */
-public class CustomerDTO {
-
-    private Long id;
-
-    private Date dateCreated;
-
-    private Date dateUpdated;
+public class CustomerDTO extends BaseEntityDTO {
 
     @NotBlank(message = StringConstants.USERNAME_NULL)
     @Email(message = StringConstants.USERNAME_BAD_EMAIL)
@@ -40,36 +35,10 @@ public class CustomerDTO {
     }
 
     public CustomerDTO(Long id, Date dateCreated, Date dateUpdated, String username, String password, List<Category> categories) {
-        this.id = id;
-        this.dateCreated = dateCreated;
-        this.dateUpdated = dateUpdated;
+        super(id, dateCreated, dateUpdated);
         this.username = username;
         this.password = password;
         this.categories = categories;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public Date getDateUpdated() {
-        return dateUpdated;
-    }
-
-    public void setDateUpdated(Date dateUpdated) {
-        this.dateUpdated = dateUpdated;
     }
 
     public String getUsername() {
