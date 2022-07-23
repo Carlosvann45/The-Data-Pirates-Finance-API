@@ -7,5 +7,6 @@ import java.util.List;
  */
 public interface PriorityLevelService {
     List<PriorityLevel> getPriorityLevels();
+
     PriorityLevel priorityLevelService(Long priorityLevelId);
 }

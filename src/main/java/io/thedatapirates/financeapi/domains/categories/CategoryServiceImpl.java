@@ -22,7 +22,7 @@ import java.util.List;
  * A class to implement all methods from the category service interface
  */
 @Service
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
 
     private final Logger logger = LogManager.getLogger(CustomerServiceImpl.class);
 
@@ -59,7 +59,7 @@ public class CategoryServiceImpl implements CategoryService{
      * Creates a category for a give customer from a
      * give bearer token
      *
-     * @param token token to get customer from
+     * @param token       token to get customer from
      * @param newCategory category to create
      * @return newly created category
      */
@@ -71,7 +71,7 @@ public class CategoryServiceImpl implements CategoryService{
 
         newCategory.setCustomer(existingCustomer);
         newCategory.setName(catName
-                .substring(0,1)
+                .substring(0, 1)
                 .toUpperCase() + catName.substring(1).toLowerCase());
         newCategory.setDateCreated(new Date(System.currentTimeMillis()));
         newCategory.setDateUpdated(new Date(System.currentTimeMillis()));
@@ -84,7 +84,7 @@ public class CategoryServiceImpl implements CategoryService{
             throw new ServerUnavailable(e.getMessage());
         }
 
-        if(existingCategory != null) throw new Conflict(StringConstants.CATEGORY_NAME_CONFLICT);
+        if (existingCategory != null) throw new Conflict(StringConstants.CATEGORY_NAME_CONFLICT);
 
         try {
             return categoryRepository.save(newCategory);
@@ -99,8 +99,8 @@ public class CategoryServiceImpl implements CategoryService{
      * Updates a category for a customer from a token id customer and category
      * exist in the database
      *
-     * @param token token to get customer from
-     * @param categoryId category id to retrieve category
+     * @param token           token to get customer from
+     * @param categoryId      category id to retrieve category
      * @param updatedCategory updated category
      * @return newly updated category
      */
@@ -113,23 +113,23 @@ public class CategoryServiceImpl implements CategoryService{
 
         updatedCategory.setCustomer(existingCustomer);
         updatedCategory.setName(catName
-            .substring(0,1)
-            .toUpperCase() + catName.substring(1).toLowerCase());
+                .substring(0, 1)
+                .toUpperCase() + catName.substring(1).toLowerCase());
         updatedCategory.setDateUpdated(new Date(System.currentTimeMillis()));
 
         try {
             existingCategory = categoryRepository.findCategoryById(categoryId);
             existingName = categoryRepository.findCategoryByName(updatedCategory.getName());
-        }  catch (DataAccessException e) {
+        } catch (DataAccessException e) {
             logger.error(e.getMessage());
 
             throw new ServerUnavailable(e.getMessage());
         }
 
         if (existingCategory == null) throw new NotFound(StringConstants.CATEGORY_NOT_FOUND);
-        else if(existingName != null) throw new Conflict(StringConstants.CATEGORY_NAME_CONFLICT);
+        else if (existingName != null) throw new Conflict(StringConstants.CATEGORY_NAME_CONFLICT);
         else if (!existingCustomer.getCategories().contains(existingCategory)) throw new BadRequest(
-            StringConstants.CATEGORY_DIFF_CUSTOMER
+                StringConstants.CATEGORY_DIFF_CUSTOMER
         );
 
         updatedCategory.setId(categoryId);
@@ -147,7 +147,7 @@ public class CategoryServiceImpl implements CategoryService{
     /**
      * Deletes a given category if it exists on a customer
      *
-     * @param token token to get user from
+     * @param token      token to get user from
      * @param categoryId category id for category to delete
      */
     @Override
@@ -158,7 +158,7 @@ public class CategoryServiceImpl implements CategoryService{
 
         try {
             existingCategory = categoryRepository.findCategoryById(categoryId);
-        }  catch (DataAccessException e) {
+        } catch (DataAccessException e) {
             logger.error(e.getMessage());
 
             throw new ServerUnavailable(e.getMessage());
@@ -166,12 +166,12 @@ public class CategoryServiceImpl implements CategoryService{
 
         if (existingCategory == null) throw new NotFound(StringConstants.CATEGORY_NOT_FOUND);
         else if (!existingCustomer.getCategories().contains(existingCategory)) throw new BadRequest(
-            StringConstants.CATEGORY_DIFF_CUSTOMER
+                StringConstants.CATEGORY_DIFF_CUSTOMER
         );
 
         try {
             categoryRepository.deleteById(categoryId);
-        }  catch (DataAccessException e) {
+        } catch (DataAccessException e) {
             logger.error(e.getMessage());
 
             throw new ServerUnavailable(e.getMessage());
@@ -199,7 +199,7 @@ public class CategoryServiceImpl implements CategoryService{
             throw new ServerUnavailable(e.getMessage());
         }
 
-        if (existingCustomer == null ) throw new NotFound(StringConstants.CUSTOMER_NOT_FOUND);
+        if (existingCustomer == null) throw new NotFound(StringConstants.CUSTOMER_NOT_FOUND);
 
         return existingCustomer;
     }

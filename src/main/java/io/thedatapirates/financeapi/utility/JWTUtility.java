@@ -50,9 +50,9 @@ public class JWTUtility implements Serializable {
     /**
      * Generic function to get specific claims from a token
      *
-     * @param token token to get claims from
+     * @param token          token to get claims from
      * @param claimsResolver function for getting claim value from
-     * @param <T> generic type for value from claim
+     * @param <T>            generic type for value from claim
      * @return value from generic claim type
      */
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
@@ -71,7 +71,7 @@ public class JWTUtility implements Serializable {
     }
 
     /**
-     *Checks if token as expired
+     * Checks if token as expired
      *
      * @param token token to check expiration date
      * @return whether token has expired
@@ -106,7 +106,7 @@ public class JWTUtility implements Serializable {
     /**
      * Uses Jwt builder to generate a token
      *
-     * @param claims claims to set token generated claims to
+     * @param claims  claims to set token generated claims to
      * @param subject subject to set token generated subject to
      * @return newly generated Jwt token
      */
@@ -123,7 +123,7 @@ public class JWTUtility implements Serializable {
     /**
      * Uses Jwt builder to generate a refresher token
      *
-     * @param claims claims to set token generated claims to
+     * @param claims  claims to set token generated claims to
      * @param subject subject to set token generated subject to
      * @return newly generated refresher Jwt token
      */
@@ -140,7 +140,7 @@ public class JWTUtility implements Serializable {
     /**
      * Validates JWT token
      *
-     * @param token token to validate
+     * @param token       token to validate
      * @param userDetails user details to check
      * @return return boolean value based on if token was authenticated
      */

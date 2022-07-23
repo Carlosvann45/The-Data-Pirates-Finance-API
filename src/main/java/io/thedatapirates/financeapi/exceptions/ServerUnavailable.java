@@ -5,7 +5,10 @@ package io.thedatapirates.financeapi.exceptions;
  */
 public class ServerUnavailable extends RuntimeException {
 
-  public ServerUnavailable() { }
+    public ServerUnavailable() {
+    }
 
-  public ServerUnavailable(String message) { super(message); }
+    public ServerUnavailable(String message) {
+        super(message);
+    }
 }

@@ -7,6 +7,7 @@ import io.micrometer.core.lang.NonNullApi;
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.CustomerServiceImpl;
+
 import java.io.IOException;
 import java.util.Arrays;
 import javax.servlet.FilterChain;
@@ -50,13 +51,13 @@ public class JwtFilter extends OncePerRequestFilter {
     /**
      * Handles validating any jwt bearer tokens passed through the authorization header
      *
-     * @param request request to validate authorization header
-     * @param response servlet response
+     * @param request     request to validate authorization header
+     * @param response    servlet response
      * @param filterChain filter chain to pass to after validation
      */
     @Override
     protected void doFilterInternal(
-            HttpServletRequest request,HttpServletResponse response, FilterChain filterChain
+            HttpServletRequest request, HttpServletResponse response, FilterChain filterChain
     ) throws ServletException, IOException {
         String url = request.getServletPath();
         String[] pathArray = new String[]{
@@ -81,7 +82,7 @@ public class JwtFilter extends OncePerRequestFilter {
                     logger.error(StringConstants.JWT_ERROR_BEGINNING.concat(e.getMessage()));
 
                     response.sendError(
-                        HttpStatusCodes.STATUS_CODE_BAD_REQUEST, StringConstants.BAD_TOKEN
+                            HttpStatusCodes.STATUS_CODE_BAD_REQUEST, StringConstants.BAD_TOKEN
                     );
                 }
             }
@@ -97,14 +98,14 @@ public class JwtFilter extends OncePerRequestFilter {
                     logger.error(StringConstants.JWT_ERROR_BEGINNING.concat(e.getMessage()));
 
                     response.sendError(
-                        HttpStatusCodes.STATUS_CODE_BAD_REQUEST, StringConstants.BAD_TOKEN
+                            HttpStatusCodes.STATUS_CODE_BAD_REQUEST, StringConstants.BAD_TOKEN
                     );
                 }
 
                 if (validToken) {
                     UsernamePasswordAuthenticationToken AuthToken =
                             new UsernamePasswordAuthenticationToken(
-                                userDetails, null, userDetails.getAuthorities()
+                                    userDetails, null, userDetails.getAuthorities()
                             );
 
                     AuthToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

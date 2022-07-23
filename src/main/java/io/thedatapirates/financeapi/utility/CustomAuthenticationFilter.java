@@ -41,7 +41,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     /**
      * Gets username and password from header to authenticate against a customer in the database
      *
-     * @param request http servlet request to get username/password parameters
+     * @param request  http servlet request to get username/password parameters
      * @param response http servlet response
      * @return authentication result based on username and password
      */
@@ -54,7 +54,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
         try {
             return authenticationManager.authenticate(authenticationToken);
-        }catch (BadCredentialsException e) {
+        } catch (BadCredentialsException e) {
             logger.error(StringConstants.JWT_CREDENTIAL_BEGINNING.concat(e.getMessage()));
 
             throw new BadRequest(StringConstants.INVALID_LOGIN);
@@ -65,9 +65,9 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
      * This function gets called on authentication success and creates a token for the
      * user while also adding it to the body for the user to retrieve
      *
-     * @param request http servlet request to add token to body
-     * @param response http servlet response
-     * @param chain filter chain
+     * @param request    http servlet request to add token to body
+     * @param response   http servlet response
+     * @param chain      filter chain
      * @param authResult authentication results to retrieve user details from
      */
     @Override

@@ -56,7 +56,7 @@ public class PriorityLevelServiceImpl implements PriorityLevelService {
             throw new ServerUnavailable(e.getMessage());
         }
 
-        if(existingPriorityLevel == null) throw new NotFound(StringConstants.PRIORITY_LEVEL_NOT_FOUND);
+        if (existingPriorityLevel == null) throw new NotFound(StringConstants.PRIORITY_LEVEL_NOT_FOUND);
 
         return existingPriorityLevel;
     }

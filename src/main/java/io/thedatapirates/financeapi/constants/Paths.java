@@ -4,26 +4,26 @@ package io.thedatapirates.financeapi.constants;
  * Constant variables for api paths
  */
 public class Paths {
-  // Customers
-  public static final String CUSTOMERS_PATH = "/customers";
-  public static final String REFRESH_TOKEN_PATH = "/refresh/token";
-  public static final String LOGIN_PATH = "/login";
+    // Customers
+    public static final String CUSTOMERS_PATH = "/customers";
+    public static final String REFRESH_TOKEN_PATH = "/refresh/token";
+    public static final String LOGIN_PATH = "/login";
 
-  // Categories
-  public static final String CATEGORY_PATH = "/categories";
-  public static final String CATEGORY_ID = "{categoryId}";
+    // Categories
+    public static final String CATEGORY_PATH = "/categories";
+    public static final String CATEGORY_ID = "{categoryId}";
 
-  // Frequencies
-  public static final String FREQUENCY_PATH = "/frequencies";
-  public static final String FREQUENCY_ID = "{frequencyId}";
+    // Frequencies
+    public static final String FREQUENCY_PATH = "/frequencies";
+    public static final String FREQUENCY_ID = "{frequencyId}";
 
-  // Priority Levels
-  public static final String PRIORITY_LEVEL_PATH = "/priorityLevels";
-  public static final String PRIORITY_LEVEL_ID = "{priorityLevelId}";
+    // Priority Levels
+    public static final String PRIORITY_LEVEL_PATH = "/priorityLevels";
+    public static final String PRIORITY_LEVEL_ID = "{priorityLevelId}";
 
 
-  // Misc
-  public static final String CREATE_PATH = "/create";
-  public static final String ALL_EXTENSIONS = "/**";
-  public static final String USERNAME_PATH = "/{username}";
+    // Misc
+    public static final String CREATE_PATH = "/create";
+    public static final String ALL_EXTENSIONS = "/**";
+    public static final String USERNAME_PATH = "/{username}";
 }

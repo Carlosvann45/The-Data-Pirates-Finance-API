@@ -15,21 +15,21 @@ import java.util.List;
  */
 public class CustomerDTO {
 
- private Long id;
+    private Long id;
 
- private Date dateCreated;
+    private Date dateCreated;
 
- private Date dateUpdated;
+    private Date dateUpdated;
 
- @NotBlank(message = StringConstants.USERNAME_NULL)
- @Email(message = StringConstants.USERNAME_BAD_EMAIL)
- private String username;
+    @NotBlank(message = StringConstants.USERNAME_NULL)
+    @Email(message = StringConstants.USERNAME_BAD_EMAIL)
+    private String username;
 
- @NotBlank(message = StringConstants.PASSWORD_NULL)
- @Size(min = 8, max = 20, message = StringConstants.PASSWORD_BAD_SIZE)
- private String password;
+    @NotBlank(message = StringConstants.PASSWORD_NULL)
+    @Size(min = 8, max = 20, message = StringConstants.PASSWORD_BAD_SIZE)
+    private String password;
 
- private List<Category> categories = new ArrayList<>();
+    private List<Category> categories = new ArrayList<>();
 
     public CustomerDTO() {
     }

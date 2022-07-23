@@ -1,6 +1,7 @@
 package io.thedatapirates.financeapi.domains.categories;
 
 import io.thedatapirates.financeapi.constants.StringConstants;
+
 import java.util.Date;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

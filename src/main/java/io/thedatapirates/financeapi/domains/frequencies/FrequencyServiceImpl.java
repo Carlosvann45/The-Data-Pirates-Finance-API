@@ -16,7 +16,7 @@ import java.util.List;
  * A class to implement all methods from the frequency service interface
  */
 @Service
-public class FrequencyServiceImpl implements FrequencyService{
+public class FrequencyServiceImpl implements FrequencyService {
 
     private final Logger logger = LogManager.getLogger(CustomerServiceImpl.class);
 
@@ -57,7 +57,7 @@ public class FrequencyServiceImpl implements FrequencyService{
             throw new ServerUnavailable(e.getMessage());
         }
 
-        if(existingFrequency == null) throw new NotFound(StringConstants.FREQUENCY_NOT_FOUND);
+        if (existingFrequency == null) throw new NotFound(StringConstants.FREQUENCY_NOT_FOUND);
 
         return existingFrequency;
     }

@@ -5,9 +5,11 @@ import static org.apache.http.HttpHeaders.AUTHORIZATION;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +45,7 @@ public class CategoryController {
      */
     @GetMapping
     public ResponseEntity<List<CategoryDTO>> getCategoriesByCustomer(
-        @RequestHeader(AUTHORIZATION) String token
+            @RequestHeader(AUTHORIZATION) String token
     ) {
         logger.info(StringConstants.LOG_GET_CATEGORIES_CUSTOMER);
 
@@ -62,13 +64,13 @@ public class CategoryController {
     /**
      * Creates a category for a customer from bearer token
      *
-     * @param token token to get a customer from
+     * @param token       token to get a customer from
      * @param categoryDTO category to create
      * @return newly created category
      */
     @PostMapping
     public ResponseEntity<CategoryDTO> createCategoryForCustomer(
-        @RequestHeader(AUTHORIZATION) String token, @Valid@RequestBody CategoryDTO categoryDTO
+            @RequestHeader(AUTHORIZATION) String token, @Valid @RequestBody CategoryDTO categoryDTO
     ) {
         logger.info(StringConstants.LOG_CREATE_CATEGORIES_CUSTOMER);
 
@@ -86,16 +88,16 @@ public class CategoryController {
     /**
      * Updates an existing category from a customer bearer token
      *
-     * @param token token to get customer from
-     * @param categoryId category id for category to update
+     * @param token       token to get customer from
+     * @param categoryId  category id for category to update
      * @param categoryDTO updated category
      * @return newly updated category
      */
     @PutMapping(Paths.CATEGORY_ID)
     public ResponseEntity<CategoryDTO> updateCategoryForCustomer(
-        @RequestHeader(AUTHORIZATION) String token,
-        @PathVariable Long categoryId,
-        @Valid@RequestBody CategoryDTO categoryDTO
+            @RequestHeader(AUTHORIZATION) String token,
+            @PathVariable Long categoryId,
+            @Valid @RequestBody CategoryDTO categoryDTO
     ) {
         logger.info(StringConstants.LOG_UPDATE_CATEGORIES_CUSTOMER);
 
@@ -114,13 +116,13 @@ public class CategoryController {
     /**
      * Deletes a category from a user with a specified id
      *
-     * @param token token to get user from
+     * @param token      token to get user from
      * @param categoryId category id to get category
      * @return no content
      */
     @DeleteMapping(Paths.CATEGORY_ID)
     public ResponseEntity<?> deleteCategoryForCustomer(
-        @RequestHeader(AUTHORIZATION) String token, @PathVariable Long categoryId
+            @RequestHeader(AUTHORIZATION) String token, @PathVariable Long categoryId
     ) {
         logger.info(StringConstants.LOG_DELETE_CATEGORIES_CUSTOMER);
 
