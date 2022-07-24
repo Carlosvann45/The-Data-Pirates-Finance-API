@@ -1,13 +1,11 @@
 package io.thedatapirates.financeapi.domains.customers;
 
-import io.thedatapirates.financeapi.constants.StringConstants;
-import io.thedatapirates.financeapi.domains.categories.Category;
+import io.thedatapirates.financeapi.domains.cashflows.ResponseCashFlowDTO;
+import io.thedatapirates.financeapi.domains.categories.CategoryDTO;
 import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
+import io.thedatapirates.financeapi.domains.investments.InvestmentDTO;
 
 import java.util.ArrayList;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -16,15 +14,15 @@ import java.util.List;
  */
 public class CustomerDTO extends BaseEntityDTO {
 
-    @NotBlank(message = StringConstants.USERNAME_NULL)
-    @Email(message = StringConstants.USERNAME_BAD_EMAIL)
     private String username;
 
-    @NotBlank(message = StringConstants.PASSWORD_NULL)
-    @Size(min = 8, max = 20, message = StringConstants.PASSWORD_BAD_SIZE)
     private String password;
 
-    private List<Category> categories = new ArrayList<>();
+    private List<CategoryDTO> categories = new ArrayList<>();
+
+    private List<InvestmentDTO> investments = new ArrayList<>();
+
+    private List<ResponseCashFlowDTO> cashFlowItems = new ArrayList<>();
 
     public CustomerDTO() {
     }
@@ -34,11 +32,16 @@ public class CustomerDTO extends BaseEntityDTO {
         this.password = password;
     }
 
-    public CustomerDTO(Long id, Date dateCreated, Date dateUpdated, String username, String password, List<Category> categories) {
+    public CustomerDTO(
+            Long id, Date dateCreated, Date dateUpdated, String username, String password,
+            List<CategoryDTO> categories, List<InvestmentDTO> investments, List<ResponseCashFlowDTO> cashFlowItems
+    ) {
         super(id, dateCreated, dateUpdated);
         this.username = username;
         this.password = password;
         this.categories = categories;
+        this.investments = investments;
+        this.cashFlowItems = cashFlowItems;
     }
 
     public String getUsername() {
@@ -57,11 +60,27 @@ public class CustomerDTO extends BaseEntityDTO {
         this.password = password;
     }
 
-    public List<Category> getCategories() {
+    public List<CategoryDTO> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<Category> categories) {
+    public void setCategories(List<CategoryDTO> categories) {
         this.categories = categories;
+    }
+
+    public List<InvestmentDTO> getInvestments() {
+        return investments;
+    }
+
+    public void setInvestments(List<InvestmentDTO> investments) {
+        this.investments = investments;
+    }
+
+    public List<ResponseCashFlowDTO> getCashFlowItems() {
+        return cashFlowItems;
+    }
+
+    public void setCashFlowItems(List<ResponseCashFlowDTO> cashFlowItems) {
+        this.cashFlowItems = cashFlowItems;
     }
 }

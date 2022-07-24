@@ -2,6 +2,7 @@ package io.thedatapirates.financeapi.domains.customers;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.thedatapirates.financeapi.constants.StringConstants;
+import io.thedatapirates.financeapi.domains.cashflows.CashFlow;
 import io.thedatapirates.financeapi.domains.categories.Category;
 import io.thedatapirates.financeapi.domains.entity.BaseEntity;
 import io.thedatapirates.financeapi.domains.investments.Investment;
@@ -30,6 +31,10 @@ public class Customer extends BaseEntity {
     @JsonManagedReference
     private List<Investment> investments = new ArrayList<>();
 
+    @OneToMany(mappedBy = StringConstants.CUSTOMER)
+    @JsonManagedReference
+    private List<CashFlow> cashFlowItems = new ArrayList<>();
+
     public Customer() {
     }
 
@@ -38,12 +43,17 @@ public class Customer extends BaseEntity {
         this.password = password;
     }
 
-    public Customer(Long id, Date dateCreated, Date dateUpdated, String username, String password, List<Category> categories, List<Investment> investments) {
+    public Customer(
+            Long id, Date dateCreated, Date dateUpdated,
+            String username, String password, List<Category> categories,
+            List<Investment> investments, List<CashFlow> cashFlowItems
+    ) {
         super(id, dateCreated, dateUpdated);
         this.username = username;
         this.password = password;
         this.categories = categories;
         this.investments = investments;
+        this.cashFlowItems = cashFlowItems;
     }
 
     public String getUsername() {
@@ -78,18 +88,26 @@ public class Customer extends BaseEntity {
         this.investments = investments;
     }
 
+    public List<CashFlow> getCashFlowItems() {
+        return cashFlowItems;
+    }
+
+    public void setCashFlowItems(List<CashFlow> cashFlowItems) {
+        this.cashFlowItems = cashFlowItems;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Customer customer = (Customer) o;
-        return Objects.equals(username, customer.username) && Objects.equals(password, customer.password) && Objects.equals(categories, customer.categories) && Objects.equals(investments, customer.investments);
+        return Objects.equals(username, customer.username) && Objects.equals(password, customer.password) && Objects.equals(categories, customer.categories) && Objects.equals(investments, customer.investments) && Objects.equals(cashFlowItems, customer.cashFlowItems);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), username, password, categories, investments);
+        return Objects.hash(super.hashCode(), username, password, categories, investments, cashFlowItems);
     }
 
     @Override
@@ -99,6 +117,7 @@ public class Customer extends BaseEntity {
                 ", password='" + password + '\'' +
                 ", categories=" + categories +
                 ", investments=" + investments +
+                ", cashFlowItems=" + cashFlowItems +
                 '}';
     }
 }

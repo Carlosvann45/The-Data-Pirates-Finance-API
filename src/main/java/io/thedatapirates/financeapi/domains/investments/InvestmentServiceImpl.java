@@ -110,7 +110,6 @@ public class InvestmentServiceImpl implements InvestmentService{
         Customer existingCustomer = getCustomerFromToken(token);
         String catName = updatedInvestment.getName();
 
-        updatedInvestment.setCustomer(existingCustomer);
         updatedInvestment.setName(catName
                 .substring(0, 1)
                 .toUpperCase() + catName.substring(1).toLowerCase());
@@ -134,6 +133,7 @@ public class InvestmentServiceImpl implements InvestmentService{
 
         updatedInvestment.setId(investmentId);
         updatedInvestment.setDateCreated(existingInvestment.getDateCreated());
+        updatedInvestment.setCustomer(existingCustomer);
 
         try {
             return investmentRepository.save(updatedInvestment);

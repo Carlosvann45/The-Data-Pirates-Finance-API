@@ -31,6 +31,10 @@ public class StringConstants {
     public static final String LOG_CREATE_INVESTMENTS_CUSTOMER = "Request received for createInvestmentForCustomer.";
     public static final String LOG_UPDATE_INVESTMENT_CUSTOMER = "Request received for updateInvestmentForCustomer.";
     public static final String LOG_DELETE_INVESTMENT_CUSTOMER = "Request received for deleteInvestmentForCustomer.";
+    public static final String LOG_GET_CASH_FLOW_CUSTOMER = "Request received for getCashFlowByCustomer.";
+    public static final String LOG_CREATE_CASH_FLOW_CUSTOMER = "Request received for createCashFlowForCustomer.";
+    public static final String LOG_UPDATE_CASH_FLOW_CUSTOMER = "Request received for updateCashFlowForCustomer.";
+    public static final String LOG_DELETE_CASH_FLOW_CUSTOMER = "Request received for deleteCashFlowForCustomer.";
 
     // Error Messages
     public static final String CUSTOMER_NOT_FOUND = "Customer with given username does not exist.";
@@ -54,12 +58,19 @@ public class StringConstants {
     public static final String INVESTMENT_NOT_FOUND = "Investment with given id does not exist.";
     public static final String INVESTMENT_DIFF_CUSTOMER = "The supplied investment id does not belong to customer from the token";
     public static final String INVESTMENT_NAME_CONFLICT = "Investment with name already exist.";
+    public static final String CASH_FLOW_NOT_FOUND = "Cash Flow with given id does not exist.";
+    public static final String CASH_FLOW_DIFF_CUSTOMER = "The supplied cash flow id does not belong to customer from the token";
+    public static final String CASH_FLOW_NAME_CONFLICT = "Cash flow with given name already exist.";
+    public static final String CASH_FLOW_BAD_FREQUENCY = "Frequency with given id does not exist.";
 
     // Misc
     public static final String EMPTY_STRING = " ";
     public static final String STAR = "*";
     public static final String CUSTOMER_ID = "customer_id";
     public static final String CUSTOMER = "customer";
+    public static final String FREQUENCY_ID = "frequency_id";
+    public static final String FREQUENCY = "frequency";
+    public static final String ID = "id";
     public static final String EXCEPTION_RESOLVER = "handlerExceptionResolver";
     public static final String STOCK = "Stock";
 

@@ -25,6 +25,11 @@ public class Paths {
     public static final String INVESTMENTS_PATH = "/investments";
     public static final String INVESTMENT_ID = "{investmentId}";
 
+    // Cash Flow
+    public static final String CASH_FLOW_PATH = "/cashFlows";
+    public static final String CASH_FLOW_ID = "{cashFlowId}";
+
+
     // Misc
     public static final String CREATE_PATH = "/create";
     public static final String ALL_EXTENSIONS = "/**";

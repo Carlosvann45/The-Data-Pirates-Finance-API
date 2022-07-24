@@ -5,6 +5,13 @@ import static org.apache.http.HttpHeaders.AUTHORIZATION;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
+import io.thedatapirates.financeapi.domains.cashflows.CashFlow;
+import io.thedatapirates.financeapi.domains.cashflows.ResponseCashFlowDTO;
+import io.thedatapirates.financeapi.domains.categories.Category;
+import io.thedatapirates.financeapi.domains.categories.CategoryDTO;
+import io.thedatapirates.financeapi.domains.frequencies.Frequency;
+import io.thedatapirates.financeapi.domains.frequencies.FrequencyDTO;
+import io.thedatapirates.financeapi.domains.investments.InvestmentDTO;
 import io.thedatapirates.financeapi.domains.jwt.JwtResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +29,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Controller for customer endpoints
@@ -49,11 +59,9 @@ public class CustomerController {
 
         token = token.substring(7).trim();
 
-        ObjectMapper mapper = new ObjectMapper();
-
         Customer customer = customerService.getCustomer(username, token);
 
-        CustomerDTO customerDTO = mapper.convertValue(customer, CustomerDTO.class);
+        CustomerDTO customerDTO = mapCustomerToCustomerDTO(customer);
 
         return new ResponseEntity<>(customerDTO, HttpStatus.OK);
     }
@@ -84,7 +92,7 @@ public class CustomerController {
      * @return newly created customer
      */
     @PostMapping(Paths.CREATE_PATH)
-    public ResponseEntity<CustomerDTO> createCustomer(@Valid @RequestBody CustomerDTO customerDTO) {
+    public ResponseEntity<CustomerDTO> createCustomer(@Valid @RequestBody CreateCustomerDTO customerDTO) {
         logger.info(StringConstants.LOG_CREATE_CUSTOMER);
 
         ObjectMapper mapper = new ObjectMapper();
@@ -93,8 +101,66 @@ public class CustomerController {
 
         Customer createdCustomer = customerService.createCustomer(newCustomer);
 
-        CustomerDTO createdCustomerDTO = mapper.convertValue(createdCustomer, CustomerDTO.class);
+        CustomerDTO createdCustomerDTO = mapCustomerToCustomerDTO(createdCustomer);
 
         return new ResponseEntity<>(createdCustomerDTO, HttpStatus.CREATED);
+    }
+
+    /**
+     * Maps a customer object to a customer DTO object
+     *
+     * @param customer customer to convert
+     * @return newly create customer DTO
+     */
+    private CustomerDTO mapCustomerToCustomerDTO(Customer customer) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        List<CategoryDTO> categories = customer.getCategories()
+                .stream()
+                .map(category -> mapper.convertValue(category, CategoryDTO.class))
+                .collect(Collectors.toList());
+
+        List<InvestmentDTO> investments = customer.getInvestments()
+                .stream()
+                .map(investment -> mapper.convertValue(investment, InvestmentDTO.class))
+                .collect(Collectors.toList());
+
+        List<ResponseCashFlowDTO> cashFlowItems = customer.getCashFlowItems()
+                .stream()
+                .map(cashFlowItem -> {
+                    ResponseCashFlowDTO cashFlowDTO = new ResponseCashFlowDTO();
+
+                    cashFlowDTO.setId(cashFlowItem.getId());
+                    cashFlowDTO.setDateCreated(cashFlowItem.getDateCreated());
+                    cashFlowDTO.setDateUpdated(cashFlowItem.getDateUpdated());
+                    cashFlowDTO.setName(cashFlowItem.getName());
+                    cashFlowDTO.setAmount(cashFlowItem.getAmount());
+
+                    Frequency frequency = cashFlowItem.getFrequency();
+                    FrequencyDTO frequencyDTO = new FrequencyDTO();
+
+                    frequencyDTO.setId(frequency.getId());
+                    frequencyDTO.setDateCreated(frequency.getDateCreated());
+                    frequencyDTO.setDateUpdated(frequency.getDateUpdated());
+                    frequencyDTO.setName(frequency.getName());
+
+                    cashFlowDTO.setFrequency(frequencyDTO);
+
+                    return cashFlowDTO;
+                })
+                .collect(Collectors.toList());
+
+        CustomerDTO newCustomer = new CustomerDTO();
+
+        newCustomer.setId(customer.getId());
+        newCustomer.setDateCreated(customer.getDateCreated());
+        newCustomer.setDateUpdated(customer.getDateUpdated());
+        newCustomer.setUsername(customer.getUsername());
+        newCustomer.setPassword(customer.getPassword());
+        newCustomer.setCategories(categories);
+        newCustomer.setInvestments(investments);
+        newCustomer.setCashFlowItems(cashFlowItems);
+
+        return newCustomer;
     }
 }

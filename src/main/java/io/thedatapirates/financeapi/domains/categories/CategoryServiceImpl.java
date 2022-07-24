@@ -111,7 +111,6 @@ public class CategoryServiceImpl implements CategoryService {
         Customer existingCustomer = getCustomerFromToken(token);
         String catName = updatedCategory.getName();
 
-        updatedCategory.setCustomer(existingCustomer);
         updatedCategory.setName(catName
                 .substring(0, 1)
                 .toUpperCase() + catName.substring(1).toLowerCase());
@@ -134,6 +133,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         updatedCategory.setId(categoryId);
         updatedCategory.setDateCreated(existingCategory.getDateCreated());
+        updatedCategory.setCustomer(existingCustomer);
 
         try {
             return categoryRepository.save(updatedCategory);
