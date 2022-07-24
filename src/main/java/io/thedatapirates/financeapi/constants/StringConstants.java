@@ -84,6 +84,12 @@ public class StringConstants {
     public static final String CUSTOMER = "customer";
     public static final String FREQUENCY_ID = "frequency_id";
     public static final String FREQUENCY = "frequency";
+    public static final String CATEGORY_ID = "category_id";
+    public static final String CATEGORY = "category";
+    public static final String REMINDER = "reminder";
+    public static final String REMINDER_ID = "reminder_id";
+    public static final String PRIORITY_LEVEL = "priorityLevel";
+    public static final String PRIORITY_LEVEL_ID = "priority_level_id";
     public static final String ID = "id";
     public static final String EXCEPTION_RESOLVER = "handlerExceptionResolver";
     public static final String STOCK = "Stock";

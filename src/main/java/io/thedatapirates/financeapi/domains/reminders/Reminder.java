@@ -2,16 +2,18 @@ package io.thedatapirates.financeapi.domains.reminders;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.Customer;
 import io.thedatapirates.financeapi.domains.entity.BaseEntity;
+import io.thedatapirates.financeapi.domains.expenses.Expense;
 import io.thedatapirates.financeapi.domains.frequencies.Frequency;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.sql.Time;
+import javax.persistence.OneToOne;
 import java.util.Date;
 import java.util.Objects;
 
@@ -36,6 +38,10 @@ public class Reminder extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = StringConstants.FREQUENCY_ID, nullable = false)
     private Frequency frequency;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = StringConstants.REMINDER)
+    private Expense expense;
 
     public Reminder() {
     }

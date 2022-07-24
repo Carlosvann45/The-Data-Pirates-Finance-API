@@ -1,5 +1,6 @@
 package io.thedatapirates.financeapi.domains.cashflows;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
 import org.hibernate.validator.constraints.Range;
@@ -20,6 +21,7 @@ public class RequestCashFlowDTO extends BaseEntityDTO {
     @Range(min = 0)
     private double amount;
 
+    @JsonIgnore
     @Range(min = 1, max = 4)
     private Long frequencyId;
 

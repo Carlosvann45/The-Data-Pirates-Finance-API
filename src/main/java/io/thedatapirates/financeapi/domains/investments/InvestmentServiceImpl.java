@@ -131,8 +131,7 @@ public class InvestmentServiceImpl implements InvestmentService {
         else if (existingName != null) {
             if (!Objects.equals(existingInvestment.getName(), updatedInvestment.getName()))
                 throw new Conflict(StringConstants.INVESTMENT_NAME_CONFLICT);
-        }
-        else if (!existingCustomer.getInvestments().contains(existingInvestment)) throw new BadRequest(
+        } else if (!existingCustomer.getInvestments().contains(existingInvestment)) throw new BadRequest(
                 StringConstants.INVESTMENT_DIFF_CUSTOMER
         );
 

@@ -142,8 +142,7 @@ public class CashFlowServiceImpl implements CashFlowService {
         else if (existingName != null) {
             if (!Objects.equals(existingCashFlow.getName(), updatedCashFlowItem.getName()))
                 throw new Conflict(StringConstants.CASH_FLOW_NAME_CONFLICT);
-        }
-        else if (existingFrequency == null) throw new BadRequest(StringConstants.BAD_FREQUENCY);
+        } else if (existingFrequency == null) throw new BadRequest(StringConstants.BAD_FREQUENCY);
 
         updatedCashFlowItem.setId(cashFlowId);
         updatedCashFlowItem.setDateCreated(existingCashFlow.getDateCreated());

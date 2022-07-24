@@ -5,10 +5,13 @@ import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.cashflows.ResponseCashFlowDTO;
 import io.thedatapirates.financeapi.domains.categories.CategoryDTO;
+import io.thedatapirates.financeapi.domains.expenses.ResponseExpenseDTO;
 import io.thedatapirates.financeapi.domains.frequencies.Frequency;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyDTO;
 import io.thedatapirates.financeapi.domains.investments.InvestmentDTO;
 import io.thedatapirates.financeapi.domains.jwt.JwtResponse;
+import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevelDTO;
+import io.thedatapirates.financeapi.domains.reminders.Reminder;
 import io.thedatapirates.financeapi.domains.reminders.ResponseReminderDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -126,16 +129,7 @@ public class CustomerController {
                     cashFlowDTO.setDateUpdated(cashFlowItem.getDateUpdated());
                     cashFlowDTO.setName(cashFlowItem.getName());
                     cashFlowDTO.setAmount(cashFlowItem.getAmount());
-
-                    Frequency frequency = cashFlowItem.getFrequency();
-                    FrequencyDTO frequencyDTO = new FrequencyDTO();
-
-                    frequencyDTO.setId(frequency.getId());
-                    frequencyDTO.setDateCreated(frequency.getDateCreated());
-                    frequencyDTO.setDateUpdated(frequency.getDateUpdated());
-                    frequencyDTO.setName(frequency.getName());
-
-                    cashFlowDTO.setFrequency(frequencyDTO);
+                    cashFlowDTO.setFrequency(mapper.convertValue(cashFlowItem.getFrequency(),FrequencyDTO.class));
 
                     return cashFlowDTO;
                 })
@@ -153,18 +147,42 @@ public class CustomerController {
                     reminderDTO.setName(reminder.getName());
                     reminderDTO.setDescription(reminder.getDescription());
                     reminderDTO.setReminderTime(reminder.getReminderTime());
-
-                    Frequency frequency = reminder.getFrequency();
-                    FrequencyDTO frequencyDTO = new FrequencyDTO();
-
-                    frequencyDTO.setId(frequency.getId());
-                    frequencyDTO.setDateCreated(frequency.getDateCreated());
-                    frequencyDTO.setDateUpdated(frequency.getDateUpdated());
-                    frequencyDTO.setName(frequency.getName());
-
-                    reminderDTO.setFrequency(frequencyDTO);
+                    reminderDTO.setFrequency(mapper.convertValue(reminder.getFrequency(), FrequencyDTO.class));
 
                     return reminderDTO;
+                })
+                .collect(Collectors.toList());
+
+        List<ResponseExpenseDTO> expenses
+                = customer.getExpenses()
+                .stream()
+                .map(expense -> {
+                    ResponseExpenseDTO expenseDTO = new ResponseExpenseDTO();
+
+                    expenseDTO.setId(expense.getId());
+                    expenseDTO.setDateCreated(expense.getDateCreated());
+                    expenseDTO.setDateUpdated(expense.getDateUpdated());
+                    expenseDTO.setName(expense.getName());
+                    expenseDTO.setAmount(expense.getAmount());
+                    expenseDTO.setDueDate(expense.getDueDate());
+                    expenseDTO.setCategory(mapper.convertValue(expense.getCategory(), CategoryDTO.class));
+                    expenseDTO.setPriorityLevel(mapper.convertValue(expense.getPriorityLevel(), PriorityLevelDTO.class));
+                    expenseDTO.setFrequency(mapper.convertValue(expense.getFrequency(), FrequencyDTO.class));
+
+                    Reminder reminder = expense.getReminder();
+                    ResponseReminderDTO reminderDTO = new ResponseReminderDTO();
+
+                    reminderDTO.setId(reminder.getId());
+                    reminderDTO.setDateCreated(reminder.getDateCreated());
+                    reminderDTO.setDateUpdated(reminder.getDateUpdated());
+                    reminderDTO.setName(reminder.getName());
+                    reminderDTO.setDescription(reminder.getDescription());
+                    reminderDTO.setReminderTime(reminder.getReminderTime());
+                    reminderDTO.setFrequency(mapper.convertValue(reminder.getFrequency(), FrequencyDTO.class));
+
+                    expenseDTO.setReminder(reminderDTO);
+
+                    return expenseDTO;
                 })
                 .collect(Collectors.toList());
 

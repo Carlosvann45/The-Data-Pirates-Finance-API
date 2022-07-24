@@ -1,20 +1,33 @@
 package io.thedatapirates.financeapi.domains.prioritylevels;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.entity.BaseEntity;
+import io.thedatapirates.financeapi.domains.expenses.Expense;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
  * Entity class to represent a priority level in the database
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = StringConstants.ID)
 public class PriorityLevel extends BaseEntity {
 
     private String level;
 
     private String description;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = StringConstants.PRIORITY_LEVEL)
+    private List<Expense> expenses = new ArrayList<>();
 
     public PriorityLevel() {
     }
@@ -30,10 +43,11 @@ public class PriorityLevel extends BaseEntity {
         this.description = description;
     }
 
-    public PriorityLevel(Long id, Date dateCreated, Date dateUpdated, String level, String description) {
+    public PriorityLevel(Long id, Date dateCreated, Date dateUpdated, String level, String description, List<Expense> expenses) {
         super(id, dateCreated, dateUpdated);
         this.level = level;
         this.description = description;
+        this.expenses = expenses;
     }
 
     public String getLevel() {
@@ -52,18 +66,26 @@ public class PriorityLevel extends BaseEntity {
         this.description = description;
     }
 
+    public List<Expense> getExpenses() {
+        return expenses;
+    }
+
+    public void setExpenses(List<Expense> expenses) {
+        this.expenses = expenses;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         PriorityLevel that = (PriorityLevel) o;
-        return Objects.equals(level, that.level) && Objects.equals(description, that.description);
+        return Objects.equals(level, that.level) && Objects.equals(description, that.description) && Objects.equals(expenses, that.expenses);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), level, description);
+        return Objects.hash(super.hashCode(), level, description, expenses);
     }
 
     @Override
@@ -71,6 +93,7 @@ public class PriorityLevel extends BaseEntity {
         return "PriorityLevel{" +
                 "level='" + level + '\'' +
                 ", description='" + description + '\'' +
+                ", expenses=" + expenses +
                 '}';
     }
 }

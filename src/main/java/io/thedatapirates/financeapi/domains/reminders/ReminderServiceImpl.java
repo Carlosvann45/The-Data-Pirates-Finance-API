@@ -142,8 +142,7 @@ public class ReminderServiceImpl implements ReminderService {
         else if (existingName != null) {
             if (!Objects.equals(existingReminder.getName(), updatedReminder.getName()))
                 throw new Conflict(StringConstants.REMINDER_NAME_CONFLICT);
-        }
-        else if (existingFrequency == null) throw new BadRequest(StringConstants.BAD_FREQUENCY);
+        } else if (existingFrequency == null) throw new BadRequest(StringConstants.BAD_FREQUENCY);
 
         updatedReminder.setId(reminderId);
         updatedReminder.setDateCreated(existingReminder.getDateCreated());

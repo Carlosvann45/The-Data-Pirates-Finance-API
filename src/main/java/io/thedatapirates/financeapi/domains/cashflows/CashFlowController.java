@@ -1,5 +1,6 @@
 package io.thedatapirates.financeapi.domains.cashflows;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.frequencies.Frequency;
@@ -63,8 +64,9 @@ public class CashFlowController {
             @RequestHeader(AUTHORIZATION) String token, @Valid @RequestBody RequestCashFlowDTO cashFlowDTO
     ) {
         logger.info(StringConstants.LOG_CREATE_CASH_FLOW_CUSTOMER);
+        ObjectMapper mapper = new ObjectMapper();
 
-        CashFlow cashFlow = mapCashFlowDTOToCasFlow(cashFlowDTO);
+        CashFlow cashFlow = mapper.convertValue(cashFlowDTO, CashFlow.class);
 
         CashFlow newCashFlow = cashFlowService.createCashFlowForCustomer(token, cashFlowDTO.getFrequencyId(), cashFlow);
 
@@ -89,7 +91,9 @@ public class CashFlowController {
     ) {
         logger.info(StringConstants.LOG_UPDATE_CASH_FLOW_CUSTOMER);
 
-        CashFlow cashFlow = mapCashFlowDTOToCasFlow(cashFlowDTO);
+        ObjectMapper mapper = new ObjectMapper();
+
+        CashFlow cashFlow = mapper.convertValue(cashFlowDTO, CashFlow.class);
 
         CashFlow updatedCashFlow = cashFlowService.updateCashFlowForCustomer(token, cashFlowDTO.getFrequencyId(), cashFlowId, cashFlow);
 
@@ -123,6 +127,8 @@ public class CashFlowController {
      * @return newly created response cash flow DTO
      */
     private ResponseCashFlowDTO mapCashFlowItemToDTO(CashFlow cashFlowItem) {
+        ObjectMapper mapper = new ObjectMapper();
+
         ResponseCashFlowDTO responseCashFlowDTO = new ResponseCashFlowDTO();
 
         responseCashFlowDTO.setId(cashFlowItem.getId());
@@ -130,35 +136,8 @@ public class CashFlowController {
         responseCashFlowDTO.setDateUpdated(cashFlowItem.getDateUpdated());
         responseCashFlowDTO.setName(cashFlowItem.getName());
         responseCashFlowDTO.setAmount(cashFlowItem.getAmount());
-
-        Frequency frequency = cashFlowItem.getFrequency();
-        FrequencyDTO frequencyDTO = new FrequencyDTO();
-
-        frequencyDTO.setId(frequency.getId());
-        frequencyDTO.setDateCreated(frequency.getDateCreated());
-        frequencyDTO.setDateUpdated(frequency.getDateUpdated());
-        frequencyDTO.setName(frequency.getName());
-
-        responseCashFlowDTO.setFrequency(frequencyDTO);
+        responseCashFlowDTO.setFrequency(mapper.convertValue(responseCashFlowDTO.getFrequency(), FrequencyDTO.class));
 
         return responseCashFlowDTO;
-    }
-
-    /**
-     * Maps a request cash flow DTO object to a cash flow object
-     *
-     * @param cashFlowDTO cash flow DTO to convert
-     * @return newly created cash flow item
-     */
-    private CashFlow mapCashFlowDTOToCasFlow(RequestCashFlowDTO cashFlowDTO) {
-        CashFlow cashFlow = new CashFlow();
-
-        cashFlow.setId(cashFlowDTO.getId());
-        cashFlow.setDateCreated(cashFlowDTO.getDateCreated());
-        cashFlow.setDateUpdated(cashFlowDTO.getDateUpdated());
-        cashFlow.setName(cashFlowDTO.getName());
-        cashFlow.setAmount(cashFlowDTO.getAmount());
-
-        return cashFlow;
     }
 }

@@ -3,7 +3,6 @@ package io.thedatapirates.financeapi.domains.reminders;
 import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyDTO;
 
-import java.sql.Time;
 import java.util.Date;
 
 /**

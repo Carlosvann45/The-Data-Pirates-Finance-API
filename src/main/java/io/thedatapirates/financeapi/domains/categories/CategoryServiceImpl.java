@@ -130,8 +130,7 @@ public class CategoryServiceImpl implements CategoryService {
         else if (existingName != null) {
             if (!Objects.equals(existingCategory.getName(), updatedCategory.getName()))
                 throw new Conflict(StringConstants.CATEGORY_NAME_CONFLICT);
-        }
-        else if (!existingCustomer.getCategories().contains(existingCategory)) throw new BadRequest(
+        } else if (!existingCustomer.getCategories().contains(existingCategory)) throw new BadRequest(
                 StringConstants.CATEGORY_DIFF_CUSTOMER
         );
 

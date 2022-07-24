@@ -1,5 +1,6 @@
 package io.thedatapirates.financeapi.domains.frequencies;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import org.apache.logging.log4j.LogManager;
@@ -36,11 +37,13 @@ public class FrequencyController {
     public ResponseEntity<List<FrequencyDTO>> getFrequencies() {
         logger.info(StringConstants.LOG_GET_FREQUENCIES);
 
+        ObjectMapper mapper = new ObjectMapper();
+
         List<Frequency> frequencies = frequencyService.getFrequencies();
 
         List<FrequencyDTO> frequencyDTOS = frequencies
                 .stream()
-                .map(this::mapFrequencyToFrequencyDTO)
+                .map(frequency -> mapper.convertValue(frequency, FrequencyDTO.class))
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>(frequencyDTOS, HttpStatus.OK);
@@ -56,27 +59,12 @@ public class FrequencyController {
     public ResponseEntity<FrequencyDTO> getFrequencyById(@PathVariable Long frequencyId) {
         logger.info(StringConstants.LOG_GET_FREQUENCIES_ID);
 
+        ObjectMapper mapper = new ObjectMapper();
+
         Frequency frequency = frequencyService.getFrequencyById(frequencyId);
 
-        FrequencyDTO frequencyDTO = mapFrequencyToFrequencyDTO(frequency);
+        FrequencyDTO frequencyDTO = mapper.convertValue(frequency, FrequencyDTO.class);
 
         return new ResponseEntity<>(frequencyDTO, HttpStatus.OK);
-    }
-
-    /**
-     * Maps a frequency to a frequency DTO
-     *
-     * @param frequency frequency to map
-     * @return newly created frequency DTO
-     */
-    private FrequencyDTO mapFrequencyToFrequencyDTO(Frequency frequency) {
-        FrequencyDTO frequencyDTO = new FrequencyDTO();
-
-        frequencyDTO.setId(frequency.getId());
-        frequencyDTO.setDateCreated(frequency.getDateCreated());
-        frequencyDTO.setDateUpdated(frequency.getDateUpdated());
-        frequencyDTO.setName(frequency.getName());
-
-        return frequencyDTO;
     }
 }

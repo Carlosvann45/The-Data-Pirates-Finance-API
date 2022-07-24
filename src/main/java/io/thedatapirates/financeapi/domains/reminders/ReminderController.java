@@ -1,5 +1,6 @@
 package io.thedatapirates.financeapi.domains.reminders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.frequencies.Frequency;
@@ -64,7 +65,9 @@ public class ReminderController {
     ) {
         logger.info(StringConstants.LOG_CREATE_REMINDER_CUSTOMER);
 
-        Reminder reminder = mapReminderDTOToReminder(reminderDTO);
+        ObjectMapper mapper = new ObjectMapper();
+
+        Reminder reminder = mapper.convertValue(reminderDTO, Reminder.class);
 
         Reminder newReminder = reminderService.createReminderForCustomer(token, reminderDTO.getFrequencyId(), reminder);
 
@@ -89,7 +92,9 @@ public class ReminderController {
     ) {
         logger.info(StringConstants.LOG_UPDATE_REMINDER_CUSTOMER);
 
-        Reminder reminder = mapReminderDTOToReminder(reminderDTO);
+        ObjectMapper mapper = new ObjectMapper();
+
+        Reminder reminder = mapper.convertValue(reminderDTO, Reminder.class);
 
         Reminder updatedReminder = reminderService.updateReminderForCustomer(token, reminderDTO.getFrequencyId(), reminderId, reminder);
 
@@ -123,6 +128,7 @@ public class ReminderController {
      * @return newly created response reminder DTO
      */
     private ResponseReminderDTO mapReminderToDTO(Reminder reminder) {
+        ObjectMapper mapper = new ObjectMapper();
         ResponseReminderDTO responseReminderDTO = new ResponseReminderDTO();
 
         responseReminderDTO.setId(reminder.getId());
@@ -131,36 +137,8 @@ public class ReminderController {
         responseReminderDTO.setName(reminder.getName());
         responseReminderDTO.setDescription(reminder.getDescription());
         responseReminderDTO.setReminderTime(reminder.getReminderTime());
-
-        Frequency frequency = reminder.getFrequency();
-        FrequencyDTO frequencyDTO = new FrequencyDTO();
-
-        frequencyDTO.setId(frequency.getId());
-        frequencyDTO.setDateCreated(frequency.getDateCreated());
-        frequencyDTO.setDateUpdated(frequency.getDateUpdated());
-        frequencyDTO.setName(frequency.getName());
-
-        responseReminderDTO.setFrequency(frequencyDTO);
+        responseReminderDTO.setFrequency(mapper.convertValue(reminder.getFrequency(), FrequencyDTO.class));
 
         return responseReminderDTO;
-    }
-
-    /**
-     * Maps a request reminderDTO object to a reminder object
-     *
-     * @param reminderDTO reminder DTO to convert
-     * @return newly created reminder
-     */
-    private Reminder mapReminderDTOToReminder(RequestReminderDTO reminderDTO) {
-        Reminder reminder = new Reminder();
-
-        reminder.setId(reminderDTO.getId());
-        reminder.setDateCreated(reminderDTO.getDateCreated());
-        reminder.setDateUpdated(reminderDTO.getDateUpdated());
-        reminder.setName(reminderDTO.getName());
-        reminder.setDescription(reminderDTO.getDescription());
-        reminder.setReminderTime(reminderDTO.getReminderTime());
-
-        return reminder;
     }
 }
