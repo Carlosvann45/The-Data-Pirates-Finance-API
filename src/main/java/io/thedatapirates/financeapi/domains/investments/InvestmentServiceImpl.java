@@ -16,12 +16,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A class to implement all methods from the investment service interface
  */
 @Service
-public class InvestmentServiceImpl implements InvestmentService{
+public class InvestmentServiceImpl implements InvestmentService {
 
     private final Logger logger = LogManager.getLogger(InvestmentServiceImpl.class);
 
@@ -53,11 +54,12 @@ public class InvestmentServiceImpl implements InvestmentService{
             throw new ServerUnavailable(e.getMessage());
         }
     }
+
     /**
      * Creates an investment for a give customer from a
      * give bearer token
      *
-     * @param token       token to get customer from
+     * @param token         token to get customer from
      * @param newInvestment investment to create
      * @return newly created investment
      */
@@ -98,7 +100,7 @@ public class InvestmentServiceImpl implements InvestmentService{
      * Updates an investment for a customer from a token id customer and investment
      * exist in the database
      *
-     * @param token           token to get customer from
+     * @param token             token to get customer from
      * @param investmentId      investment id to retrieve investment
      * @param updatedInvestment updated investment
      * @return newly updated investment
@@ -126,7 +128,10 @@ public class InvestmentServiceImpl implements InvestmentService{
         }
 
         if (existingInvestment == null) throw new NotFound(StringConstants.INVESTMENT_NOT_FOUND);
-        else if (existingName != null) throw new Conflict(StringConstants.INVESTMENT_NAME_CONFLICT);
+        else if (existingName != null) {
+            if (!Objects.equals(existingInvestment.getName(), updatedInvestment.getName()))
+                throw new Conflict(StringConstants.INVESTMENT_NAME_CONFLICT);
+        }
         else if (!existingCustomer.getInvestments().contains(existingInvestment)) throw new BadRequest(
                 StringConstants.INVESTMENT_DIFF_CUSTOMER
         );
@@ -147,7 +152,7 @@ public class InvestmentServiceImpl implements InvestmentService{
     /**
      * Deletes a given investment if it exists on a customer
      *
-     * @param token      token to get customer from
+     * @param token        token to get customer from
      * @param investmentId investment id for investment to delete
      */
     @Override

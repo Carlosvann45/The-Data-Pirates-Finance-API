@@ -1,28 +1,27 @@
 package io.thedatapirates.financeapi.domains.customers;
 
+import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.jwt.JwtResponse;
+import io.thedatapirates.financeapi.exceptions.BadRequest;
+import io.thedatapirates.financeapi.exceptions.Conflict;
+import io.thedatapirates.financeapi.exceptions.NotFound;
+import io.thedatapirates.financeapi.exceptions.ServerUnavailable;
+import io.thedatapirates.financeapi.utility.JWTUtility;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import io.thedatapirates.financeapi.constants.StringConstants;
-import io.thedatapirates.financeapi.exceptions.BadRequest;
-import io.thedatapirates.financeapi.exceptions.Conflict;
-import io.thedatapirates.financeapi.exceptions.NotFound;
-import io.thedatapirates.financeapi.exceptions.ServerUnavailable;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import io.thedatapirates.financeapi.utility.JWTUtility;
 
 /**
  * A class to implement all methods from the customer service interface

@@ -3,9 +3,9 @@ package io.thedatapirates.financeapi.domains.categories;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
 
-import java.util.Date;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * An object to represent a Data Transfer Object for a category

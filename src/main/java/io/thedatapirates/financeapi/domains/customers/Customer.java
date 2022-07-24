@@ -6,12 +6,14 @@ import io.thedatapirates.financeapi.domains.cashflows.CashFlow;
 import io.thedatapirates.financeapi.domains.categories.Category;
 import io.thedatapirates.financeapi.domains.entity.BaseEntity;
 import io.thedatapirates.financeapi.domains.investments.Investment;
+import io.thedatapirates.financeapi.domains.reminders.Reminder;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.*;
 
 /**
  * This class that represents a customer entity in the database
@@ -35,6 +37,10 @@ public class Customer extends BaseEntity {
     @JsonManagedReference
     private List<CashFlow> cashFlowItems = new ArrayList<>();
 
+    @OneToMany(mappedBy = StringConstants.CUSTOMER)
+    @JsonManagedReference
+    private List<Reminder> reminders = new ArrayList<>();
+
     public Customer() {
     }
 
@@ -43,17 +49,14 @@ public class Customer extends BaseEntity {
         this.password = password;
     }
 
-    public Customer(
-            Long id, Date dateCreated, Date dateUpdated,
-            String username, String password, List<Category> categories,
-            List<Investment> investments, List<CashFlow> cashFlowItems
-    ) {
+    public Customer(Long id, Date dateCreated, Date dateUpdated, String username, String password, List<Category> categories, List<Investment> investments, List<CashFlow> cashFlowItems, List<Reminder> reminders) {
         super(id, dateCreated, dateUpdated);
         this.username = username;
         this.password = password;
         this.categories = categories;
         this.investments = investments;
         this.cashFlowItems = cashFlowItems;
+        this.reminders = reminders;
     }
 
     public String getUsername() {
@@ -96,18 +99,26 @@ public class Customer extends BaseEntity {
         this.cashFlowItems = cashFlowItems;
     }
 
+    public List<Reminder> getReminders() {
+        return reminders;
+    }
+
+    public void setReminders(List<Reminder> reminders) {
+        this.reminders = reminders;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Customer customer = (Customer) o;
-        return Objects.equals(username, customer.username) && Objects.equals(password, customer.password) && Objects.equals(categories, customer.categories) && Objects.equals(investments, customer.investments) && Objects.equals(cashFlowItems, customer.cashFlowItems);
+        return Objects.equals(username, customer.username) && Objects.equals(password, customer.password) && Objects.equals(categories, customer.categories) && Objects.equals(investments, customer.investments) && Objects.equals(cashFlowItems, customer.cashFlowItems) && Objects.equals(reminders, customer.reminders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), username, password, categories, investments, cashFlowItems);
+        return Objects.hash(super.hashCode(), username, password, categories, investments, cashFlowItems, reminders);
     }
 
     @Override
@@ -118,6 +129,7 @@ public class Customer extends BaseEntity {
                 ", categories=" + categories +
                 ", investments=" + investments +
                 ", cashFlowItems=" + cashFlowItems +
+                ", reminders=" + reminders +
                 '}';
     }
 }

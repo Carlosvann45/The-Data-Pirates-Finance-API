@@ -9,6 +9,7 @@ import java.util.Date;
  * An object to represent a response Data Transfer Object for cash flow items
  */
 public class ResponseCashFlowDTO extends BaseEntityDTO {
+
     private String name;
 
     private double amount;

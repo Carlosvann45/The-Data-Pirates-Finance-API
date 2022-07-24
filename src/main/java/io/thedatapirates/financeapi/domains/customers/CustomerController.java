@@ -1,37 +1,28 @@
 package io.thedatapirates.financeapi.domains.customers;
 
-import static org.apache.http.HttpHeaders.AUTHORIZATION;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
-import io.thedatapirates.financeapi.domains.cashflows.CashFlow;
 import io.thedatapirates.financeapi.domains.cashflows.ResponseCashFlowDTO;
-import io.thedatapirates.financeapi.domains.categories.Category;
 import io.thedatapirates.financeapi.domains.categories.CategoryDTO;
 import io.thedatapirates.financeapi.domains.frequencies.Frequency;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyDTO;
 import io.thedatapirates.financeapi.domains.investments.InvestmentDTO;
 import io.thedatapirates.financeapi.domains.jwt.JwtResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
+import io.thedatapirates.financeapi.domains.reminders.ResponseReminderDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.apache.http.HttpHeaders.AUTHORIZATION;
 
 /**
  * Controller for customer endpoints
@@ -150,6 +141,33 @@ public class CustomerController {
                 })
                 .collect(Collectors.toList());
 
+        List<ResponseReminderDTO> reminders
+                = customer.getReminders()
+                .stream()
+                .map(reminder -> {
+                    ResponseReminderDTO reminderDTO = new ResponseReminderDTO();
+
+                    reminderDTO.setId(reminder.getId());
+                    reminderDTO.setDateCreated(reminder.getDateCreated());
+                    reminderDTO.setDateUpdated(reminder.getDateUpdated());
+                    reminderDTO.setName(reminder.getName());
+                    reminderDTO.setDescription(reminder.getDescription());
+                    reminderDTO.setReminderTime(reminder.getReminderTime());
+
+                    Frequency frequency = reminder.getFrequency();
+                    FrequencyDTO frequencyDTO = new FrequencyDTO();
+
+                    frequencyDTO.setId(frequency.getId());
+                    frequencyDTO.setDateCreated(frequency.getDateCreated());
+                    frequencyDTO.setDateUpdated(frequency.getDateUpdated());
+                    frequencyDTO.setName(frequency.getName());
+
+                    reminderDTO.setFrequency(frequencyDTO);
+
+                    return reminderDTO;
+                })
+                .collect(Collectors.toList());
+
         CustomerDTO newCustomer = new CustomerDTO();
 
         newCustomer.setId(customer.getId());
@@ -160,6 +178,7 @@ public class CustomerController {
         newCustomer.setCategories(categories);
         newCustomer.setInvestments(investments);
         newCustomer.setCashFlowItems(cashFlowItems);
+        newCustomer.setReminders(reminders);
 
         return newCustomer;
     }

@@ -1,6 +1,5 @@
 package io.thedatapirates.financeapi.domains.frequencies;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import org.apache.logging.log4j.LogManager;

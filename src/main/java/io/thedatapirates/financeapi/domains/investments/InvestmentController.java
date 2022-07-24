@@ -55,7 +55,7 @@ public class InvestmentController {
     /**
      * Creates an investment for a customer from bearer token
      *
-     * @param token       token to get a customer from
+     * @param token         token to get a customer from
      * @param investmentDTO investment to create
      * @return newly created investment
      */
@@ -79,7 +79,7 @@ public class InvestmentController {
     /**
      * Updates an existing investment from a customer bearer token
      *
-     * @param token       token to get customer from
+     * @param token         token to get customer from
      * @param investmentId  investment id for investment to update
      * @param investmentDTO updated investment
      * @return newly updated investment
@@ -106,7 +106,7 @@ public class InvestmentController {
     /**
      * Deletes an investment from a user with a specified id
      *
-     * @param token      token to get user from
+     * @param token        token to get user from
      * @param investmentId investment id to get investment
      * @return no content
      */

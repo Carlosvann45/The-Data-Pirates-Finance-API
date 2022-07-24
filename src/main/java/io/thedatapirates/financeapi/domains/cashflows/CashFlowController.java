@@ -1,6 +1,5 @@
 package io.thedatapirates.financeapi.domains.cashflows;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.frequencies.Frequency;
@@ -103,7 +102,7 @@ public class CashFlowController {
      * Deletes a cash flow from a user with a specified id
      *
      * @param token      token to get user from
-     * @param cashFlowId cash flow id to get category
+     * @param cashFlowId cash flow id to get reminder
      * @return no content
      */
     @DeleteMapping(Paths.CASH_FLOW_ID)

@@ -1,16 +1,12 @@
 package io.thedatapirates.financeapi.domains.customers;
 
 import io.thedatapirates.financeapi.constants.StringConstants;
-import io.thedatapirates.financeapi.domains.cashflows.ResponseCashFlowDTO;
-import io.thedatapirates.financeapi.domains.categories.CategoryDTO;
 import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
-import io.thedatapirates.financeapi.domains.investments.InvestmentDTO;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
 
 /**
  * An object to represent a Data Transfer Object to create a customer

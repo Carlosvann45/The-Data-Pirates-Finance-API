@@ -35,6 +35,11 @@ public class StringConstants {
     public static final String LOG_CREATE_CASH_FLOW_CUSTOMER = "Request received for createCashFlowForCustomer.";
     public static final String LOG_UPDATE_CASH_FLOW_CUSTOMER = "Request received for updateCashFlowForCustomer.";
     public static final String LOG_DELETE_CASH_FLOW_CUSTOMER = "Request received for deleteCashFlowForCustomer.";
+    public static final String LOG_GET_REMINDER_CUSTOMER = "Request received for getReminderByCustomer.";
+    public static final String LOG_DELETE_REMINDER_CUSTOMER = "Request received for deleteReminderForCustomer.";
+    public static final String LOG_CREATE_REMINDER_CUSTOMER = "Request received for createReminderForCustomer.";
+    public static final String LOG_UPDATE_REMINDER_CUSTOMER = "Request received for updateReminderForCustomer.";
+
 
     // Error Messages
     public static final String CUSTOMER_NOT_FOUND = "Customer with given username does not exist.";
@@ -61,7 +66,16 @@ public class StringConstants {
     public static final String CASH_FLOW_NOT_FOUND = "Cash Flow with given id does not exist.";
     public static final String CASH_FLOW_DIFF_CUSTOMER = "The supplied cash flow id does not belong to customer from the token";
     public static final String CASH_FLOW_NAME_CONFLICT = "Cash flow with given name already exist.";
-    public static final String CASH_FLOW_BAD_FREQUENCY = "Frequency with given id does not exist.";
+    public static final String BAD_FREQUENCY = "Frequency with given id does not exist.";
+    public static final String REMINDER_NOT_FOUND = "Reminder with given id does not exist.";
+    public static final String REMINDER_DIFF_CUSTOMER = "The supplied reminder id does not belong to customer from the token";
+    public static final String REMINDER_NAME_CONFLICT = "Reminder with given name already exist.";
+    public static final String DESCRIPTION_REQUIRED = "Description is a required field.";
+    public static final String DESCRIPTION_MIN = "Description must be at least 3 characters long.";
+    public static final String TIME_ERROR = "Time must follow this format: 00:00:00";
+
+    // RegEx
+    public static final String TIME_VALIDATION = "^[0-9]{2}:[0-9]{2}:[0-9]{2}$";
 
     // Misc
     public static final String EMPTY_STRING = " ";

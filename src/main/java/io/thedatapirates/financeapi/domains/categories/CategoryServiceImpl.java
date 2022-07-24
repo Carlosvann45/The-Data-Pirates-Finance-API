@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A class to implement all methods from the category service interface
@@ -126,7 +127,10 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         if (existingCategory == null) throw new NotFound(StringConstants.CATEGORY_NOT_FOUND);
-        else if (existingName != null) throw new Conflict(StringConstants.CATEGORY_NAME_CONFLICT);
+        else if (existingName != null) {
+            if (!Objects.equals(existingCategory.getName(), updatedCategory.getName()))
+                throw new Conflict(StringConstants.CATEGORY_NAME_CONFLICT);
+        }
         else if (!existingCustomer.getCategories().contains(existingCategory)) throw new BadRequest(
                 StringConstants.CATEGORY_DIFF_CUSTOMER
         );

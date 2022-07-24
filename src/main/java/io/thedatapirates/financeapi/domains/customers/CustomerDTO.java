@@ -4,6 +4,7 @@ import io.thedatapirates.financeapi.domains.cashflows.ResponseCashFlowDTO;
 import io.thedatapirates.financeapi.domains.categories.CategoryDTO;
 import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
 import io.thedatapirates.financeapi.domains.investments.InvestmentDTO;
+import io.thedatapirates.financeapi.domains.reminders.ResponseReminderDTO;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +25,8 @@ public class CustomerDTO extends BaseEntityDTO {
 
     private List<ResponseCashFlowDTO> cashFlowItems = new ArrayList<>();
 
+    private List<ResponseReminderDTO> reminders = new ArrayList<>();
+
     public CustomerDTO() {
     }
 
@@ -33,8 +36,9 @@ public class CustomerDTO extends BaseEntityDTO {
     }
 
     public CustomerDTO(
-            Long id, Date dateCreated, Date dateUpdated, String username, String password,
-            List<CategoryDTO> categories, List<InvestmentDTO> investments, List<ResponseCashFlowDTO> cashFlowItems
+            Long id, Date dateCreated, Date dateUpdated, String username,
+            String password, List<CategoryDTO> categories, List<InvestmentDTO> investments,
+            List<ResponseCashFlowDTO> cashFlowItems, List<ResponseReminderDTO> reminders
     ) {
         super(id, dateCreated, dateUpdated);
         this.username = username;
@@ -42,6 +46,7 @@ public class CustomerDTO extends BaseEntityDTO {
         this.categories = categories;
         this.investments = investments;
         this.cashFlowItems = cashFlowItems;
+        this.reminders = reminders;
     }
 
     public String getUsername() {
@@ -82,5 +87,13 @@ public class CustomerDTO extends BaseEntityDTO {
 
     public void setCashFlowItems(List<ResponseCashFlowDTO> cashFlowItems) {
         this.cashFlowItems = cashFlowItems;
+    }
+
+    public List<ResponseReminderDTO> getReminders() {
+        return reminders;
+    }
+
+    public void setReminders(List<ResponseReminderDTO> reminders) {
+        this.reminders = reminders;
     }
 }

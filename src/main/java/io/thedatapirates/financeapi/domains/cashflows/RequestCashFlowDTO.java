@@ -1,7 +1,11 @@
 package io.thedatapirates.financeapi.domains.cashflows;
 
+import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -9,10 +13,14 @@ import java.util.Date;
  */
 public class RequestCashFlowDTO extends BaseEntityDTO {
 
+    @NotBlank(message = StringConstants.NAME_REQUIRED)
+    @Size(min = 3, message = StringConstants.NAME_MIN)
     private String name;
 
+    @Range(min = 0)
     private double amount;
 
+    @Range(min = 1, max = 4)
     private Long frequencyId;
 
     public RequestCashFlowDTO() {

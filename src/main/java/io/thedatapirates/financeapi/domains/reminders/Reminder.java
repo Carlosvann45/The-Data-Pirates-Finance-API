@@ -1,4 +1,4 @@
-package io.thedatapirates.financeapi.domains.cashflows;
+package io.thedatapirates.financeapi.domains.reminders;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -11,19 +11,22 @@ import io.thedatapirates.financeapi.domains.frequencies.Frequency;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.sql.Time;
 import java.util.Date;
 import java.util.Objects;
 
 /**
- * Entity class to represent a cash flow item in the database
+ * This class that represents a reminder entity in the database
  */
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = StringConstants.ID)
-public class CashFlow extends BaseEntity {
+public class Reminder extends BaseEntity {
 
     private String name;
 
-    private double amount;
+    private String description;
+
+    private Date reminderTime;
 
     @ManyToOne
     @JoinColumn(name = StringConstants.CUSTOMER_ID, nullable = false)
@@ -34,21 +37,23 @@ public class CashFlow extends BaseEntity {
     @JoinColumn(name = StringConstants.FREQUENCY_ID, nullable = false)
     private Frequency frequency;
 
-    public CashFlow() {
+    public Reminder() {
     }
 
-    public CashFlow(Date dateCreated, Date dateUpdated, String name, double amount, Customer customer, Frequency frequency) {
+    public Reminder(Date dateCreated, Date dateUpdated, String name, String description, Date reminderTime, Customer customer, Frequency frequency) {
         super(dateCreated, dateUpdated);
         this.name = name;
-        this.amount = amount;
+        this.description = description;
+        this.reminderTime = reminderTime;
         this.customer = customer;
         this.frequency = frequency;
     }
 
-    public CashFlow(Long id, Date dateCreated, Date dateUpdated, String name, double amount, Customer customer, Frequency frequency) {
+    public Reminder(Long id, Date dateCreated, Date dateUpdated, String name, String description, Date reminderTime, Customer customer, Frequency frequency) {
         super(id, dateCreated, dateUpdated);
         this.name = name;
-        this.amount = amount;
+        this.description = description;
+        this.reminderTime = reminderTime;
         this.customer = customer;
         this.frequency = frequency;
     }
@@ -61,12 +66,20 @@ public class CashFlow extends BaseEntity {
         this.name = name;
     }
 
-    public double getAmount() {
-        return amount;
+    public String getDescription() {
+        return description;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getReminderTime() {
+        return reminderTime;
+    }
+
+    public void setReminderTime(Date reminderTime) {
+        this.reminderTime = reminderTime;
     }
 
     public Customer getCustomer() {
@@ -90,20 +103,21 @@ public class CashFlow extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        CashFlow cashFlow = (CashFlow) o;
-        return Double.compare(cashFlow.amount, amount) == 0 && Objects.equals(name, cashFlow.name) && Objects.equals(customer, cashFlow.customer) && Objects.equals(frequency, cashFlow.frequency);
+        Reminder reminder = (Reminder) o;
+        return Objects.equals(name, reminder.name) && Objects.equals(description, reminder.description) && Objects.equals(reminderTime, reminder.reminderTime) && Objects.equals(customer, reminder.customer) && Objects.equals(frequency, reminder.frequency);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, amount, customer, frequency);
+        return Objects.hash(super.hashCode(), name, description, reminderTime, customer, frequency);
     }
 
     @Override
     public String toString() {
-        return "CashFlow{" +
+        return "Reminder{" +
                 "name='" + name + '\'' +
-                ", amount=" + amount +
+                ", description='" + description + '\'' +
+                ", reminderTime=" + reminderTime +
                 ", customer=" + customer +
                 ", frequency=" + frequency +
                 '}';

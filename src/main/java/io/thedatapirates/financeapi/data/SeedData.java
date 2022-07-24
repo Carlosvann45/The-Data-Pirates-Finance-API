@@ -1,11 +1,7 @@
 package io.thedatapirates.financeapi.data;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-
 import io.thedatapirates.financeapi.domains.customers.Customer;
+import io.thedatapirates.financeapi.domains.customers.CustomerRepository;
 import io.thedatapirates.financeapi.domains.frequencies.Frequency;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyRepository;
 import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevel;
@@ -19,7 +15,11 @@ import org.springframework.core.env.Environment;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import io.thedatapirates.financeapi.domains.customers.CustomerRepository;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * This class handles Seeding selected data into the database depending on the application.yml

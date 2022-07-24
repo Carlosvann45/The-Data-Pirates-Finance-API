@@ -1,4 +1,4 @@
-package io.thedatapirates.financeapi.domains.cashflows;
+package io.thedatapirates.financeapi.domains.reminders;
 
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.Customer;
@@ -21,12 +21,12 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * A class to implement all methods from the cash flow service interface
+ * A class to implement all methods from the reminder service interface
  */
 @Service
-public class CashFlowServiceImpl implements CashFlowService {
+public class ReminderServiceImpl implements ReminderService {
 
-    private final Logger logger = LogManager.getLogger(CashFlowServiceImpl.class);
+    private final Logger logger = LogManager.getLogger(ReminderServiceImpl.class);
 
     @Autowired
     private JWTUtility jwtUtility;
@@ -38,21 +38,21 @@ public class CashFlowServiceImpl implements CashFlowService {
     private FrequencyRepository frequencyRepository;
 
     @Autowired
-    private CashFlowRepository cashFlowRepository;
+    private ReminderRepository reminderRepository;
 
     /**
      * Calls repository to get a customer and retrieves all
-     * cash flow items based on that customers id
+     * reminders based on that customers id
      *
      * @param token token to get username for customer
      * @return all cash flow items related to a specified customer
      */
     @Override
-    public List<CashFlow> getCashFlowByCustomer(String token) {
+    public List<Reminder> getReminderByCustomer(String token) {
         Customer existingCustomer = getCustomerFromToken(token);
 
         try {
-            return cashFlowRepository.findAllByCustomerId(existingCustomer.getId());
+            return reminderRepository.findAllByCustomerId(existingCustomer.getId());
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
 
@@ -61,30 +61,30 @@ public class CashFlowServiceImpl implements CashFlowService {
     }
 
     /**
-     * Creates a new cash flow for a customer if frequency and customer
+     * Creates a new reminder for a customer if frequency and customer
      * exist in the database
      *
-     * @param token           token to get customer from
-     * @param frequencyId     frequency id to get frequency
-     * @param newCashFlowItem new cash flow item
-     * @return newly created cash flow item
+     * @param token       token to get customer from
+     * @param frequencyId frequency id to get frequency
+     * @param newReminder new reminder
+     * @return newly created reminder
      */
     @Override
-    public CashFlow createCashFlowForCustomer(String token, Long frequencyId, CashFlow newCashFlowItem) {
-        CashFlow existingCashFlow;
+    public Reminder createReminderForCustomer(String token, Long frequencyId, Reminder newReminder) {
+        Reminder existingReminder;
         Frequency existingFrequency;
         Customer existingCustomer = getCustomerFromToken(token);
-        String catName = newCashFlowItem.getName();
+        String catName = newReminder.getName();
 
-        newCashFlowItem.setCustomer(existingCustomer);
-        newCashFlowItem.setName(catName
+        newReminder.setCustomer(existingCustomer);
+        newReminder.setName(catName
                 .substring(0, 1)
                 .toUpperCase() + catName.substring(1).toLowerCase());
-        newCashFlowItem.setDateCreated(new Date(System.currentTimeMillis()));
-        newCashFlowItem.setDateUpdated(new Date(System.currentTimeMillis()));
+        newReminder.setDateCreated(new Date(System.currentTimeMillis()));
+        newReminder.setDateUpdated(new Date(System.currentTimeMillis()));
 
         try {
-            existingCashFlow = cashFlowRepository.findCashFlowByName(newCashFlowItem.getName());
+            existingReminder = reminderRepository.findReminderByName(newReminder.getName());
             existingFrequency = frequencyRepository.findFrequencyById(frequencyId);
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
@@ -92,13 +92,13 @@ public class CashFlowServiceImpl implements CashFlowService {
             throw new ServerUnavailable(e.getMessage());
         }
 
-        if (existingCashFlow != null) throw new Conflict(StringConstants.CASH_FLOW_NAME_CONFLICT);
+        if (existingReminder != null) throw new Conflict(StringConstants.REMINDER_NAME_CONFLICT);
         else if (existingFrequency == null) throw new BadRequest(StringConstants.BAD_FREQUENCY);
 
-        newCashFlowItem.setFrequency(existingFrequency);
+        newReminder.setFrequency(existingFrequency);
 
         try {
-            return cashFlowRepository.save(newCashFlowItem);
+            return reminderRepository.save(newReminder);
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
 
@@ -107,30 +107,30 @@ public class CashFlowServiceImpl implements CashFlowService {
     }
 
     /**
-     * Updates an existing cash flow item if the customer exist and frequency exist
+     * Updates an existing reminder if the customer exist and frequency exist
      *
-     * @param token               token to get customer from
-     * @param frequencyId         frequency id to attach to a customer
-     * @param cashFlowId          cash flow id for cash flow to update
-     * @param updatedCashFlowItem updated cash flow item
-     * @return newly updated cash flow item
+     * @param token           token to get customer from
+     * @param frequencyId     frequency id to attach to a customer
+     * @param reminderId      reminder id for reminder to update
+     * @param updatedReminder updated reminder
+     * @return newly updated reminder
      */
     @Override
-    public CashFlow updateCashFlowForCustomer(String token, Long frequencyId, Long cashFlowId, CashFlow updatedCashFlowItem) {
-        CashFlow existingCashFlow;
-        CashFlow existingName;
+    public Reminder updateReminderForCustomer(String token, Long frequencyId, Long reminderId, Reminder updatedReminder) {
+        Reminder existingReminder;
+        Reminder existingName;
         Frequency existingFrequency;
         Customer existingCustomer = getCustomerFromToken(token);
-        String catName = updatedCashFlowItem.getName();
+        String catName = updatedReminder.getName();
 
-        updatedCashFlowItem.setName(catName
+        updatedReminder.setName(catName
                 .substring(0, 1)
                 .toUpperCase() + catName.substring(1).toLowerCase());
-        updatedCashFlowItem.setDateUpdated(new Date(System.currentTimeMillis()));
+        updatedReminder.setDateUpdated(new Date(System.currentTimeMillis()));
 
         try {
-            existingCashFlow = cashFlowRepository.findCashFlowById(cashFlowId);
-            existingName = cashFlowRepository.findCashFlowByName(updatedCashFlowItem.getName());
+            existingReminder = reminderRepository.findReminderById(reminderId);
+            existingName = reminderRepository.findReminderByName(updatedReminder.getName());
             existingFrequency = frequencyRepository.findFrequencyById(frequencyId);
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
@@ -138,20 +138,20 @@ public class CashFlowServiceImpl implements CashFlowService {
             throw new ServerUnavailable(e.getMessage());
         }
 
-        if (existingCashFlow == null) throw new NotFound(StringConstants.CASH_FLOW_NOT_FOUND);
+        if (existingReminder == null) throw new NotFound(StringConstants.REMINDER_NOT_FOUND);
         else if (existingName != null) {
-            if (!Objects.equals(existingCashFlow.getName(), updatedCashFlowItem.getName()))
-                throw new Conflict(StringConstants.CASH_FLOW_NAME_CONFLICT);
+            if (!Objects.equals(existingReminder.getName(), updatedReminder.getName()))
+                throw new Conflict(StringConstants.REMINDER_NAME_CONFLICT);
         }
         else if (existingFrequency == null) throw new BadRequest(StringConstants.BAD_FREQUENCY);
 
-        updatedCashFlowItem.setId(cashFlowId);
-        updatedCashFlowItem.setDateCreated(existingCashFlow.getDateCreated());
-        updatedCashFlowItem.setCustomer(existingCustomer);
-        updatedCashFlowItem.setFrequency(existingFrequency);
+        updatedReminder.setId(reminderId);
+        updatedReminder.setDateCreated(existingReminder.getDateCreated());
+        updatedReminder.setCustomer(existingCustomer);
+        updatedReminder.setFrequency(existingFrequency);
 
         try {
-            return cashFlowRepository.save(updatedCashFlowItem);
+            return reminderRepository.save(updatedReminder);
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
 
@@ -160,32 +160,32 @@ public class CashFlowServiceImpl implements CashFlowService {
     }
 
     /**
-     * Deletes a given cash flow item if it exists on a customer
+     * Deletes a given reminder if it exists on a customer
      *
      * @param token      token to get customer from
-     * @param cashFlowId cash flow id for cash flow to delete
+     * @param reminderId reminder id for reminder to delete
      */
     @Override
-    public void deleteCashFlowForCustomer(String token, Long cashFlowId) {
-        CashFlow existingCashFlow;
+    public void deleteReminderForCustomer(String token, Long reminderId) {
+        Reminder existingReminder;
         Customer existingCustomer = getCustomerFromToken(token);
 
 
         try {
-            existingCashFlow = cashFlowRepository.findCashFlowById(cashFlowId);
+            existingReminder = reminderRepository.findReminderById(reminderId);
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
 
             throw new ServerUnavailable(e.getMessage());
         }
 
-        if (existingCashFlow == null) throw new NotFound(StringConstants.CASH_FLOW_NOT_FOUND);
-        else if (!existingCustomer.getCashFlowItems().contains(existingCashFlow)) throw new BadRequest(
-                StringConstants.CASH_FLOW_DIFF_CUSTOMER
+        if (existingReminder == null) throw new NotFound(StringConstants.REMINDER_NOT_FOUND);
+        else if (!existingCustomer.getReminders().contains(existingReminder)) throw new BadRequest(
+                StringConstants.REMINDER_DIFF_CUSTOMER
         );
 
         try {
-            cashFlowRepository.deleteById(cashFlowId);
+            reminderRepository.deleteById(reminderId);
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
 

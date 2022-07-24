@@ -22,7 +22,7 @@ public class PriorityLevelDTO extends BaseEntityDTO {
     }
 
     public PriorityLevelDTO(Date dateCreated, Date dateUpdated, String level, String description) {
-        super(dateCreated,dateUpdated);
+        super(dateCreated, dateUpdated);
         this.level = level;
         this.description = description;
     }
