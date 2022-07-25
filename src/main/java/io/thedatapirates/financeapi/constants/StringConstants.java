@@ -39,6 +39,10 @@ public class StringConstants {
     public static final String LOG_DELETE_REMINDER_CUSTOMER = "Request received for deleteReminderForCustomer.";
     public static final String LOG_CREATE_REMINDER_CUSTOMER = "Request received for createReminderForCustomer.";
     public static final String LOG_UPDATE_REMINDER_CUSTOMER = "Request received for updateReminderForCustomer.";
+    public static final String LOG_GET_EXPENSE_CUSTOMER = "Request received for getExpenseByCustomer.";
+    public static final String LOG_DELETE_EXPENSE_CUSTOMER = "Request received for deleteExpenseForCustomer.";
+    public static final String LOG_UPDATE_EXPENSE_CUSTOMER = "Request received for updateReminderForCustomer.";
+    public static final String LOG_CREATE_EXPENSE_CUSTOMER = "Request received for createExpenseForCustomer.";
 
 
     // Error Messages
@@ -73,6 +77,11 @@ public class StringConstants {
     public static final String DESCRIPTION_REQUIRED = "Description is a required field.";
     public static final String DESCRIPTION_MIN = "Description must be at least 3 characters long.";
     public static final String EXPENSE_BAD_ID = "Expense with the given id does not exist";
+    public static final String EXPENSE_NOT_FOUND = "Expense with given id does not exist.";
+    public static final String EXPENSE_DIFF_CUSTOMER = "The supplied expense id does not belong to customer from the token";
+    public static final String EXPENSE_NAME_CONFLICT = "Expense with given name already exist.";
+    public static final String BAD_CATEGORY = "Category with given id does not exist.";
+    public static final String BAD_PRIORITY_LEVEL = "Priority Level with given id does not exist.";
 
     // Misc
     public static final String EMPTY_STRING = " ";

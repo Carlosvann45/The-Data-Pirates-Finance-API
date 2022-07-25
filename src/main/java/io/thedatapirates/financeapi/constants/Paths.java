@@ -33,6 +33,10 @@ public class Paths {
     public static final String REMINDER_PATH = "/reminders";
     public static final String REMINDER_ID = "{reminderId}";
 
+    // Expense
+    public static final String EXPENSE_PATH = "/expenses";
+    public static final String EXPENSE_ID = "{expenseId}";
+
     // Misc
     public static final String CREATE_PATH = "/create";
     public static final String ALL_EXTENSIONS = "/**";

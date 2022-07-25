@@ -50,7 +50,7 @@ public class ReminderServiceImpl implements ReminderService {
      * reminders based on that customers id
      *
      * @param token token to get username for customer
-     * @return all cash flow items related to a specified customer
+     * @return all reminders related to a specified customer
      */
     @Override
     public List<Reminder> getReminderByCustomer(String token) {
