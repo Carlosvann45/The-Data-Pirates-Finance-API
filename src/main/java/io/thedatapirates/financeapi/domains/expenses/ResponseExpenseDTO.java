@@ -1,22 +1,11 @@
 package io.thedatapirates.financeapi.domains.expenses;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import io.thedatapirates.financeapi.constants.StringConstants;
-import io.thedatapirates.financeapi.domains.categories.Category;
 import io.thedatapirates.financeapi.domains.categories.CategoryDTO;
-import io.thedatapirates.financeapi.domains.customers.Customer;
 import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
-import io.thedatapirates.financeapi.domains.frequencies.Frequency;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyDTO;
-import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevel;
 import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevelDTO;
-import io.thedatapirates.financeapi.domains.reminders.Reminder;
 import io.thedatapirates.financeapi.domains.reminders.ResponseReminderDTO;
 
-import javax.persistence.CascadeType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import java.util.Date;
 
 /**

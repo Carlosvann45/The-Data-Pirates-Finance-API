@@ -21,7 +21,10 @@ public class ResponseReminderDTO extends BaseEntityDTO {
     public ResponseReminderDTO() {
     }
 
-    public ResponseReminderDTO(Date dateCreated, Date dateUpdated, String name, String description, Date reminderTime, FrequencyDTO frequency) {
+    public ResponseReminderDTO(
+            Date dateCreated, Date dateUpdated, String name, String description,
+            Date reminderTime, FrequencyDTO frequency
+    ) {
         super(dateCreated, dateUpdated);
         this.name = name;
         this.description = description;
@@ -29,7 +32,10 @@ public class ResponseReminderDTO extends BaseEntityDTO {
         this.frequency = frequency;
     }
 
-    public ResponseReminderDTO(Long id, Date dateCreated, Date dateUpdated, String name, String description, Date reminderTime, FrequencyDTO frequency) {
+    public ResponseReminderDTO(
+            Long id, Date dateCreated, Date dateUpdated, String name,
+            String description, Date reminderTime, FrequencyDTO frequency
+    ) {
         super(id, dateCreated, dateUpdated);
         this.name = name;
         this.description = description;

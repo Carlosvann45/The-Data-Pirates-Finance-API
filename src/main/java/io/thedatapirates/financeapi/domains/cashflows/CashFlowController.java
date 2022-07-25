@@ -3,7 +3,6 @@ package io.thedatapirates.financeapi.domains.cashflows;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
-import io.thedatapirates.financeapi.domains.frequencies.Frequency;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

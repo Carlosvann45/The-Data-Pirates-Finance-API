@@ -46,22 +46,30 @@ public class Reminder extends BaseEntity {
     public Reminder() {
     }
 
-    public Reminder(Date dateCreated, Date dateUpdated, String name, String description, Date reminderTime, Customer customer, Frequency frequency) {
+    public Reminder(
+            Date dateCreated, Date dateUpdated, String name, String description,
+            Date reminderTime, Customer customer, Frequency frequency, Expense expense
+    ) {
         super(dateCreated, dateUpdated);
         this.name = name;
         this.description = description;
         this.reminderTime = reminderTime;
         this.customer = customer;
         this.frequency = frequency;
+        this.expense = expense;
     }
 
-    public Reminder(Long id, Date dateCreated, Date dateUpdated, String name, String description, Date reminderTime, Customer customer, Frequency frequency) {
+    public Reminder(
+            Long id, Date dateCreated, Date dateUpdated, String name, String description,
+            Date reminderTime, Customer customer, Frequency frequency, Expense expense
+    ) {
         super(id, dateCreated, dateUpdated);
         this.name = name;
         this.description = description;
         this.reminderTime = reminderTime;
         this.customer = customer;
         this.frequency = frequency;
+        this.expense = expense;
     }
 
     public String getName() {
@@ -104,18 +112,26 @@ public class Reminder extends BaseEntity {
         this.frequency = frequency;
     }
 
+    public Expense getExpense() {
+        return expense;
+    }
+
+    public void setExpense(Expense expense) {
+        this.expense = expense;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Reminder reminder = (Reminder) o;
-        return Objects.equals(name, reminder.name) && Objects.equals(description, reminder.description) && Objects.equals(reminderTime, reminder.reminderTime) && Objects.equals(customer, reminder.customer) && Objects.equals(frequency, reminder.frequency);
+        return Objects.equals(name, reminder.name) && Objects.equals(description, reminder.description) && Objects.equals(reminderTime, reminder.reminderTime) && Objects.equals(customer, reminder.customer) && Objects.equals(frequency, reminder.frequency) && Objects.equals(expense, reminder.expense);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, description, reminderTime, customer, frequency);
+        return Objects.hash(super.hashCode(), name, description, reminderTime, customer, frequency, expense);
     }
 
     @Override
@@ -126,6 +142,7 @@ public class Reminder extends BaseEntity {
                 ", reminderTime=" + reminderTime +
                 ", customer=" + customer +
                 ", frequency=" + frequency +
+                ", expense=" + expense +
                 '}';
     }
 }

@@ -3,6 +3,8 @@ package io.thedatapirates.financeapi.domains.reminders;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.Customer;
 import io.thedatapirates.financeapi.domains.customers.CustomerRepository;
+import io.thedatapirates.financeapi.domains.expenses.Expense;
+import io.thedatapirates.financeapi.domains.expenses.ExpenseRepository;
 import io.thedatapirates.financeapi.domains.frequencies.Frequency;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyRepository;
 import io.thedatapirates.financeapi.exceptions.BadRequest;
@@ -38,6 +40,9 @@ public class ReminderServiceImpl implements ReminderService {
     private FrequencyRepository frequencyRepository;
 
     @Autowired
+    private ExpenseRepository expenseRepository;
+
+    @Autowired
     private ReminderRepository reminderRepository;
 
     /**
@@ -70,9 +75,10 @@ public class ReminderServiceImpl implements ReminderService {
      * @return newly created reminder
      */
     @Override
-    public Reminder createReminderForCustomer(String token, Long frequencyId, Reminder newReminder) {
+    public Reminder createReminderForCustomer(String token, Long frequencyId, Long expenseId, Reminder newReminder) {
         Reminder existingReminder;
         Frequency existingFrequency;
+        Expense existingExpense;
         Customer existingCustomer = getCustomerFromToken(token);
         String catName = newReminder.getName();
 
@@ -86,6 +92,7 @@ public class ReminderServiceImpl implements ReminderService {
         try {
             existingReminder = reminderRepository.findReminderByName(newReminder.getName());
             existingFrequency = frequencyRepository.findFrequencyById(frequencyId);
+            existingExpense = expenseRepository.findExpenseById(expenseId);
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
 
@@ -93,9 +100,11 @@ public class ReminderServiceImpl implements ReminderService {
         }
 
         if (existingReminder != null) throw new Conflict(StringConstants.REMINDER_NAME_CONFLICT);
+        else if (existingExpense == null) throw new BadRequest(StringConstants.EXPENSE_BAD_ID);
         else if (existingFrequency == null) throw new BadRequest(StringConstants.BAD_FREQUENCY);
 
         newReminder.setFrequency(existingFrequency);
+        newReminder.setExpense(existingExpense);
 
         try {
             return reminderRepository.save(newReminder);
@@ -116,10 +125,13 @@ public class ReminderServiceImpl implements ReminderService {
      * @return newly updated reminder
      */
     @Override
-    public Reminder updateReminderForCustomer(String token, Long frequencyId, Long reminderId, Reminder updatedReminder) {
+    public Reminder updateReminderForCustomer(
+            String token, Long frequencyId, Long reminderId, Long expenseId, Reminder updatedReminder
+    ) {
         Reminder existingReminder;
         Reminder existingName;
         Frequency existingFrequency;
+        Expense existingExpense;
         Customer existingCustomer = getCustomerFromToken(token);
         String catName = updatedReminder.getName();
 
@@ -132,6 +144,7 @@ public class ReminderServiceImpl implements ReminderService {
             existingReminder = reminderRepository.findReminderById(reminderId);
             existingName = reminderRepository.findReminderByName(updatedReminder.getName());
             existingFrequency = frequencyRepository.findFrequencyById(frequencyId);
+            existingExpense = expenseRepository.findExpenseById(expenseId);
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
 
@@ -139,6 +152,7 @@ public class ReminderServiceImpl implements ReminderService {
         }
 
         if (existingReminder == null) throw new NotFound(StringConstants.REMINDER_NOT_FOUND);
+        else if (existingExpense == null) throw new BadRequest(StringConstants.EXPENSE_BAD_ID);
         else if (existingName != null) {
             if (!Objects.equals(existingReminder.getName(), updatedReminder.getName()))
                 throw new Conflict(StringConstants.REMINDER_NAME_CONFLICT);
@@ -148,6 +162,7 @@ public class ReminderServiceImpl implements ReminderService {
         updatedReminder.setDateCreated(existingReminder.getDateCreated());
         updatedReminder.setCustomer(existingCustomer);
         updatedReminder.setFrequency(existingFrequency);
+        updatedReminder.setExpense(existingExpense);
 
         try {
             return reminderRepository.save(updatedReminder);

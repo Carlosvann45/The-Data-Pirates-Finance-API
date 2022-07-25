@@ -6,7 +6,6 @@ import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.cashflows.ResponseCashFlowDTO;
 import io.thedatapirates.financeapi.domains.categories.CategoryDTO;
 import io.thedatapirates.financeapi.domains.expenses.ResponseExpenseDTO;
-import io.thedatapirates.financeapi.domains.frequencies.Frequency;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyDTO;
 import io.thedatapirates.financeapi.domains.investments.InvestmentDTO;
 import io.thedatapirates.financeapi.domains.jwt.JwtResponse;
@@ -129,7 +128,7 @@ public class CustomerController {
                     cashFlowDTO.setDateUpdated(cashFlowItem.getDateUpdated());
                     cashFlowDTO.setName(cashFlowItem.getName());
                     cashFlowDTO.setAmount(cashFlowItem.getAmount());
-                    cashFlowDTO.setFrequency(mapper.convertValue(cashFlowItem.getFrequency(),FrequencyDTO.class));
+                    cashFlowDTO.setFrequency(mapper.convertValue(cashFlowItem.getFrequency(), FrequencyDTO.class));
 
                     return cashFlowDTO;
                 })
@@ -197,6 +196,7 @@ public class CustomerController {
         newCustomer.setInvestments(investments);
         newCustomer.setCashFlowItems(cashFlowItems);
         newCustomer.setReminders(reminders);
+        newCustomer.setExpenses(expenses);
 
         return newCustomer;
     }

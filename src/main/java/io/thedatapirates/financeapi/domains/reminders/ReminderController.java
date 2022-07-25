@@ -3,7 +3,6 @@ package io.thedatapirates.financeapi.domains.reminders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
-import io.thedatapirates.financeapi.domains.frequencies.Frequency;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -69,7 +68,9 @@ public class ReminderController {
 
         Reminder reminder = mapper.convertValue(reminderDTO, Reminder.class);
 
-        Reminder newReminder = reminderService.createReminderForCustomer(token, reminderDTO.getFrequencyId(), reminder);
+        Reminder newReminder = reminderService.createReminderForCustomer(
+                token, reminderDTO.getFrequencyId(), reminderDTO.getExpenseId(), reminder
+        );
 
         ResponseReminderDTO newReminderDTO = mapReminderToDTO(newReminder);
 
@@ -96,7 +97,9 @@ public class ReminderController {
 
         Reminder reminder = mapper.convertValue(reminderDTO, Reminder.class);
 
-        Reminder updatedReminder = reminderService.updateReminderForCustomer(token, reminderDTO.getFrequencyId(), reminderId, reminder);
+        Reminder updatedReminder = reminderService.updateReminderForCustomer(
+                token, reminderDTO.getFrequencyId(), reminderDTO.getExpenseId(), reminderId, reminder
+        );
 
         ResponseReminderDTO updatedReminderDTO = mapReminderToDTO(updatedReminder);
 

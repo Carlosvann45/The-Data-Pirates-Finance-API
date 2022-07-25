@@ -72,10 +72,7 @@ public class StringConstants {
     public static final String REMINDER_NAME_CONFLICT = "Reminder with given name already exist.";
     public static final String DESCRIPTION_REQUIRED = "Description is a required field.";
     public static final String DESCRIPTION_MIN = "Description must be at least 3 characters long.";
-    public static final String TIME_ERROR = "Time must follow this format: 00:00:00";
-
-    // RegEx
-    public static final String TIME_VALIDATION = "^[0-9]{2}:[0-9]{2}:[0-9]{2}$";
+    public static final String EXPENSE_BAD_ID = "Expense with the given id does not exist";
 
     // Misc
     public static final String EMPTY_STRING = " ";
