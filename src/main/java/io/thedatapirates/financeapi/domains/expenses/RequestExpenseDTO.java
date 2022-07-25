@@ -1,8 +1,13 @@
 package io.thedatapirates.financeapi.domains.expenses;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
+import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -10,19 +15,26 @@ import java.util.Date;
  */
 public class RequestExpenseDTO extends BaseEntityDTO {
 
+    @NotBlank(message = StringConstants.NAME_REQUIRED)
+    @Size(min = 3, message = StringConstants.NAME_MIN)
     private String name;
 
+    @Range(min = 0)
     private double amount;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date dueDate;
 
     @JsonIgnore
+    @Range(min = 0)
     private Long categoryId;
 
     @JsonIgnore
+    @Range(min = 1, max = 4)
     private Long frequencyId;
 
     @JsonIgnore
+    @Range(min = 1, max = 4)
     private Long priorityLevelId;
 
     public RequestExpenseDTO() {
