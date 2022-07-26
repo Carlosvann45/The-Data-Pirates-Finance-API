@@ -1,5 +1,8 @@
 package io.thedatapirates.financeapi.config;
 
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.domains.customers.CustomerServiceImpl;
 import io.thedatapirates.financeapi.utility.CustomAuthenticationFilter;
@@ -17,9 +20,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
-
 /**
  * Configuration setup for spring boot web security
  */
@@ -27,78 +27,77 @@ import static org.springframework.http.HttpMethod.POST;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+  @Autowired
+  private BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    private CustomerServiceImpl customerService;
+  @Autowired
+  private CustomerServiceImpl customerService;
 
-    @Autowired
-    private JWTUtility jwtUtility;
+  @Autowired
+  private JWTUtility jwtUtility;
 
-    @Autowired
-    private JwtFilter jwtFilter;
+  @Autowired
+  private JwtFilter jwtFilter;
 
-    /**
-     * Configures Http Security to utilize custom authorization
-     *
-     * @param security HttpSecurity for configuration
-     */
-    @Override
-    protected void configure(HttpSecurity security) throws Exception {
-        CustomAuthenticationFilter customAuthFilter =
-                new CustomAuthenticationFilter(authenticationManagerBean(), jwtUtility);
+  /**
+   * Configures Http Security to utilize custom authorization
+   *
+   * @param security HttpSecurity for configuration
+   */
+  @Override
+  protected void configure(HttpSecurity security) throws Exception {
+    CustomAuthenticationFilter customAuthFilter =
+        new CustomAuthenticationFilter(authenticationManagerBean(), jwtUtility);
 
-        customAuthFilter.setFilterProcessesUrl(Paths.CUSTOMERS_PATH.concat(Paths.LOGIN_PATH));
+    customAuthFilter.setFilterProcessesUrl(Paths.CUSTOMERS_PATH.concat(Paths.LOGIN_PATH));
 
-        security.csrf().disable();
+    security.csrf().disable();
 
-        security.authorizeRequests()
-                .antMatchers(POST, Paths.CUSTOMERS_PATH.concat(Paths.CREATE_PATH))
-                .permitAll();
+    security.authorizeRequests()
+        .antMatchers(POST, Paths.CUSTOMERS_PATH.concat(Paths.CREATE_PATH))
+        .permitAll();
 
-        security.authorizeRequests()
-                .antMatchers(GET, Paths.CUSTOMERS_PATH.concat(Paths.REFRESH_TOKEN_PATH))
-                .permitAll();
+    security.authorizeRequests()
+        .antMatchers(GET, Paths.CUSTOMERS_PATH.concat(Paths.REFRESH_TOKEN_PATH))
+        .permitAll();
 
-        security.authorizeRequests()
-                .antMatchers(GET, Paths.FREQUENCY_PATH.concat(Paths.ALL_EXTENSIONS))
-                .permitAll();
+    security.authorizeRequests()
+        .antMatchers(GET, Paths.FREQUENCY_PATH.concat(Paths.ALL_EXTENSIONS))
+        .permitAll();
 
+    security.authorizeRequests()
+        .antMatchers(GET, Paths.PRIORITY_LEVEL_PATH.concat(Paths.ALL_EXTENSIONS))
+        .permitAll();
 
-        security.authorizeRequests()
-                .antMatchers(GET, Paths.PRIORITY_LEVEL_PATH.concat(Paths.ALL_EXTENSIONS))
-                .permitAll();
+    security.authorizeRequests()
+        .anyRequest()
+        .authenticated()
+        .and()
+        .sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        security.authorizeRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    security.addFilter(customAuthFilter);
+    security.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+  }
 
-        security.addFilter(customAuthFilter);
-        security.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-    }
+  /**
+   * Configures Authentication manager builder
+   *
+   * @param auth authentication manager builder to configure
+   */
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(customerService).passwordEncoder(passwordEncoder);
+  }
 
-    /**
-     * Configures Authentication manager builder
-     *
-     * @param auth authentication manager builder to configure
-     */
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customerService).passwordEncoder(passwordEncoder);
-    }
-
-    /**
-     * Gets authentication manager
-     *
-     * @return Authentication manger bean
-     */
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+  /**
+   * Gets authentication manager
+   *
+   * @return Authentication manger bean
+   */
+  @Bean
+  @Override
+  public AuthenticationManager authenticationManagerBean() throws Exception {
+    return super.authenticationManagerBean();
+  }
 }

@@ -6,11 +6,13 @@ import java.util.List;
  * Interface class provides abstraction layer for cash flow service
  */
 public interface CashFlowService {
-    List<CashFlow> getCashFlowByCustomer(String token);
 
-    CashFlow createCashFlowForCustomer(String token, Long frequencyId, CashFlow newCashFlowItem);
+  List<CashFlow> getCashFlowByCustomer(String token);
 
-    CashFlow updateCashFlowForCustomer(String token, Long frequencyId, Long cashFlowId, CashFlow updatedCashFlowItem);
+  CashFlow createCashFlowForCustomer(String token, Long frequencyId, CashFlow newCashFlowItem);
 
-    void deleteCashFlowForCustomer(String token, Long cashFlowId);
+  CashFlow updateCashFlowForCustomer(String token, Long frequencyId, Long cashFlowId,
+      CashFlow updatedCashFlowItem);
+
+  void deleteCashFlowForCustomer(String token, Long cashFlowId);
 }

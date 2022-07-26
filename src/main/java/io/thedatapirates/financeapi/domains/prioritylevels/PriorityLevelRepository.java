@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Interface to access and query the database
  */
 public interface PriorityLevelRepository extends JpaRepository<PriorityLevel, Long> {
-    PriorityLevel findPriorityLevelById(Long id);
+
+  PriorityLevel findPriorityLevelById(Long id);
 }

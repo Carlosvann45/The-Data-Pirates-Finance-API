@@ -1,123 +1,127 @@
 package io.thedatapirates.financeapi.domains.categories;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.apache.http.HttpHeaders.AUTHORIZATION;
+
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
+import io.thedatapirates.financeapi.utility.MapperExtensions;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.validation.Valid;
+import lombok.experimental.ExtensionMethod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.apache.http.HttpHeaders.AUTHORIZATION;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Controller for category endpoints
  */
 @RestController
 @RequestMapping(value = Paths.CATEGORY_PATH)
+@ExtensionMethod(MapperExtensions.class)
 public class CategoryController {
 
-    private final Logger logger = LogManager.getLogger(CategoryController.class);
+  private final Logger logger = LogManager.getLogger(CategoryController.class);
 
-    @Autowired
-    private CategoryService categoryService;
+  @Autowired
+  private CategoryService categoryService;
 
-    /**
-     * Gets all categories related to a customer through a bearer token
-     *
-     * @param token token to get username of customer from
-     * @return all categories of a given customer
-     */
-    @GetMapping
-    public ResponseEntity<List<CategoryDTO>> getCategoriesByCustomer(
-            @RequestHeader(AUTHORIZATION) String token
-    ) {
-        logger.info(StringConstants.LOG_GET_CATEGORIES_CUSTOMER);
+  /**
+   * Gets all categories related to a customer through a bearer token
+   *
+   * @param token token to get username of customer from
+   * @return all categories of a given customer
+   */
+  @GetMapping
+  public ResponseEntity<List<CategoryDTO>> getCategoriesByCustomer(
+      @RequestHeader(AUTHORIZATION) String token
+  ) {
+    logger.info(StringConstants.LOG_GET_CATEGORIES_CUSTOMER);
 
-        ObjectMapper mapper = new ObjectMapper();
+    List<Category> categories = categoryService.getCategoriesByCustomer(token);
 
-        List<Category> categories = categoryService.getCategoriesByCustomer(token);
+    List<CategoryDTO> categoryDTOs = categories
+        .stream()
+        .map(category -> category.mapCategoryToDTO())
+        .collect(Collectors.toList());
 
-        List<CategoryDTO> categoryDTOs = categories
-                .stream()
-                .map(category -> mapper.convertValue(category, CategoryDTO.class))
-                .collect(Collectors.toList());
+    return new ResponseEntity<>(categoryDTOs, HttpStatus.OK);
+  }
 
-        return new ResponseEntity<>(categoryDTOs, HttpStatus.OK);
-    }
+  /**
+   * Creates a category for a customer from bearer token
+   *
+   * @param token       token to get a customer from
+   * @param categoryDTO category to create
+   * @return newly created category
+   */
+  @PostMapping
+  public ResponseEntity<CategoryDTO> createCategoryForCustomer(
+      @RequestHeader(AUTHORIZATION) String token, @Valid @RequestBody CategoryDTO categoryDTO
+  ) {
+    logger.info(StringConstants.LOG_CREATE_CATEGORIES_CUSTOMER);
 
-    /**
-     * Creates a category for a customer from bearer token
-     *
-     * @param token       token to get a customer from
-     * @param categoryDTO category to create
-     * @return newly created category
-     */
-    @PostMapping
-    public ResponseEntity<CategoryDTO> createCategoryForCustomer(
-            @RequestHeader(AUTHORIZATION) String token, @Valid @RequestBody CategoryDTO categoryDTO
-    ) {
-        logger.info(StringConstants.LOG_CREATE_CATEGORIES_CUSTOMER);
+    Category category = categoryDTO.mapDTOToCategory();
 
-        ObjectMapper mapper = new ObjectMapper();
+    Category newCategory = categoryService.createCategoryForCustomer(token, category);
 
-        Category category = mapper.convertValue(categoryDTO, Category.class);
+    CategoryDTO newCategoryDTO = newCategory.mapCategoryToDTO();
 
-        Category newCategory = categoryService.createCategoryForCustomer(token, category);
+    return new ResponseEntity<>(newCategoryDTO, HttpStatus.CREATED);
+  }
 
-        CategoryDTO newCategoryDTO = mapper.convertValue(newCategory, CategoryDTO.class);
+  /**
+   * Updates an existing category from a customer bearer token
+   *
+   * @param token       token to get customer from
+   * @param categoryId  category id for category to update
+   * @param categoryDTO updated category
+   * @return newly updated category
+   */
+  @PutMapping(Paths.CATEGORY_ID)
+  public ResponseEntity<CategoryDTO> updateCategoryForCustomer(
+      @RequestHeader(AUTHORIZATION) String token,
+      @PathVariable Long categoryId,
+      @Valid @RequestBody CategoryDTO categoryDTO
+  ) {
+    logger.info(StringConstants.LOG_UPDATE_CATEGORIES_CUSTOMER);
 
-        return new ResponseEntity<>(newCategoryDTO, HttpStatus.CREATED);
-    }
+    Category category = categoryDTO.mapDTOToCategory();
 
-    /**
-     * Updates an existing category from a customer bearer token
-     *
-     * @param token       token to get customer from
-     * @param categoryId  category id for category to update
-     * @param categoryDTO updated category
-     * @return newly updated category
-     */
-    @PutMapping(Paths.CATEGORY_ID)
-    public ResponseEntity<CategoryDTO> updateCategoryForCustomer(
-            @RequestHeader(AUTHORIZATION) String token,
-            @PathVariable Long categoryId,
-            @Valid @RequestBody CategoryDTO categoryDTO
-    ) {
-        logger.info(StringConstants.LOG_UPDATE_CATEGORIES_CUSTOMER);
+    Category updatedCategory = categoryService.updateCategoryForCustomer(token, categoryId,
+        category);
 
-        ObjectMapper mapper = new ObjectMapper();
+    CategoryDTO updatedCategoryDTO = updatedCategory.mapCategoryToDTO();
 
-        Category category = mapper.convertValue(categoryDTO, Category.class);
+    return new ResponseEntity<>(updatedCategoryDTO, HttpStatus.OK);
+  }
 
-        Category updatedCategory = categoryService.updateCategoryForCustomer(token, categoryId, category);
+  /**
+   * Deletes a category from a user with a specified id
+   *
+   * @param token      token to get user from
+   * @param categoryId category id to get category
+   * @return no content
+   */
+  @DeleteMapping(Paths.CATEGORY_ID)
+  public ResponseEntity<?> deleteCategoryForCustomer(
+      @RequestHeader(AUTHORIZATION) String token, @PathVariable Long categoryId
+  ) {
+    logger.info(StringConstants.LOG_DELETE_CATEGORIES_CUSTOMER);
 
-        CategoryDTO updatedCategoryDTO = mapper.convertValue(updatedCategory, CategoryDTO.class);
+    categoryService.deleteCategoryForCustomer(token, categoryId);
 
-        return new ResponseEntity<>(updatedCategoryDTO, HttpStatus.OK);
-    }
-
-    /**
-     * Deletes a category from a user with a specified id
-     *
-     * @param token      token to get user from
-     * @param categoryId category id to get category
-     * @return no content
-     */
-    @DeleteMapping(Paths.CATEGORY_ID)
-    public ResponseEntity<?> deleteCategoryForCustomer(
-            @RequestHeader(AUTHORIZATION) String token, @PathVariable Long categoryId
-    ) {
-        logger.info(StringConstants.LOG_DELETE_CATEGORIES_CUSTOMER);
-
-        categoryService.deleteCategoryForCustomer(token, categoryId);
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
 }

@@ -4,41 +4,42 @@ package io.thedatapirates.financeapi.constants;
  * Constant variables for api paths
  */
 public class Paths {
-    // Customers
-    public static final String CUSTOMERS_PATH = "/customers";
-    public static final String REFRESH_TOKEN_PATH = "/refresh/token";
-    public static final String LOGIN_PATH = "/login";
 
-    // Categories
-    public static final String CATEGORY_PATH = "/categories";
-    public static final String CATEGORY_ID = "{categoryId}";
+  // Customers
+  public static final String CUSTOMERS_PATH = "/customers";
+  public static final String REFRESH_TOKEN_PATH = "/refresh/token";
+  public static final String LOGIN_PATH = "/login";
 
-    // Frequencies
-    public static final String FREQUENCY_PATH = "/frequencies";
-    public static final String FREQUENCY_ID = "{frequencyId}";
+  // Categories
+  public static final String CATEGORY_PATH = "/categories";
+  public static final String CATEGORY_ID = "{categoryId}";
 
-    // Priority Levels
-    public static final String PRIORITY_LEVEL_PATH = "/priorityLevels";
-    public static final String PRIORITY_LEVEL_ID = "{priorityLevelId}";
+  // Frequencies
+  public static final String FREQUENCY_PATH = "/frequencies";
+  public static final String FREQUENCY_ID = "{frequencyId}";
 
-    // Investments
-    public static final String INVESTMENTS_PATH = "/investments";
-    public static final String INVESTMENT_ID = "{investmentId}";
+  // Priority Levels
+  public static final String PRIORITY_LEVEL_PATH = "/priorityLevels";
+  public static final String PRIORITY_LEVEL_ID = "{priorityLevelId}";
 
-    // Cash Flow
-    public static final String CASH_FLOW_PATH = "/cashFlows";
-    public static final String CASH_FLOW_ID = "{cashFlowId}";
+  // Investments
+  public static final String INVESTMENTS_PATH = "/investments";
+  public static final String INVESTMENT_ID = "{investmentId}";
 
-    // Reminder
-    public static final String REMINDER_PATH = "/reminders";
-    public static final String REMINDER_ID = "{reminderId}";
+  // Cash Flow
+  public static final String CASH_FLOW_PATH = "/cashFlows";
+  public static final String CASH_FLOW_ID = "{cashFlowId}";
 
-    // Expense
-    public static final String EXPENSE_PATH = "/expenses";
-    public static final String EXPENSE_ID = "{expenseId}";
+  // Reminder
+  public static final String REMINDER_PATH = "/reminders";
+  public static final String REMINDER_ID = "{reminderId}";
 
-    // Misc
-    public static final String CREATE_PATH = "/create";
-    public static final String ALL_EXTENSIONS = "/**";
-    public static final String USERNAME_PATH = "/{username}";
+  // Expense
+  public static final String EXPENSE_PATH = "/expenses";
+  public static final String EXPENSE_ID = "{expenseId}";
+
+  // Misc
+  public static final String CREATE_PATH = "/create";
+  public static final String ALL_EXTENSIONS = "/**";
+  public static final String USERNAME_PATH = "/{username}";
 }

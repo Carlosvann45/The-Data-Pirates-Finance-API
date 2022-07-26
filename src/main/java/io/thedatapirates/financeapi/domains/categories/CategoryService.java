@@ -6,11 +6,12 @@ import java.util.List;
  * Interface class provides abstraction layer for category service
  */
 public interface CategoryService {
-    List<Category> getCategoriesByCustomer(String token);
 
-    Category createCategoryForCustomer(String token, Category newCategory);
+  List<Category> getCategoriesByCustomer(String token);
 
-    Category updateCategoryForCustomer(String token, Long categoryId, Category updatedCategory);
+  Category createCategoryForCustomer(String token, Category newCategory);
 
-    void deleteCategoryForCustomer(String token, Long categoryId);
+  Category updateCategoryForCustomer(String token, Long categoryId, Category updatedCategory);
+
+  void deleteCategoryForCustomer(String token, Long categoryId);
 }
