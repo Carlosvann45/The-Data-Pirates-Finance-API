@@ -39,6 +39,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Autowired
   private JwtFilter jwtFilter;
 
+  private static final String[] AUTH_WHITELIST = {
+      // -- Swagger UI v2
+      "/v2/api-docs",
+      "/swagger-resources",
+      "/swagger-resources/**",
+      "/configuration/ui",
+      "/configuration/security",
+      "/swagger-ui.html",
+      "/webjars/**",
+      // -- Swagger UI v3 (OpenAPI)
+      "/v3/api-docs/**",
+      "/swagger-ui/**"
+  };
+
   /**
    * Configures Http Security to utilize custom authorization
    *
@@ -67,6 +81,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     security.authorizeRequests()
         .antMatchers(GET, Paths.PRIORITY_LEVEL_PATH.concat(Paths.ALL_EXTENSIONS))
+        .permitAll();
+
+    security.authorizeRequests()
+        .antMatchers(AUTH_WHITELIST)
         .permitAll();
 
     security.authorizeRequests()

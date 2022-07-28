@@ -226,6 +226,7 @@ public class MapperExtensions {
     reminderDTO.setDescription(reminder.getDescription());
     reminderDTO.setReminderTime(reminder.getReminderTime());
     reminderDTO.setFrequency(mapFrequencyToDTO(reminder.getFrequency()));
+    reminderDTO.setExpense(mapExpenseToDTO(reminder.getExpense()));
 
     return reminderDTO;
   }
@@ -262,9 +263,11 @@ public class MapperExtensions {
     expenseDTO.setDateCreated(expense.getDateCreated());
     expenseDTO.setDateUpdated(expense.getDateUpdated());
     expenseDTO.setName(expense.getName());
+    expenseDTO.setAmount(expense.getAmount());
+    expenseDTO.setDueDate(expense.getDueDate());
     expenseDTO.setCategory(mapCategoryToDTO(expense.getCategory()));
     expenseDTO.setFrequency(mapFrequencyToDTO(expense.getFrequency()));
-    expenseDTO.setReminder(mapReminderToDTO(expense.getReminder()));
+    expenseDTO.setPriorityLevel(mapPriorityLevelToDTO(expense.getPriorityLevel()));
 
     return expenseDTO;
   }
@@ -282,6 +285,8 @@ public class MapperExtensions {
     expense.setDateCreated(expenseDTO.getDateCreated());
     expense.setDateUpdated(expenseDTO.getDateUpdated());
     expense.setName(expenseDTO.getName());
+    expense.setAmount(expenseDTO.getAmount());
+    expense.setDueDate(expenseDTO.getDueDate());
 
     return expense;
   }

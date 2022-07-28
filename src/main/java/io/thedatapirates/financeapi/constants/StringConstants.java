@@ -83,6 +83,7 @@ public class StringConstants {
   public static final String EXPENSE_NAME_CONFLICT = "Expense with given name already exist.";
   public static final String BAD_CATEGORY = "Category with given id does not exist.";
   public static final String BAD_PRIORITY_LEVEL = "Priority Level with given id does not exist.";
+  public static final String EXPENSE_HAS_REMINDER = "Expense already contains a reminder.";
 
   // Misc
   public static final String EMPTY_STRING = " ";
@@ -97,8 +98,13 @@ public class StringConstants {
   public static final String REMINDER_ID = "reminder_id";
   public static final String PRIORITY_LEVEL = "priorityLevel";
   public static final String PRIORITY_LEVEL_ID = "priority_level_id";
+  public static final String EXPENSE_ID = "expense_id";
+  public static final String EXPENSE = "expense";
   public static final String ID = "id";
   public static final String EXCEPTION_RESOLVER = "handlerExceptionResolver";
   public static final String STOCK = "Stock";
+  public static final String HEADER = "header";
+  public static final String ACCESS_TOKEN = "Access Token";
+
 
 }

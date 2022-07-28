@@ -1,6 +1,7 @@
 package io.thedatapirates.financeapi.domains.reminders;
 
 import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
+import io.thedatapirates.financeapi.domains.expenses.ResponseExpenseDTO;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyDTO;
 import java.util.Date;
 
@@ -17,29 +18,34 @@ public class ResponseReminderDTO extends BaseEntityDTO {
 
   private FrequencyDTO frequency;
 
+  private ResponseExpenseDTO expense;
+
   public ResponseReminderDTO() {
   }
 
   public ResponseReminderDTO(
       Date dateCreated, Date dateUpdated, String name, String description,
-      Date reminderTime, FrequencyDTO frequency
+      Date reminderTime, FrequencyDTO frequency, ResponseExpenseDTO expense
   ) {
     super(dateCreated, dateUpdated);
     this.name = name;
     this.description = description;
     this.reminderTime = reminderTime;
     this.frequency = frequency;
+    this.expense = expense;
   }
 
   public ResponseReminderDTO(
       Long id, Date dateCreated, Date dateUpdated, String name,
-      String description, Date reminderTime, FrequencyDTO frequency
+      String description, Date reminderTime, FrequencyDTO frequency,
+      ResponseExpenseDTO expense
   ) {
     super(id, dateCreated, dateUpdated);
     this.name = name;
     this.description = description;
     this.reminderTime = reminderTime;
     this.frequency = frequency;
+    this.expense = expense;
   }
 
   public String getName() {
@@ -72,5 +78,13 @@ public class ResponseReminderDTO extends BaseEntityDTO {
 
   public void setFrequency(FrequencyDTO frequency) {
     this.frequency = frequency;
+  }
+
+  public ResponseExpenseDTO getExpense() {
+    return expense;
+  }
+
+  public void setExpense(ResponseExpenseDTO expense) {
+    this.expense = expense;
   }
 }

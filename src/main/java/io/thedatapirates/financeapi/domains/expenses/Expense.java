@@ -10,13 +10,14 @@ import io.thedatapirates.financeapi.domains.entity.BaseEntity;
 import io.thedatapirates.financeapi.domains.frequencies.Frequency;
 import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevel;
 import io.thedatapirates.financeapi.domains.reminders.Reminder;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 /**
  * This class that represents a customer entity in the database
@@ -48,9 +49,8 @@ public class Expense extends BaseEntity {
   @JoinColumn(name = StringConstants.PRIORITY_LEVEL_ID, nullable = false)
   private PriorityLevel priorityLevel;
 
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = StringConstants.REMINDER_ID, referencedColumnName = StringConstants.ID)
-  private Reminder reminder = new Reminder();
+  @OneToMany(mappedBy = StringConstants.EXPENSE)
+  private List<Reminder> reminders = new ArrayList<>();
 
   public Expense() {
   }
@@ -58,7 +58,7 @@ public class Expense extends BaseEntity {
   public Expense(
       Date dateCreated, Date dateUpdated, String name, double amount,
       Date dueDate, Customer customer, Category category, Frequency frequency,
-      PriorityLevel priorityLevel, Reminder reminder
+      PriorityLevel priorityLevel, List<Reminder> reminders
   ) {
     super(dateCreated, dateUpdated);
     this.name = name;
@@ -68,13 +68,13 @@ public class Expense extends BaseEntity {
     this.category = category;
     this.frequency = frequency;
     this.priorityLevel = priorityLevel;
-    this.reminder = reminder;
+    this.reminders = reminders;
   }
 
   public Expense(
       Long id, Date dateCreated, Date dateUpdated,
       String name, double amount, Date dueDate, Customer customer,
-      Category category, Frequency frequency, PriorityLevel priorityLevel, Reminder reminder
+      Category category, Frequency frequency, PriorityLevel priorityLevel, List<Reminder> reminders
   ) {
     super(id, dateCreated, dateUpdated);
     this.name = name;
@@ -84,7 +84,7 @@ public class Expense extends BaseEntity {
     this.category = category;
     this.frequency = frequency;
     this.priorityLevel = priorityLevel;
-    this.reminder = reminder;
+    this.reminders = reminders;
   }
 
   public String getName() {
@@ -143,12 +143,12 @@ public class Expense extends BaseEntity {
     this.priorityLevel = priorityLevel;
   }
 
-  public Reminder getReminder() {
-    return reminder;
+  public List<Reminder> getReminders() {
+    return reminders;
   }
 
-  public void setReminder(Reminder reminder) {
-    this.reminder = reminder;
+  public void setReminders(List<Reminder> reminders) {
+    this.reminders = reminders;
   }
 
   @Override
@@ -167,14 +167,14 @@ public class Expense extends BaseEntity {
         && Objects.equals(dueDate, expense.dueDate) && Objects.equals(customer, expense.customer)
         && Objects.equals(category, expense.category)
         && Objects.equals(frequency, expense.frequency)
-        && Objects.equals(priorityLevel, expense.priorityLevel) && Objects.equals(reminder,
-        expense.reminder);
+        && Objects.equals(priorityLevel, expense.priorityLevel) && Objects.equals(reminders,
+        expense.reminders);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), name, amount, dueDate, customer, category, frequency,
-        priorityLevel, reminder);
+        priorityLevel, reminders);
   }
 
   @Override
@@ -187,7 +187,7 @@ public class Expense extends BaseEntity {
         ", category=" + category +
         ", frequency=" + frequency +
         ", priorityLevel=" + priorityLevel +
-        ", reminder=" + reminder +
+        ", reminders=" + reminders +
         '}';
   }
 }

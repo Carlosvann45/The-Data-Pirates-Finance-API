@@ -13,7 +13,6 @@ import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 /**
  * This class that represents a reminder entity in the database
@@ -37,7 +36,8 @@ public class Reminder extends BaseEntity {
   @JoinColumn(name = StringConstants.FREQUENCY_ID, nullable = false)
   private Frequency frequency;
 
-  @OneToOne(mappedBy = StringConstants.REMINDER)
+  @ManyToOne
+  @JoinColumn(name = StringConstants.EXPENSE_ID, nullable = false)
   private Expense expense;
 
   public Reminder() {

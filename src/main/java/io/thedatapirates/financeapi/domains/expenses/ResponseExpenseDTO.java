@@ -4,7 +4,6 @@ import io.thedatapirates.financeapi.domains.categories.CategoryDTO;
 import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyDTO;
 import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevelDTO;
-import io.thedatapirates.financeapi.domains.reminders.ResponseReminderDTO;
 import java.util.Date;
 
 /**
@@ -24,15 +23,13 @@ public class ResponseExpenseDTO extends BaseEntityDTO {
 
   private PriorityLevelDTO priorityLevel;
 
-  private ResponseReminderDTO reminder = new ResponseReminderDTO();
-
   public ResponseExpenseDTO() {
   }
 
   public ResponseExpenseDTO(
       Date dateCreated, Date dateUpdated, String name, double amount,
       Date dueDate, CategoryDTO category, FrequencyDTO frequency,
-      PriorityLevelDTO priorityLevel, ResponseReminderDTO reminder
+      PriorityLevelDTO priorityLevel
   ) {
     super(dateCreated, dateUpdated);
     this.name = name;
@@ -41,14 +38,13 @@ public class ResponseExpenseDTO extends BaseEntityDTO {
     this.category = category;
     this.frequency = frequency;
     this.priorityLevel = priorityLevel;
-    this.reminder = reminder;
   }
 
   public ResponseExpenseDTO(
       Long id, Date dateCreated, Date dateUpdated,
       String name, double amount, Date dueDate,
       CategoryDTO category, FrequencyDTO frequency,
-      PriorityLevelDTO priorityLevel, ResponseReminderDTO reminder
+      PriorityLevelDTO priorityLevel
   ) {
     super(id, dateCreated, dateUpdated);
     this.name = name;
@@ -57,7 +53,6 @@ public class ResponseExpenseDTO extends BaseEntityDTO {
     this.category = category;
     this.frequency = frequency;
     this.priorityLevel = priorityLevel;
-    this.reminder = reminder;
   }
 
   public String getName() {
@@ -106,13 +101,5 @@ public class ResponseExpenseDTO extends BaseEntityDTO {
 
   public void setPriorityLevel(PriorityLevelDTO priorityLevel) {
     this.priorityLevel = priorityLevel;
-  }
-
-  public ResponseReminderDTO getReminder() {
-    return reminder;
-  }
-
-  public void setReminder(ResponseReminderDTO reminder) {
-    this.reminder = reminder;
   }
 }

@@ -92,7 +92,7 @@ public class ExpenseController {
    * @param expenseDTO updated expense
    * @return newly updated expense
    */
-  @PutMapping(Paths.REMINDER_ID)
+  @PutMapping(Paths.EXPENSE_ID)
   public ResponseEntity<ResponseExpenseDTO> updateReminderForCustomer(
       @RequestHeader(AUTHORIZATION) String token,
       @PathVariable Long expenseId,
@@ -119,7 +119,7 @@ public class ExpenseController {
    * @param expenseId expense id to get category
    * @return no content
    */
-  @DeleteMapping(Paths.REMINDER_ID)
+  @DeleteMapping(Paths.EXPENSE_ID)
   public ResponseEntity<?> deleteExpenseForCustomer(
       @RequestHeader(AUTHORIZATION) String token, @PathVariable Long expenseId
   ) {
