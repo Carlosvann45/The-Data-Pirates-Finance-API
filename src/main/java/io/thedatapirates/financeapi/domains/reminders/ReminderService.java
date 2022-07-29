@@ -7,13 +7,13 @@ import java.util.List;
  */
 public interface ReminderService {
 
-  List<Reminder> getReminderByCustomer(String token);
+    List<Reminder> getReminderByCustomer(String token);
 
-  Reminder createReminderForCustomer(String token, Long frequencyId, Long expenseId,
-      Reminder newReminder);
+    Reminder createReminderForCustomer(String token, Long frequencyId, Long expenseId,
+                                       Reminder newReminder);
 
-  Reminder updateReminderForCustomer(String token, Long frequencyId, Long reminderId,
-      Long expenseId, Reminder updatedReminder);
+    Reminder updateReminderForCustomer(String token, Long frequencyId, Long reminderId,
+                                       Long expenseId, Reminder updatedReminder);
 
-  void deleteReminderForCustomer(String token, Long reminderId);
+    void deleteReminderForCustomer(String token, Long reminderId);
 }

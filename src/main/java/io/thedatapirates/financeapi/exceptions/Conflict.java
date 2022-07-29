@@ -5,10 +5,10 @@ package io.thedatapirates.financeapi.exceptions;
  */
 public class Conflict extends RuntimeException {
 
-  public Conflict() {
-  }
+    public Conflict() {
+    }
 
-  public Conflict(String message) {
-    super(message);
-  }
+    public Conflict(String message) {
+        super(message);
+    }
 }

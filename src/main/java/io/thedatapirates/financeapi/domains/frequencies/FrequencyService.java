@@ -7,7 +7,7 @@ import java.util.List;
  */
 public interface FrequencyService {
 
-  List<Frequency> getFrequencies();
+    List<Frequency> getFrequencies();
 
-  Frequency getFrequencyById(Long id);
+    Frequency getFrequencyById(Long id);
 }

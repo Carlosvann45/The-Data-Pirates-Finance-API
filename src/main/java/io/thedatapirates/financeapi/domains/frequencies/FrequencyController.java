@@ -3,8 +3,6 @@ package io.thedatapirates.financeapi.domains.frequencies;
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.utility.MapperExtensions;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.experimental.ExtensionMethod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Controller for frequency endpoints
  */
@@ -24,44 +25,44 @@ import org.springframework.web.bind.annotation.RestController;
 @ExtensionMethod(MapperExtensions.class)
 public class FrequencyController {
 
-  private final Logger logger = LogManager.getLogger(FrequencyController.class);
+    private final Logger logger = LogManager.getLogger(FrequencyController.class);
 
-  @Autowired
-  private FrequencyService frequencyService;
+    @Autowired
+    private FrequencyService frequencyService;
 
-  /**
-   * Retrieves all frequencies
-   *
-   * @return a list of frequencies
-   */
-  @GetMapping
-  public ResponseEntity<List<FrequencyDTO>> getFrequencies() {
-    logger.info(StringConstants.LOG_GET_FREQUENCIES);
+    /**
+     * Retrieves all frequencies
+     *
+     * @return a list of frequencies
+     */
+    @GetMapping
+    public ResponseEntity<List<FrequencyDTO>> getFrequencies() {
+        logger.info(StringConstants.LOG_GET_FREQUENCIES);
 
-    List<Frequency> frequencies = frequencyService.getFrequencies();
+        List<Frequency> frequencies = frequencyService.getFrequencies();
 
-    List<FrequencyDTO> frequencyDTOS = frequencies
-        .stream()
-        .map(frequency -> frequency.mapFrequencyToDTO())
-        .collect(Collectors.toList());
+        List<FrequencyDTO> frequencyDTOS = frequencies
+                .stream()
+                .map(frequency -> frequency.mapFrequencyToDTO())
+                .collect(Collectors.toList());
 
-    return new ResponseEntity<>(frequencyDTOS, HttpStatus.OK);
-  }
+        return new ResponseEntity<>(frequencyDTOS, HttpStatus.OK);
+    }
 
-  /**
-   * Get a frequency by a given id
-   *
-   * @param frequencyId frequency id to search for
-   * @return frequency with given id
-   */
-  @GetMapping(Paths.FREQUENCY_ID)
-  public ResponseEntity<FrequencyDTO> getFrequencyById(@PathVariable Long frequencyId) {
-    logger.info(StringConstants.LOG_GET_FREQUENCIES_ID);
+    /**
+     * Get a frequency by a given id
+     *
+     * @param frequencyId frequency id to search for
+     * @return frequency with given id
+     */
+    @GetMapping(Paths.FREQUENCY_ID)
+    public ResponseEntity<FrequencyDTO> getFrequencyById(@PathVariable Long frequencyId) {
+        logger.info(StringConstants.LOG_GET_FREQUENCIES_ID);
 
-    Frequency frequency = frequencyService.getFrequencyById(frequencyId);
+        Frequency frequency = frequencyService.getFrequencyById(frequencyId);
 
-    FrequencyDTO frequencyDTO = frequency.mapFrequencyToDTO();
+        FrequencyDTO frequencyDTO = frequency.mapFrequencyToDTO();
 
-    return new ResponseEntity<>(frequencyDTO, HttpStatus.OK);
-  }
+        return new ResponseEntity<>(frequencyDTO, HttpStatus.OK);
+    }
 }

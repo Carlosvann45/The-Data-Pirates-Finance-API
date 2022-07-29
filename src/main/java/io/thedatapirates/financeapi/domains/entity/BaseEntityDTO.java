@@ -7,48 +7,48 @@ import java.util.Date;
  */
 public abstract class BaseEntityDTO {
 
-  private Long id;
+    private Long id;
 
-  private Date dateCreated;
+    private Date dateCreated;
 
-  private Date dateUpdated;
+    private Date dateUpdated;
 
-  public BaseEntityDTO() {
+    public BaseEntityDTO() {
 
-  }
+    }
 
-  public BaseEntityDTO(Date dateCreated, Date dateUpdated) {
-    this.dateCreated = dateCreated;
-    this.dateUpdated = dateUpdated;
-  }
+    public BaseEntityDTO(Date dateCreated, Date dateUpdated) {
+        this.dateCreated = dateCreated;
+        this.dateUpdated = dateUpdated;
+    }
 
-  public BaseEntityDTO(Long id, Date dateCreated, Date dateUpdated) {
-    this.id = id;
-    this.dateCreated = dateCreated;
-    this.dateUpdated = dateUpdated;
-  }
+    public BaseEntityDTO(Long id, Date dateCreated, Date dateUpdated) {
+        this.id = id;
+        this.dateCreated = dateCreated;
+        this.dateUpdated = dateUpdated;
+    }
 
-  public Long getId() {
-    return id;
-  }
+    public Long getId() {
+        return id;
+    }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  public Date getDateCreated() {
-    return dateCreated;
-  }
+    public Date getDateCreated() {
+        return dateCreated;
+    }
 
-  public void setDateCreated(Date dateCreated) {
-    this.dateCreated = dateCreated;
-  }
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 
-  public Date getDateUpdated() {
-    return dateUpdated;
-  }
+    public Date getDateUpdated() {
+        return dateUpdated;
+    }
 
-  public void setDateUpdated(Date dateUpdated) {
-    this.dateUpdated = dateUpdated;
-  }
+    public void setDateUpdated(Date dateUpdated) {
+        this.dateUpdated = dateUpdated;
+    }
 }

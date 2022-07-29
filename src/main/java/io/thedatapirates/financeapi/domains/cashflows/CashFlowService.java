@@ -7,12 +7,12 @@ import java.util.List;
  */
 public interface CashFlowService {
 
-  List<CashFlow> getCashFlowByCustomer(String token);
+    List<CashFlow> getCashFlowByCustomer(String token);
 
-  CashFlow createCashFlowForCustomer(String token, Long frequencyId, CashFlow newCashFlowItem);
+    CashFlow createCashFlowForCustomer(String token, Long frequencyId, CashFlow newCashFlowItem);
 
-  CashFlow updateCashFlowForCustomer(String token, Long frequencyId, Long cashFlowId,
-      CashFlow updatedCashFlowItem);
+    CashFlow updateCashFlowForCustomer(String token, Long frequencyId, Long cashFlowId,
+                                       CashFlow updatedCashFlowItem);
 
-  void deleteCashFlowForCustomer(String token, Long cashFlowId);
+    void deleteCashFlowForCustomer(String token, Long cashFlowId);
 }

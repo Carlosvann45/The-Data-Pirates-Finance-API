@@ -1,8 +1,9 @@
 package io.thedatapirates.financeapi.domains.investments;
 
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Interface to access and query the database
@@ -10,9 +11,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InvestmentRepository extends JpaRepository<Investment, Long> {
 
-  List<Investment> findAllByCustomerId(Long customerId);
+    List<Investment> findAllByCustomerId(Long customerId);
 
-  Investment findInvestmentByName(String name);
+    Investment findInvestmentByName(String name);
 
-  Investment findInvestmentById(Long id);
+    Investment findInvestmentById(Long id);
 }

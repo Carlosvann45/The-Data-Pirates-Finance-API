@@ -7,13 +7,13 @@ import java.util.List;
  */
 public interface ExpenseService {
 
-  List<Expense> getExpenseByCustomer(String token);
+    List<Expense> getExpenseByCustomer(String token);
 
-  Expense createExpenseForCustomer(String token, Long categoryId, Long frequencyId,
-      Long priorityLevelId, Expense newExpense);
+    Expense createExpenseForCustomer(String token, Long categoryId, Long frequencyId,
+                                     Long priorityLevelId, Expense newExpense);
 
-  Expense updateExpenseForCustomer(String token, Long categoryId, Long frequencyId,
-      Long priorityLevelId, Long expenseId, Expense updatedExpense);
+    Expense updateExpenseForCustomer(String token, Long categoryId, Long frequencyId,
+                                     Long priorityLevelId, Long expenseId, Expense updatedExpense);
 
-  void deleteExpenseForCustomer(String token, Long expenseId);
+    void deleteExpenseForCustomer(String token, Long expenseId);
 }

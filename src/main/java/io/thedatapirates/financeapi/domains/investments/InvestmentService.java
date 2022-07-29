@@ -7,12 +7,12 @@ import java.util.List;
  */
 public interface InvestmentService {
 
-  List<Investment> getInvestmentsByCustomer(String token);
+    List<Investment> getInvestmentsByCustomer(String token);
 
-  Investment createInvestmentForCustomer(String token, Investment newInvestment);
+    Investment createInvestmentForCustomer(String token, Investment newInvestment);
 
-  Investment updateInvestmentForCustomer(String token, Long investmentId,
-      Investment updatedInvestment);
+    Investment updateInvestmentForCustomer(String token, Long investmentId,
+                                           Investment updatedInvestment);
 
-  void deleteInvestmentForCustomer(String token, Long investmentId);
+    void deleteInvestmentForCustomer(String token, Long investmentId);
 }

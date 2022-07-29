@@ -5,41 +5,41 @@ package io.thedatapirates.financeapi.constants;
  */
 public class Paths {
 
-  // Customers
-  public static final String CUSTOMERS_PATH = "/customers";
-  public static final String REFRESH_TOKEN_PATH = "/refresh/token";
-  public static final String LOGIN_PATH = "/login";
+    // Customers
+    public static final String CUSTOMERS_PATH = "/customers";
+    public static final String REFRESH_TOKEN_PATH = "/refresh/token";
+    public static final String LOGIN_PATH = "/login";
 
-  // Categories
-  public static final String CATEGORY_PATH = "/categories";
-  public static final String CATEGORY_ID = "{categoryId}";
+    // Categories
+    public static final String CATEGORY_PATH = "/categories";
+    public static final String CATEGORY_ID = "{categoryId}";
 
-  // Frequencies
-  public static final String FREQUENCY_PATH = "/frequencies";
-  public static final String FREQUENCY_ID = "{frequencyId}";
+    // Frequencies
+    public static final String FREQUENCY_PATH = "/frequencies";
+    public static final String FREQUENCY_ID = "{frequencyId}";
 
-  // Priority Levels
-  public static final String PRIORITY_LEVEL_PATH = "/priorityLevels";
-  public static final String PRIORITY_LEVEL_ID = "{priorityLevelId}";
+    // Priority Levels
+    public static final String PRIORITY_LEVEL_PATH = "/priorityLevels";
+    public static final String PRIORITY_LEVEL_ID = "{priorityLevelId}";
 
-  // Investments
-  public static final String INVESTMENTS_PATH = "/investments";
-  public static final String INVESTMENT_ID = "{investmentId}";
+    // Investments
+    public static final String INVESTMENTS_PATH = "/investments";
+    public static final String INVESTMENT_ID = "{investmentId}";
 
-  // Cash Flow
-  public static final String CASH_FLOW_PATH = "/cashFlows";
-  public static final String CASH_FLOW_ID = "{cashFlowId}";
+    // Cash Flow
+    public static final String CASH_FLOW_PATH = "/cashFlows";
+    public static final String CASH_FLOW_ID = "{cashFlowId}";
 
-  // Reminder
-  public static final String REMINDER_PATH = "/reminders";
-  public static final String REMINDER_ID = "{reminderId}";
+    // Reminder
+    public static final String REMINDER_PATH = "/reminders";
+    public static final String REMINDER_ID = "{reminderId}";
 
-  // Expense
-  public static final String EXPENSE_PATH = "/expenses";
-  public static final String EXPENSE_ID = "{expenseId}";
+    // Expense
+    public static final String EXPENSE_PATH = "/expenses";
+    public static final String EXPENSE_ID = "{expenseId}";
 
-  // Misc
-  public static final String CREATE_PATH = "/create";
-  public static final String ALL_EXTENSIONS = "/**";
-  public static final String USERNAME_PATH = "/{username}";
+    // Misc
+    public static final String CREATE_PATH = "/create";
+    public static final String ALL_EXTENSIONS = "/**";
+    public static final String USERNAME_PATH = "/{username}";
 }

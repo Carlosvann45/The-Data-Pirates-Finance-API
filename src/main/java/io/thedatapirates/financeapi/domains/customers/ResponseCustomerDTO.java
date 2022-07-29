@@ -6,6 +6,7 @@ import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
 import io.thedatapirates.financeapi.domains.expenses.ResponseExpenseDTO;
 import io.thedatapirates.financeapi.domains.investments.InvestmentDTO;
 import io.thedatapirates.financeapi.domains.reminders.ResponseReminderDTO;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,97 +16,119 @@ import java.util.List;
  */
 public class ResponseCustomerDTO extends BaseEntityDTO {
 
-  private String username;
+    private String firstName;
 
-  private String password;
+    private String lastName;
 
-  private List<CategoryDTO> categories = new ArrayList<>();
+    private String username;
 
-  private List<InvestmentDTO> investments = new ArrayList<>();
+    private String password;
 
-  private List<ResponseCashFlowDTO> cashFlowItems = new ArrayList<>();
+    private List<CategoryDTO> categories = new ArrayList<>();
 
-  private List<ResponseReminderDTO> reminders = new ArrayList<>();
+    private List<InvestmentDTO> investments = new ArrayList<>();
 
-  private List<ResponseExpenseDTO> expenses = new ArrayList<>();
+    private List<ResponseCashFlowDTO> cashFlowItems = new ArrayList<>();
 
-  public ResponseCustomerDTO() {
-  }
+    private List<ResponseReminderDTO> reminders = new ArrayList<>();
 
-  public ResponseCustomerDTO(String username, String password) {
-    this.username = username;
-    this.password = password;
-  }
+    private List<ResponseExpenseDTO> expenses = new ArrayList<>();
 
-  public ResponseCustomerDTO(
-      Long id, Date dateCreated, Date dateUpdated, String username,
-      String password, List<CategoryDTO> categories, List<InvestmentDTO> investments,
-      List<ResponseCashFlowDTO> cashFlowItems, List<ResponseReminderDTO> reminders,
-      List<ResponseExpenseDTO> expenses
-  ) {
-    super(id, dateCreated, dateUpdated);
-    this.username = username;
-    this.password = password;
-    this.categories = categories;
-    this.investments = investments;
-    this.cashFlowItems = cashFlowItems;
-    this.reminders = reminders;
-    this.expenses = expenses;
-  }
+    public ResponseCustomerDTO() {
+    }
 
-  public String getUsername() {
-    return username;
-  }
+    public ResponseCustomerDTO(String firstName, String lastName, String username, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+    }
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
+    public ResponseCustomerDTO(
+            Long id, Date dateCreated, Date dateUpdated, String username,
+            String password, List<CategoryDTO> categories, List<InvestmentDTO> investments,
+            List<ResponseCashFlowDTO> cashFlowItems, List<ResponseReminderDTO> reminders,
+            List<ResponseExpenseDTO> expenses
+    ) {
+        super(id, dateCreated, dateUpdated);
+        this.username = username;
+        this.password = password;
+        this.categories = categories;
+        this.investments = investments;
+        this.cashFlowItems = cashFlowItems;
+        this.reminders = reminders;
+        this.expenses = expenses;
+    }
 
-  public String getPassword() {
-    return password;
-  }
+    public String getUsername() {
+        return username;
+    }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-  public List<CategoryDTO> getCategories() {
-    return categories;
-  }
+    public String getPassword() {
+        return password;
+    }
 
-  public void setCategories(List<CategoryDTO> categories) {
-    this.categories = categories;
-  }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-  public List<InvestmentDTO> getInvestments() {
-    return investments;
-  }
+    public List<CategoryDTO> getCategories() {
+        return categories;
+    }
 
-  public void setInvestments(List<InvestmentDTO> investments) {
-    this.investments = investments;
-  }
+    public void setCategories(List<CategoryDTO> categories) {
+        this.categories = categories;
+    }
 
-  public List<ResponseCashFlowDTO> getCashFlowItems() {
-    return cashFlowItems;
-  }
+    public List<InvestmentDTO> getInvestments() {
+        return investments;
+    }
 
-  public void setCashFlowItems(List<ResponseCashFlowDTO> cashFlowItems) {
-    this.cashFlowItems = cashFlowItems;
-  }
+    public void setInvestments(List<InvestmentDTO> investments) {
+        this.investments = investments;
+    }
 
-  public List<ResponseReminderDTO> getReminders() {
-    return reminders;
-  }
+    public List<ResponseCashFlowDTO> getCashFlowItems() {
+        return cashFlowItems;
+    }
 
-  public void setReminders(List<ResponseReminderDTO> reminders) {
-    this.reminders = reminders;
-  }
+    public void setCashFlowItems(List<ResponseCashFlowDTO> cashFlowItems) {
+        this.cashFlowItems = cashFlowItems;
+    }
 
-  public List<ResponseExpenseDTO> getExpenses() {
-    return expenses;
-  }
+    public List<ResponseReminderDTO> getReminders() {
+        return reminders;
+    }
 
-  public void setExpenses(List<ResponseExpenseDTO> expenses) {
-    this.expenses = expenses;
-  }
+    public void setReminders(List<ResponseReminderDTO> reminders) {
+        this.reminders = reminders;
+    }
+
+    public List<ResponseExpenseDTO> getExpenses() {
+        return expenses;
+    }
+
+    public void setExpenses(List<ResponseExpenseDTO> expenses) {
+        this.expenses = expenses;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }

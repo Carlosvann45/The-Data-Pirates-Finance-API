@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface FrequencyRepository extends JpaRepository<Frequency, Long> {
 
-  Frequency findFrequencyById(Long id);
+    Frequency findFrequencyById(Long id);
 }
