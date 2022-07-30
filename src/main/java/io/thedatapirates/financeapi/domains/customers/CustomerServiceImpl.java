@@ -109,7 +109,7 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
                 }
 
                 if (validToken) {
-                    return new JwtResponse(jwtUtility.generateToken(userDetails, url), refreshToken);
+                    return new JwtResponse(jwtUtility.generateToken(userDetails, url), token);
                 }
             }
         }
