@@ -110,6 +110,9 @@ public class JwtFilter extends OncePerRequestFilter {
                     AuthToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                     SecurityContextHolder.getContext().setAuthentication(AuthToken);
+                } else {
+                    response.sendError(
+                            HttpStatusCodes.STATUS_CODE_BAD_REQUEST, StringConstants.BAD_TOKEN);
                 }
             }
         }
