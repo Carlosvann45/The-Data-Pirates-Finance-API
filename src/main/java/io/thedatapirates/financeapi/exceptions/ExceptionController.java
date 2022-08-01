@@ -96,6 +96,24 @@ public class ExceptionController {
     }
 
     /**
+     * Handles any exceptions that are thrown with the unauthorized class
+     *
+     * @param exception exception that was thrown
+     * @return new response entity the represents the error response
+     */
+    @ExceptionHandler(Unauthorized.class)
+    protected ResponseEntity<ExceptionResponseMessage> unauthorized(Unauthorized exception) {
+        List<String> errors = new ArrayList<>();
+
+        errors.add(exception.getMessage());
+
+        ExceptionResponseMessage response = new ExceptionResponseMessage(errors, new Date(),
+                StringConstants.UNAUTHORIZED);
+
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    /**
      * Handles all exceptions thrown for validation annotation's
      *
      * @param exception exception to get messages from

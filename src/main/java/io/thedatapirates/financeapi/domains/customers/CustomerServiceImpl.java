@@ -2,10 +2,7 @@ package io.thedatapirates.financeapi.domains.customers;
 
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.jwt.JwtResponse;
-import io.thedatapirates.financeapi.exceptions.BadRequest;
-import io.thedatapirates.financeapi.exceptions.Conflict;
-import io.thedatapirates.financeapi.exceptions.NotFound;
-import io.thedatapirates.financeapi.exceptions.ServerUnavailable;
+import io.thedatapirates.financeapi.exceptions.*;
 import io.thedatapirates.financeapi.utility.JWTUtility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -92,7 +89,7 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
             } catch (Exception e) {
                 logger.error(StringConstants.JWT_ERROR_BEGINNING.concat(e.getMessage()));
 
-                throw new BadRequest(StringConstants.BAD_TOKEN);
+                throw new Unauthorized(StringConstants.BAD_TOKEN);
             }
 
             if (username != null) {
@@ -105,7 +102,7 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
                 } catch (Exception e) {
                     logger.error(StringConstants.JWT_ERROR_BEGINNING.concat(e.getMessage()));
 
-                    throw new BadRequest(StringConstants.BAD_TOKEN);
+                    throw new Unauthorized(StringConstants.BAD_TOKEN);
                 }
 
                 if (validToken) {
@@ -114,7 +111,7 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
             }
         }
 
-        throw new BadRequest(StringConstants.BAD_TOKEN);
+        throw new Unauthorized(StringConstants.BAD_TOKEN);
     }
 
     /**

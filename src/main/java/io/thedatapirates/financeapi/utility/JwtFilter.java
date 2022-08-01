@@ -5,6 +5,7 @@ import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.CustomerServiceImpl;
 import io.thedatapirates.financeapi.exceptions.BadRequest;
+import io.thedatapirates.financeapi.exceptions.Unauthorized;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +82,7 @@ public class JwtFilter extends OncePerRequestFilter {
                     } catch (Exception e) {
                         logger.error(StringConstants.JWT_ERROR_BEGINNING.concat(e.getMessage()));
 
-                        throw new BadRequest(StringConstants.BAD_TOKEN);
+                        throw new Unauthorized(StringConstants.BAD_TOKEN);
                     }
                 }
 
@@ -95,7 +96,7 @@ public class JwtFilter extends OncePerRequestFilter {
                     } catch (Exception e) {
                         logger.error(StringConstants.JWT_ERROR_BEGINNING.concat(e.getMessage()));
 
-                        throw new BadRequest(StringConstants.BAD_TOKEN);
+                        throw new Unauthorized(StringConstants.BAD_TOKEN);
                     }
 
                     if (validToken) {
@@ -108,7 +109,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
                         SecurityContextHolder.getContext().setAuthentication(AuthToken);
                     } else {
-                        throw new BadRequest(StringConstants.BAD_TOKEN);
+                        throw new Unauthorized(StringConstants.BAD_TOKEN);
                     }
                 }
             }

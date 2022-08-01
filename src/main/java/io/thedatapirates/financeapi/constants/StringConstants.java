@@ -15,6 +15,7 @@ public class StringConstants {
     public static final String BAD_REQUEST = "400 Bad Request";
     public static final String NOT_FOUND = "404 Not Found";
     public static final String CONFLICT = "409 Conflict";
+    public static final String UNAUTHORIZED = "401 Unauthorized";
 
     // Logger
     public static final String LOG_GET_CUSTOMER = "Request received for getCustomers.";
