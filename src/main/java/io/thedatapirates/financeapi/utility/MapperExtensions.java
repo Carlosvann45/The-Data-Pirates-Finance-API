@@ -77,7 +77,7 @@ public class MapperExtensions {
         priorityLevel.setDateCreated(priorityLevelDTO.getDateCreated());
         priorityLevel.setDateUpdated(priorityLevelDTO.getDateUpdated());
         priorityLevel.setLevel(priorityLevelDTO.getLevel());
-        priorityLevel.setDescription(priorityLevelDTO.getLevel());
+        priorityLevel.setDescription(priorityLevelDTO.getDescription());
 
         return priorityLevel;
     }
@@ -95,7 +95,7 @@ public class MapperExtensions {
         priorityLevelDTO.setDateCreated(priorityLevel.getDateCreated());
         priorityLevelDTO.setDateUpdated(priorityLevel.getDateUpdated());
         priorityLevelDTO.setLevel(priorityLevel.getLevel());
-        priorityLevelDTO.setDescription(priorityLevel.getLevel());
+        priorityLevelDTO.setDescription(priorityLevel.getDescription());
 
         return priorityLevelDTO;
     }
