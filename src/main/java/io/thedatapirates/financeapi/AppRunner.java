@@ -1,17 +1,19 @@
 package io.thedatapirates.financeapi;
 
+import static com.google.api.client.http.HttpMethods.GET;
+import static com.google.api.client.http.HttpMethods.POST;
+
+import io.thedatapirates.financeapi.config.EmailConfig;
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import static com.google.api.client.http.HttpMethods.GET;
-import static com.google.api.client.http.HttpMethods.POST;
 
 @SpringBootApplication
 public class AppRunner {
@@ -49,5 +51,10 @@ public class AppRunner {
     public PasswordEncoder passwordEncoder() {
 
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JavaMailSender javaMailSender() {
+        return EmailConfig.createEmailConfig();
     }
 }

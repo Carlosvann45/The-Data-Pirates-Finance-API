@@ -11,7 +11,7 @@ import java.util.Objects;
  * An entity class to represent whether a customer was verified for a specific type.
  */
 @Entity
-public class Verified extends BaseEntity {
+public class Verification extends BaseEntity {
 
     private LocalDateTime dateExpires;
 
@@ -23,7 +23,7 @@ public class Verified extends BaseEntity {
 
     private VerificationTypes type;
 
-    public Verified() {
+    public Verification() {
     }
 
     public LocalDateTime getDateExpires() {
@@ -71,8 +71,8 @@ public class Verified extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        Verified verified = (Verified) o;
-        return Objects.equals(dateExpires, verified.dateExpires) && Objects.equals(dateConfirmed, verified.dateConfirmed) && Objects.equals(token, verified.token) && Objects.equals(username, verified.username) && type == verified.type;
+        Verification verification = (Verification) o;
+        return Objects.equals(dateExpires, verification.dateExpires) && Objects.equals(dateConfirmed, verification.dateConfirmed) && Objects.equals(token, verification.token) && Objects.equals(username, verification.username) && type == verification.type;
     }
 
     @Override

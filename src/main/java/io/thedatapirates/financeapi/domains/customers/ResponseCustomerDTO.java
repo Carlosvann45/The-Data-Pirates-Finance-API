@@ -6,9 +6,7 @@ import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 import io.thedatapirates.financeapi.domains.expenses.ResponseExpenseDTO;
 import io.thedatapirates.financeapi.domains.investments.InvestmentDTO;
 import io.thedatapirates.financeapi.domains.reminders.ResponseReminderDTO;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,29 +33,6 @@ public class ResponseCustomerDTO extends BaseEntityDTO {
     private List<ResponseExpenseDTO> expenses = new ArrayList<>();
 
     public ResponseCustomerDTO() {
-    }
-
-    public ResponseCustomerDTO(String firstName, String lastName, String username, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.password = password;
-    }
-
-    public ResponseCustomerDTO(
-            Long id, Date dateCreated, Date dateUpdated, String username,
-            String password, List<CategoryDTO> categories, List<InvestmentDTO> investments,
-            List<ResponseCashFlowDTO> cashFlowItems, List<ResponseReminderDTO> reminders,
-            List<ResponseExpenseDTO> expenses
-    ) {
-        super(id, dateCreated, dateUpdated);
-        this.username = username;
-        this.password = password;
-        this.categories = categories;
-        this.investments = investments;
-        this.cashFlowItems = cashFlowItems;
-        this.reminders = reminders;
-        this.expenses = expenses;
     }
 
     public String getUsername() {

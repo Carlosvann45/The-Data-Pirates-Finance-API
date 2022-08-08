@@ -10,16 +10,14 @@ import io.thedatapirates.financeapi.domains.entities.BaseEntity;
 import io.thedatapirates.financeapi.domains.frequencies.Frequency;
 import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevel;
 import io.thedatapirates.financeapi.domains.reminders.Reminder;
-
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * This class that represents a customer entity in the database
@@ -32,7 +30,7 @@ public class Expense extends BaseEntity {
 
     private double amount;
 
-    private Date dueDate;
+    private LocalDateTime dueDate;
 
     @ManyToOne
     @JoinColumn(name = StringConstants.CUSTOMER_ID, nullable = false)
@@ -59,7 +57,7 @@ public class Expense extends BaseEntity {
 
     public Expense(
             LocalDateTime dateCreated, LocalDateTime dateUpdated, String name, double amount,
-            Date dueDate, Customer customer, Category category, Frequency frequency,
+            LocalDateTime dueDate, Customer customer, Category category, Frequency frequency,
             PriorityLevel priorityLevel, List<Reminder> reminders
     ) {
         super(dateCreated, dateUpdated);
@@ -75,7 +73,7 @@ public class Expense extends BaseEntity {
 
     public Expense(
             Long id, LocalDateTime dateCreated, LocalDateTime dateUpdated,
-            String name, double amount, Date dueDate, Customer customer,
+            String name, double amount, LocalDateTime dueDate, Customer customer,
             Category category, Frequency frequency, PriorityLevel priorityLevel, List<Reminder> reminders
     ) {
         super(id, dateCreated, dateUpdated);
@@ -105,11 +103,11 @@ public class Expense extends BaseEntity {
         this.amount = amount;
     }
 
-    public Date getDueDate() {
+    public LocalDateTime getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
     }
 
