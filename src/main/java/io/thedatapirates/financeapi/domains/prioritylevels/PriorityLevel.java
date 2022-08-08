@@ -3,11 +3,12 @@ package io.thedatapirates.financeapi.domains.prioritylevels;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.thedatapirates.financeapi.constants.StringConstants;
-import io.thedatapirates.financeapi.domains.entity.BaseEntity;
+import io.thedatapirates.financeapi.domains.entities.BaseEntity;
 import io.thedatapirates.financeapi.domains.expenses.Expense;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,23 +31,10 @@ public class PriorityLevel extends BaseEntity {
     public PriorityLevel() {
     }
 
-    public PriorityLevel(String level, String description) {
-        this.level = level;
-        this.description = description;
-    }
-
-    public PriorityLevel(Date dateCreated, Date dateUpdated, String level, String description) {
+    public PriorityLevel(LocalDateTime dateCreated, LocalDateTime dateUpdated, String level, String description) {
         super(dateCreated, dateUpdated);
         this.level = level;
         this.description = description;
-    }
-
-    public PriorityLevel(Long id, Date dateCreated, Date dateUpdated, String level,
-                         String description, List<Expense> expenses) {
-        super(id, dateCreated, dateUpdated);
-        this.level = level;
-        this.description = description;
-        this.expenses = expenses;
     }
 
     public String getLevel() {

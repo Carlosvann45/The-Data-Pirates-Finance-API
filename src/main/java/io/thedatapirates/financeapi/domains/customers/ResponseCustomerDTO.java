@@ -2,7 +2,7 @@ package io.thedatapirates.financeapi.domains.customers;
 
 import io.thedatapirates.financeapi.domains.cashflows.ResponseCashFlowDTO;
 import io.thedatapirates.financeapi.domains.categories.CategoryDTO;
-import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
+import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 import io.thedatapirates.financeapi.domains.expenses.ResponseExpenseDTO;
 import io.thedatapirates.financeapi.domains.investments.InvestmentDTO;
 import io.thedatapirates.financeapi.domains.reminders.ResponseReminderDTO;

@@ -16,6 +16,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -71,6 +73,9 @@ public class SeedData implements CommandLineRunner {
      * Seeds database into the repositories with randomly generated data
      */
     private void seedDatabase() {
+        LocalDateTime currentDate = new Date(System.currentTimeMillis()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
 
         // Persist user to database
         logger.info("Loading " + 5 + " customer(s)...");
@@ -90,16 +95,16 @@ public class SeedData implements CommandLineRunner {
         Customer customer5 = new Customer("John", "Selders", "jjselders@student.fullsail.edu",
                 passwordEncoder.encode("password123"));
 
-        customer1.setDateCreated(new Date(System.currentTimeMillis()));
-        customer1.setDateUpdated(new Date(System.currentTimeMillis()));
-        customer2.setDateCreated(new Date(System.currentTimeMillis()));
-        customer2.setDateUpdated(new Date(System.currentTimeMillis()));
-        customer3.setDateCreated(new Date(System.currentTimeMillis()));
-        customer3.setDateUpdated(new Date(System.currentTimeMillis()));
-        customer4.setDateCreated(new Date(System.currentTimeMillis()));
-        customer4.setDateUpdated(new Date(System.currentTimeMillis()));
-        customer5.setDateCreated(new Date(System.currentTimeMillis()));
-        customer5.setDateUpdated(new Date(System.currentTimeMillis()));
+        customer1.setDateCreated(currentDate);
+        customer1.setDateUpdated(currentDate);
+        customer2.setDateCreated(currentDate);
+        customer2.setDateUpdated(currentDate);
+        customer3.setDateCreated(currentDate);
+        customer3.setDateUpdated(currentDate);
+        customer4.setDateCreated(currentDate);
+        customer4.setDateUpdated(currentDate);
+        customer5.setDateCreated(currentDate);
+        customer5.setDateUpdated(currentDate);
 
         try {
             if (customerRepository.findCustomerByUsername(customer1.getUsername()) == null) {
@@ -128,29 +133,29 @@ public class SeedData implements CommandLineRunner {
 
             if (frequencyRepository.findFrequencyById(1L) == null) {
                 frequencyList.add(new Frequency(
-                        new Date(System.currentTimeMillis()),
-                        new Date(System.currentTimeMillis()),
+                        currentDate,
+                        currentDate,
                         "Daily"));
             }
 
             if (frequencyRepository.findFrequencyById(2L) == null) {
                 frequencyList.add(new Frequency(
-                        new Date(System.currentTimeMillis()),
-                        new Date(System.currentTimeMillis()),
+                        currentDate,
+                        currentDate,
                         "Weekly"));
             }
 
             if (frequencyRepository.findFrequencyById(3L) == null) {
                 frequencyList.add(new Frequency(
-                        new Date(System.currentTimeMillis()),
-                        new Date(System.currentTimeMillis()),
+                                currentDate,
+                        currentDate,
                         "Monthly"));
             }
 
             if (frequencyRepository.findFrequencyById(4L) == null) {
                 frequencyList.add(new Frequency(
-                        new Date(System.currentTimeMillis()),
-                        new Date(System.currentTimeMillis()),
+                        currentDate,
+                        currentDate,
                         "Yearly"));
             }
 
@@ -162,32 +167,32 @@ public class SeedData implements CommandLineRunner {
 
             if (priorityLevelRepository.findPriorityLevelById(1L) == null) {
                 priorityLevelList.add(new PriorityLevel(
-                        new Date(System.currentTimeMillis()),
-                        new Date(System.currentTimeMillis()),
+                        currentDate,
+                        currentDate,
                         "Low",
                         "Lowest level of priority. Its not really at the top of your TODO list."));
             }
 
             if (priorityLevelRepository.findPriorityLevelById(2L) == null) {
                 priorityLevelList.add(new PriorityLevel(
-                        new Date(System.currentTimeMillis()),
-                        new Date(System.currentTimeMillis()),
+                        currentDate,
+                        currentDate,
                         "Medium",
                         "Second lowest level of priority. Its important enough that it's in the middle of your TODO list."));
             }
 
             if (priorityLevelRepository.findPriorityLevelById(3L) == null) {
                 priorityLevelList.add(new PriorityLevel(
-                        new Date(System.currentTimeMillis()),
-                        new Date(System.currentTimeMillis()),
+                        currentDate,
+                        currentDate,
                         "High",
                         "High level of priority. Its important and its towards the top of your TODO list."));
             }
 
             if (priorityLevelRepository.findPriorityLevelById(4L) == null) {
                 priorityLevelList.add(new PriorityLevel(
-                        new Date(System.currentTimeMillis()),
-                        new Date(System.currentTimeMillis()),
+                        currentDate,
+                        currentDate,
                         "Very High",
                         "Top level of priority. Its very important and at the top of your TODO list."));
             }

@@ -3,7 +3,7 @@ package io.thedatapirates.financeapi.domains.investments;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.Customer;
-import io.thedatapirates.financeapi.domains.entity.BaseEntity;
+import io.thedatapirates.financeapi.domains.entities.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -31,26 +31,6 @@ public class Investment extends BaseEntity {
     private Customer customer;
 
     public Investment() {
-    }
-
-    public Investment(Date dateCreated, Date dateUpdated, String investmentType, String name,
-                      double amount, double buyPrice, Customer customer) {
-        super(dateCreated, dateUpdated);
-        this.investmentType = investmentType;
-        this.name = name;
-        this.amount = amount;
-        this.buyPrice = buyPrice;
-        this.customer = customer;
-    }
-
-    public Investment(Long id, Date dateCreated, Date dateUpdated, String investmentType, String name,
-                      double amount, double buyPrice, Customer customer) {
-        super(id, dateCreated, dateUpdated);
-        this.investmentType = investmentType;
-        this.name = name;
-        this.amount = amount;
-        this.buyPrice = buyPrice;
-        this.customer = customer;
     }
 
     public String getInvestmentType() {

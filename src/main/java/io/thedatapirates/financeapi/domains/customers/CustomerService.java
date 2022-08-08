@@ -1,6 +1,6 @@
 package io.thedatapirates.financeapi.domains.customers;
 
-import io.thedatapirates.financeapi.domains.jwt.JwtResponse;
+import io.thedatapirates.financeapi.domains.jwts.JwtResponse;
 
 /**
  * Interface class provides abstraction layer for customer service

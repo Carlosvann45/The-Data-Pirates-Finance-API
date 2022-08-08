@@ -1,7 +1,7 @@
 package io.thedatapirates.financeapi.domains.categories;
 
 import io.thedatapirates.financeapi.constants.StringConstants;
-import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
+import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -17,15 +17,6 @@ public class CategoryDTO extends BaseEntityDTO {
     private String name;
 
     public CategoryDTO() {
-    }
-
-    public CategoryDTO(String name) {
-        this.name = name;
-    }
-
-    public CategoryDTO(Long id, Date dateCreated, Date dateUpdated, String name) {
-        super(id, dateCreated, dateUpdated);
-        this.name = name;
     }
 
     public String getName() {

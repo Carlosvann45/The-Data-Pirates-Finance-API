@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.cashflows.CashFlow;
-import io.thedatapirates.financeapi.domains.entity.BaseEntity;
+import io.thedatapirates.financeapi.domains.entities.BaseEntity;
 import io.thedatapirates.financeapi.domains.expenses.Expense;
 import io.thedatapirates.financeapi.domains.reminders.Reminder;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,12 +42,12 @@ public class Frequency extends BaseEntity {
         this.name = name;
     }
 
-    public Frequency(Date dateCreated, Date dateUpdated, String name) {
+    public Frequency(LocalDateTime dateCreated, LocalDateTime dateUpdated, String name) {
         super(dateCreated, dateUpdated);
         this.name = name;
     }
 
-    public Frequency(Long id, Date dateCreated, Date dateUpdated, String name,
+    public Frequency(Long id, LocalDateTime dateCreated, LocalDateTime dateUpdated, String name,
                      List<CashFlow> cashFlow, List<Reminder> reminders, List<Expense> expenses) {
         super(id, dateCreated, dateUpdated);
         this.name = name;

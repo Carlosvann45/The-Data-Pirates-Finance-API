@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.categories.Category;
 import io.thedatapirates.financeapi.domains.customers.Customer;
-import io.thedatapirates.financeapi.domains.entity.BaseEntity;
+import io.thedatapirates.financeapi.domains.entities.BaseEntity;
 import io.thedatapirates.financeapi.domains.frequencies.Frequency;
 import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevel;
 import io.thedatapirates.financeapi.domains.reminders.Reminder;
@@ -15,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,7 +58,7 @@ public class Expense extends BaseEntity {
     }
 
     public Expense(
-            Date dateCreated, Date dateUpdated, String name, double amount,
+            LocalDateTime dateCreated, LocalDateTime dateUpdated, String name, double amount,
             Date dueDate, Customer customer, Category category, Frequency frequency,
             PriorityLevel priorityLevel, List<Reminder> reminders
     ) {
@@ -73,7 +74,7 @@ public class Expense extends BaseEntity {
     }
 
     public Expense(
-            Long id, Date dateCreated, Date dateUpdated,
+            Long id, LocalDateTime dateCreated, LocalDateTime dateUpdated,
             String name, double amount, Date dueDate, Customer customer,
             Category category, Frequency frequency, PriorityLevel priorityLevel, List<Reminder> reminders
     ) {

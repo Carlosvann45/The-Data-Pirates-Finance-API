@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.cashflows.CashFlow;
 import io.thedatapirates.financeapi.domains.categories.Category;
-import io.thedatapirates.financeapi.domains.entity.BaseEntity;
+import io.thedatapirates.financeapi.domains.entities.BaseEntity;
 import io.thedatapirates.financeapi.domains.expenses.Expense;
 import io.thedatapirates.financeapi.domains.investments.Investment;
 import io.thedatapirates.financeapi.domains.reminders.Reminder;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,7 +67,7 @@ public class Customer extends BaseEntity {
     }
 
     public Customer(
-            Long id, Date dateCreated, Date dateUpdated, String username, String password,
+            Long id, LocalDateTime dateCreated, LocalDateTime dateUpdated, String username, String password,
             List<Category> categories, List<Investment> investments, List<CashFlow> cashFlowItems,
             List<Reminder> reminders, List<Expense> expenses
     ) {

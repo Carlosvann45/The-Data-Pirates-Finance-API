@@ -1,5 +1,6 @@
-package io.thedatapirates.financeapi.domains.entity;
+package io.thedatapirates.financeapi.domains.entities;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -9,20 +10,20 @@ public abstract class BaseEntityDTO {
 
     private Long id;
 
-    private Date dateCreated;
+    private LocalDateTime dateCreated;
 
-    private Date dateUpdated;
+    private LocalDateTime dateUpdated;
 
     public BaseEntityDTO() {
 
     }
 
-    public BaseEntityDTO(Date dateCreated, Date dateUpdated) {
+    public BaseEntityDTO(LocalDateTime dateCreated, LocalDateTime dateUpdated) {
         this.dateCreated = dateCreated;
         this.dateUpdated = dateUpdated;
     }
 
-    public BaseEntityDTO(Long id, Date dateCreated, Date dateUpdated) {
+    public BaseEntityDTO(Long id, LocalDateTime dateCreated, LocalDateTime dateUpdated) {
         this.id = id;
         this.dateCreated = dateCreated;
         this.dateUpdated = dateUpdated;
@@ -36,19 +37,19 @@ public abstract class BaseEntityDTO {
         this.id = id;
     }
 
-    public Date getDateCreated() {
+    public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    public Date getDateUpdated() {
+    public LocalDateTime getDateUpdated() {
         return dateUpdated;
     }
 
-    public void setDateUpdated(Date dateUpdated) {
+    public void setDateUpdated(LocalDateTime dateUpdated) {
         this.dateUpdated = dateUpdated;
     }
 }

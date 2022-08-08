@@ -1,6 +1,6 @@
 package io.thedatapirates.financeapi.domains.prioritylevels;
 
-import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
+import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 
 import java.util.Date;
 

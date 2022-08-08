@@ -9,6 +9,7 @@ public class Paths {
     public static final String CUSTOMERS_PATH = "/customers";
     public static final String REFRESH_TOKEN_PATH = "/refresh/token";
     public static final String LOGIN_PATH = "/login";
+    public static final String FORGOT_PASS_PATH = "/password/forgot/{email}";
 
     // Categories
     public static final String CATEGORY_PATH = "/categories";

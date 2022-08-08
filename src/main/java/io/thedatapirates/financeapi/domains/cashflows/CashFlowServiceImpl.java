@@ -1,5 +1,6 @@
 package io.thedatapirates.financeapi.domains.cashflows;
 
+import com.google.api.client.util.DateTime;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.Customer;
 import io.thedatapirates.financeapi.domains.customers.CustomerRepository;
@@ -16,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -80,8 +84,12 @@ public class CashFlowServiceImpl implements CashFlowService {
         newCashFlowItem.setName(catName
                 .substring(0, 1)
                 .toUpperCase() + catName.substring(1).toLowerCase());
-        newCashFlowItem.setDateCreated(new Date(System.currentTimeMillis()));
-        newCashFlowItem.setDateUpdated(new Date(System.currentTimeMillis()));
+        newCashFlowItem.setDateCreated(new Date(System.currentTimeMillis()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
+        newCashFlowItem.setDateUpdated(new Date(System.currentTimeMillis()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
 
         try {
             existingCashFlow = cashFlowRepository.findCashFlowByName(newCashFlowItem.getName());
@@ -130,7 +138,9 @@ public class CashFlowServiceImpl implements CashFlowService {
         updatedCashFlowItem.setName(catName
                 .substring(0, 1)
                 .toUpperCase() + catName.substring(1).toLowerCase());
-        updatedCashFlowItem.setDateUpdated(new Date(System.currentTimeMillis()));
+        updatedCashFlowItem.setDateUpdated(new Date(System.currentTimeMillis()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
 
         try {
             existingCashFlow = cashFlowRepository.findCashFlowById(cashFlowId);

@@ -1,7 +1,7 @@
 package io.thedatapirates.financeapi.domains.customers;
 
 import io.thedatapirates.financeapi.constants.StringConstants;
-import io.thedatapirates.financeapi.domains.jwt.JwtResponse;
+import io.thedatapirates.financeapi.domains.jwts.JwtResponse;
 import io.thedatapirates.financeapi.exceptions.*;
 import io.thedatapirates.financeapi.utility.JWTUtility;
 import org.apache.logging.log4j.LogManager;
@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
@@ -137,8 +138,12 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
         }
 
         newCustomer.setPassword(passwordEncoder.encode(newCustomer.getPassword()));
-        newCustomer.setDateCreated(new Date(System.currentTimeMillis()));
-        newCustomer.setDateUpdated(new Date(System.currentTimeMillis()));
+        newCustomer.setDateCreated(new Date(System.currentTimeMillis()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
+        newCustomer.setDateUpdated(new Date(System.currentTimeMillis()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
 
         try {
             return customerRepository.save(newCustomer);

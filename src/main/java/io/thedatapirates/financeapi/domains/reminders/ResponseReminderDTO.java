@@ -1,9 +1,10 @@
 package io.thedatapirates.financeapi.domains.reminders;
 
-import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
+import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 import io.thedatapirates.financeapi.domains.expenses.ResponseExpenseDTO;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyDTO;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -15,38 +16,13 @@ public class ResponseReminderDTO extends BaseEntityDTO {
 
     private String description;
 
-    private Date reminderTime;
+    private LocalDateTime reminderTime;
 
     private FrequencyDTO frequency;
 
     private ResponseExpenseDTO expense;
 
     public ResponseReminderDTO() {
-    }
-
-    public ResponseReminderDTO(
-            Date dateCreated, Date dateUpdated, String name, String description,
-            Date reminderTime, FrequencyDTO frequency, ResponseExpenseDTO expense
-    ) {
-        super(dateCreated, dateUpdated);
-        this.name = name;
-        this.description = description;
-        this.reminderTime = reminderTime;
-        this.frequency = frequency;
-        this.expense = expense;
-    }
-
-    public ResponseReminderDTO(
-            Long id, Date dateCreated, Date dateUpdated, String name,
-            String description, Date reminderTime, FrequencyDTO frequency,
-            ResponseExpenseDTO expense
-    ) {
-        super(id, dateCreated, dateUpdated);
-        this.name = name;
-        this.description = description;
-        this.reminderTime = reminderTime;
-        this.frequency = frequency;
-        this.expense = expense;
     }
 
     public String getName() {
@@ -65,11 +41,11 @@ public class ResponseReminderDTO extends BaseEntityDTO {
         this.description = description;
     }
 
-    public Date getReminderTime() {
+    public LocalDateTime getReminderTime() {
         return reminderTime;
     }
 
-    public void setReminderTime(Date reminderTime) {
+    public void setReminderTime(LocalDateTime reminderTime) {
         this.reminderTime = reminderTime;
     }
 

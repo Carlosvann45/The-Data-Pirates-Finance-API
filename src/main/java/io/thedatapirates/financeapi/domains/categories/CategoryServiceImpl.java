@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -72,8 +73,12 @@ public class CategoryServiceImpl implements CategoryService {
         newCategory.setName(catName
                 .substring(0, 1)
                 .toUpperCase() + catName.substring(1).toLowerCase());
-        newCategory.setDateCreated(new Date(System.currentTimeMillis()));
-        newCategory.setDateUpdated(new Date(System.currentTimeMillis()));
+        newCategory.setDateCreated(new Date(System.currentTimeMillis()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
+        newCategory.setDateUpdated(new Date(System.currentTimeMillis()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
 
         try {
             existingCategory = categoryRepository.findCategoryByName(newCategory.getName());
@@ -115,7 +120,9 @@ public class CategoryServiceImpl implements CategoryService {
         updatedCategory.setName(catName
                 .substring(0, 1)
                 .toUpperCase() + catName.substring(1).toLowerCase());
-        updatedCategory.setDateUpdated(new Date(System.currentTimeMillis()));
+        updatedCategory.setDateUpdated(new Date(System.currentTimeMillis()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
 
         try {
             existingCategory = categoryRepository.findCategoryById(categoryId);

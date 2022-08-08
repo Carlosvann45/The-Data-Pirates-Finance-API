@@ -1,10 +1,12 @@
 package io.thedatapirates.financeapi.domains.expenses;
 
 import io.thedatapirates.financeapi.domains.categories.CategoryDTO;
-import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
+import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyDTO;
 import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevelDTO;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -16,7 +18,7 @@ public class ResponseExpenseDTO extends BaseEntityDTO {
 
     private double amount;
 
-    private Date dueDate;
+    private LocalDateTime dueDate;
 
     private CategoryDTO category;
 
@@ -28,8 +30,8 @@ public class ResponseExpenseDTO extends BaseEntityDTO {
     }
 
     public ResponseExpenseDTO(
-            Date dateCreated, Date dateUpdated, String name, double amount,
-            Date dueDate, CategoryDTO category, FrequencyDTO frequency,
+            LocalDateTime dateCreated, LocalDateTime dateUpdated, String name, double amount,
+            LocalDateTime dueDate, CategoryDTO category, FrequencyDTO frequency,
             PriorityLevelDTO priorityLevel
     ) {
         super(dateCreated, dateUpdated);
@@ -42,8 +44,8 @@ public class ResponseExpenseDTO extends BaseEntityDTO {
     }
 
     public ResponseExpenseDTO(
-            Long id, Date dateCreated, Date dateUpdated,
-            String name, double amount, Date dueDate,
+            Long id, LocalDateTime dateCreated, LocalDateTime dateUpdated,
+            String name, double amount, LocalDateTime dueDate,
             CategoryDTO category, FrequencyDTO frequency,
             PriorityLevelDTO priorityLevel
     ) {
@@ -72,11 +74,11 @@ public class ResponseExpenseDTO extends BaseEntityDTO {
         this.amount = amount;
     }
 
-    public Date getDueDate() {
+    public LocalDateTime getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
     }
 

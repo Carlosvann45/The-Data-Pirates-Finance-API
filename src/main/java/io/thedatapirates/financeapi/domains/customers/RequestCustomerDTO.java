@@ -1,7 +1,7 @@
 package io.thedatapirates.financeapi.domains.customers;
 
 import io.thedatapirates.financeapi.constants.StringConstants;
-import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
+import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

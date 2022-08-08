@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.Customer;
-import io.thedatapirates.financeapi.domains.entity.BaseEntity;
+import io.thedatapirates.financeapi.domains.entities.BaseEntity;
 import io.thedatapirates.financeapi.domains.expenses.Expense;
 
 import javax.persistence.Entity;
@@ -35,18 +35,6 @@ public class Category extends BaseEntity {
     private List<Expense> expenses = new ArrayList<>();
 
     public Category() {
-    }
-
-    public Category(String name) {
-        this.name = name;
-    }
-
-    public Category(Long id, Date dateCreated, Date dateUpdated, String name, Customer customer,
-                    List<Expense> expenses) {
-        super(id, dateCreated, dateUpdated);
-        this.name = name;
-        this.customer = customer;
-        this.expenses = expenses;
     }
 
     public String getName() {
