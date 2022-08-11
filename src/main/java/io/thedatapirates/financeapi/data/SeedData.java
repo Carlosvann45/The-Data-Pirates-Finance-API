@@ -147,7 +147,7 @@ public class SeedData implements CommandLineRunner {
 
             if (frequencyRepository.findFrequencyById(3L) == null) {
                 frequencyList.add(new Frequency(
-                                currentDate,
+                        currentDate,
                         currentDate,
                         "Monthly"));
             }

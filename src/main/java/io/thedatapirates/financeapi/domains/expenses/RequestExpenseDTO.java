@@ -8,7 +8,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * A Data Transfer Object to represent an expense request

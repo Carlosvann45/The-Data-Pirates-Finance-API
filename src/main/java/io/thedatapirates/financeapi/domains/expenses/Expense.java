@@ -10,14 +10,15 @@ import io.thedatapirates.financeapi.domains.entities.BaseEntity;
 import io.thedatapirates.financeapi.domains.frequencies.Frequency;
 import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevel;
 import io.thedatapirates.financeapi.domains.reminders.Reminder;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * This class that represents a customer entity in the database

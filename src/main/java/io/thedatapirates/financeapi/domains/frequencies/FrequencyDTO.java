@@ -3,8 +3,6 @@ package io.thedatapirates.financeapi.domains.frequencies;
 
 import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 
-import java.util.Date;
-
 /**
  * An object to represent a Data Transfer Object for a frequency
  */

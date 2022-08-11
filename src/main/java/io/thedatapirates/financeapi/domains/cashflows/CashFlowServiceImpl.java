@@ -1,6 +1,5 @@
 package io.thedatapirates.financeapi.domains.cashflows;
 
-import com.google.api.client.util.DateTime;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.Customer;
 import io.thedatapirates.financeapi.domains.customers.CustomerRepository;
@@ -17,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;

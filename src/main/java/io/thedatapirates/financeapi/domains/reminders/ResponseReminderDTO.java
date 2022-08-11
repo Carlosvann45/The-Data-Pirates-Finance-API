@@ -5,7 +5,6 @@ import io.thedatapirates.financeapi.domains.expenses.ResponseExpenseDTO;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyDTO;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * An object to represent a response Data Transfer Object for reminders

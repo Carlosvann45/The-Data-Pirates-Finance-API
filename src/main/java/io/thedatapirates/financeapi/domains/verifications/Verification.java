@@ -1,9 +1,13 @@
 package io.thedatapirates.financeapi.domains.verifications;
 
+import io.thedatapirates.financeapi.constants.StringConstants;
+import io.thedatapirates.financeapi.domains.customers.Customer;
 import io.thedatapirates.financeapi.domains.entities.BaseEntity;
 import io.thedatapirates.financeapi.utility.VerificationTypes;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -19,9 +23,11 @@ public class Verification extends BaseEntity {
 
     private String token;
 
-    private String username;
-
     private VerificationTypes type;
+
+    @ManyToOne
+    @JoinColumn(name = StringConstants.CUSTOMER_ID, nullable = false)
+    private Customer customer;
 
     public Verification() {
     }
@@ -58,12 +64,12 @@ public class Verification extends BaseEntity {
         this.type = type;
     }
 
-    public String getUsername() {
-        return username;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @Override
@@ -71,23 +77,23 @@ public class Verification extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        Verification verification = (Verification) o;
-        return Objects.equals(dateExpires, verification.dateExpires) && Objects.equals(dateConfirmed, verification.dateConfirmed) && Objects.equals(token, verification.token) && Objects.equals(username, verification.username) && type == verification.type;
+        Verification that = (Verification) o;
+        return Objects.equals(dateExpires, that.dateExpires) && Objects.equals(dateConfirmed, that.dateConfirmed) && Objects.equals(token, that.token) && type == that.type && Objects.equals(customer, that.customer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), dateExpires, dateConfirmed, token, username, type);
+        return Objects.hash(super.hashCode(), dateExpires, dateConfirmed, token, type, customer);
     }
 
     @Override
     public String toString() {
-        return "Verified{" +
+        return "Verification{" +
                 "dateExpires=" + dateExpires +
                 ", dateConfirmed=" + dateConfirmed +
                 ", token='" + token + '\'' +
-                ", username='" + username + '\'' +
                 ", type=" + type +
+                ", customer=" + customer +
                 '}';
     }
 }

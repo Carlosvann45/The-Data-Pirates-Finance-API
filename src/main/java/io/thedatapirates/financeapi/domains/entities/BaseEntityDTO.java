@@ -1,7 +1,6 @@
 package io.thedatapirates.financeapi.domains.entities;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * An abstract class to represent a Data Transfer Object(DTO) for other DTOs in the API

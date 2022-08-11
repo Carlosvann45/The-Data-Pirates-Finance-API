@@ -5,9 +5,7 @@ import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyDTO;
 import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevelDTO;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * A Data Transfer Object to represent an expense response

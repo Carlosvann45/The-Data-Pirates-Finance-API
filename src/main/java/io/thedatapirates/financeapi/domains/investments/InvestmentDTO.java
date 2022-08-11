@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Date;
 
 /**
  * An object to represent a Data Transfer Object for a investments

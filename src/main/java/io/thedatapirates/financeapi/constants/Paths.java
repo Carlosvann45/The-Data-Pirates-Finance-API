@@ -41,7 +41,7 @@ public class Paths {
     // Verification
     public static final String VERIFICATION_PATH = "/verifications";
     public static final String FORGOT_PASS_PATH = "/password/forgot/{email}";
-    public static final String CHANGE_PASS_PATH = "/password/change";
+    public static final String CHANGE_PASS_PATH = "/password/reset";
 
     // Misc
     public static final String CREATE_PATH = "/create";

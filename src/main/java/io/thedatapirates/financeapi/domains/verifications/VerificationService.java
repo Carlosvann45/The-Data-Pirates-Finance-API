@@ -1,10 +1,14 @@
 package io.thedatapirates.financeapi.domains.verifications;
 
-import org.springframework.web.bind.annotation.PathVariable;
+import io.thedatapirates.financeapi.domains.customers.Customer;
 
 /**
  * Service for verification endpoints
  */
 public interface VerificationService {
-  void sendVerificationEmailForPassword(@PathVariable String email);
+    void sendVerificationEmailForPassword(String email);
+
+    void changePasswordWithToken(String token);
+
+    void updatePasswordOnCustomer(String token, String password);
 }

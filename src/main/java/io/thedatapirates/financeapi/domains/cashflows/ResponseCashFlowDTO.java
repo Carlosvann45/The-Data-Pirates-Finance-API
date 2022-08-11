@@ -3,8 +3,6 @@ package io.thedatapirates.financeapi.domains.cashflows;
 import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyDTO;
 
-import java.util.Date;
-
 /**
  * An object to represent a response Data Transfer Object for cash flow items
  */

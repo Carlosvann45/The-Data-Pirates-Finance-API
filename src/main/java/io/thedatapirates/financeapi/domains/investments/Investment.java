@@ -8,7 +8,6 @@ import io.thedatapirates.financeapi.domains.entities.BaseEntity;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.util.Date;
 import java.util.Objects;
 
 /**
