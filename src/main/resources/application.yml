@@ -19,16 +19,16 @@ spring:
       ddl-auto: update
   datasource:
     platform: postgres
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: root
+    url: jdbc:${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
     driverClassName: org.postgresql.Driver
 
   mail:
     host: smtp.gmail.com
     port: 587
-    username: thedatapirates.cashplan@gmail.com
-    password: cukegrhlbmjunjml
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
 
     properties:
       mail:

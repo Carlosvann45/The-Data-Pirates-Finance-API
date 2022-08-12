@@ -116,7 +116,7 @@ public class StringConstants {
 
     // Links
     public static String CREATE_FORGOT_PASSWORD_LINK(String token) {
-        return "http://localhost:8085" + Paths.VERIFICATION_PATH + Paths.CHANGE_PASS_PATH + "?token=" + token;
+        return "https://the-data-pirates-cash-plan.herokuapp.com" + Paths.VERIFICATION_PATH + Paths.CHANGE_PASS_PATH + "?token=" + token;
     }
 
     // Email Templates
