@@ -1,13 +1,13 @@
 package io.thedatapirates.financeapi.domains.reminders;
 
 import io.thedatapirates.financeapi.constants.StringConstants;
-import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
+import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * An object to represent a request Data Transfer Object for reminders
@@ -23,7 +23,7 @@ public class RequestReminderDTO extends BaseEntityDTO {
     private String description;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private Date reminderTime;
+    private LocalDateTime reminderTime;
 
     @Range(min = 1, max = 4)
     private Long frequencyId;
@@ -32,30 +32,6 @@ public class RequestReminderDTO extends BaseEntityDTO {
     private Long expenseId;
 
     public RequestReminderDTO() {
-    }
-
-    public RequestReminderDTO(
-            Date dateCreated, Date dateUpdated, String name, String description,
-            Date reminderTime, Long frequencyId, Long expenseId
-    ) {
-        super(dateCreated, dateUpdated);
-        this.name = name;
-        this.description = description;
-        this.reminderTime = reminderTime;
-        this.frequencyId = frequencyId;
-        this.expenseId = expenseId;
-    }
-
-    public RequestReminderDTO(
-            Long id, Date dateCreated, Date dateUpdated, String name, String description,
-            Date reminderTime, Long frequencyId, Long expenseId
-    ) {
-        super(id, dateCreated, dateUpdated);
-        this.name = name;
-        this.description = description;
-        this.reminderTime = reminderTime;
-        this.frequencyId = frequencyId;
-        this.expenseId = expenseId;
     }
 
     public String getName() {
@@ -74,11 +50,11 @@ public class RequestReminderDTO extends BaseEntityDTO {
         this.description = description;
     }
 
-    public Date getReminderTime() {
+    public LocalDateTime getReminderTime() {
         return reminderTime;
     }
 
-    public void setReminderTime(Date reminderTime) {
+    public void setReminderTime(LocalDateTime reminderTime) {
         this.reminderTime = reminderTime;
     }
 

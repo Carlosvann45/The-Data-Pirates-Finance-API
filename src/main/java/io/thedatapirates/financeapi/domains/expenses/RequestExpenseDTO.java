@@ -1,13 +1,13 @@
 package io.thedatapirates.financeapi.domains.expenses;
 
 import io.thedatapirates.financeapi.constants.StringConstants;
-import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
+import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * A Data Transfer Object to represent an expense request
@@ -22,7 +22,7 @@ public class RequestExpenseDTO extends BaseEntityDTO {
     private double amount;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private Date dueDate;
+    private LocalDateTime dueDate;
 
     @Range(min = 0)
     private Long categoryId;
@@ -37,8 +37,8 @@ public class RequestExpenseDTO extends BaseEntityDTO {
     }
 
     public RequestExpenseDTO(
-            Date dateCreated, Date dateUpdated, String name, double amount,
-            Date dueDate, Long categoryId, Long frequencyId, Long priorityLevelId
+            LocalDateTime dateCreated, LocalDateTime dateUpdated, String name, double amount,
+            LocalDateTime dueDate, Long categoryId, Long frequencyId, Long priorityLevelId
     ) {
         super(dateCreated, dateUpdated);
         this.name = name;
@@ -50,8 +50,8 @@ public class RequestExpenseDTO extends BaseEntityDTO {
     }
 
     public RequestExpenseDTO(
-            Long id, Date dateCreated, Date dateUpdated, String name, double amount,
-            Date dueDate, Long categoryId, Long frequencyId, Long priorityLevelId
+            Long id, LocalDateTime dateCreated, LocalDateTime dateUpdated, String name, double amount,
+            LocalDateTime dueDate, Long categoryId, Long frequencyId, Long priorityLevelId
     ) {
         super(id, dateCreated, dateUpdated);
         this.name = name;
@@ -78,11 +78,11 @@ public class RequestExpenseDTO extends BaseEntityDTO {
         this.amount = amount;
     }
 
-    public Date getDueDate() {
+    public LocalDateTime getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
     }
 

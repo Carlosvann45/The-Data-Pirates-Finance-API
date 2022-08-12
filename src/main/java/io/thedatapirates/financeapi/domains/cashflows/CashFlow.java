@@ -5,13 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.Customer;
-import io.thedatapirates.financeapi.domains.entity.BaseEntity;
+import io.thedatapirates.financeapi.domains.entities.BaseEntity;
 import io.thedatapirates.financeapi.domains.frequencies.Frequency;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -35,24 +34,6 @@ public class CashFlow extends BaseEntity {
     private Frequency frequency;
 
     public CashFlow() {
-    }
-
-    public CashFlow(Date dateCreated, Date dateUpdated, String name, double amount, Customer customer,
-                    Frequency frequency) {
-        super(dateCreated, dateUpdated);
-        this.name = name;
-        this.amount = amount;
-        this.customer = customer;
-        this.frequency = frequency;
-    }
-
-    public CashFlow(Long id, Date dateCreated, Date dateUpdated, String name, double amount,
-                    Customer customer, Frequency frequency) {
-        super(id, dateCreated, dateUpdated);
-        this.name = name;
-        this.amount = amount;
-        this.customer = customer;
-        this.frequency = frequency;
     }
 
     public String getName() {

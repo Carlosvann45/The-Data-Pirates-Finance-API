@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -94,8 +95,12 @@ public class ExpenseServiceImpl implements ExpenseService {
         newExpense.setName(catName
                 .substring(0, 1)
                 .toUpperCase() + catName.substring(1).toLowerCase());
-        newExpense.setDateCreated(new Date(System.currentTimeMillis()));
-        newExpense.setDateUpdated(new Date(System.currentTimeMillis()));
+        newExpense.setDateCreated(new Date(System.currentTimeMillis()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
+        newExpense.setDateUpdated(new Date(System.currentTimeMillis()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
 
         try {
             existingExpense = expenseRepository.findExpenseByName(newExpense.getName());
@@ -158,7 +163,9 @@ public class ExpenseServiceImpl implements ExpenseService {
         updatedExpense.setName(catName
                 .substring(0, 1)
                 .toUpperCase() + catName.substring(1).toLowerCase());
-        updatedExpense.setDateUpdated(new Date(System.currentTimeMillis()));
+        updatedExpense.setDateUpdated(new Date(System.currentTimeMillis()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
 
         try {
             existingExpense = expenseRepository.findExpenseById(expenseId);
