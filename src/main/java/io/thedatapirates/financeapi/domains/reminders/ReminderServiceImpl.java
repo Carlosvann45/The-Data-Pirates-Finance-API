@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -85,8 +86,12 @@ public class ReminderServiceImpl implements ReminderService {
         newReminder.setName(catName
                 .substring(0, 1)
                 .toUpperCase() + catName.substring(1).toLowerCase());
-        newReminder.setDateCreated(new Date(System.currentTimeMillis()));
-        newReminder.setDateUpdated(new Date(System.currentTimeMillis()));
+        newReminder.setDateCreated(new Date(System.currentTimeMillis()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
+        newReminder.setDateUpdated(new Date(System.currentTimeMillis()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
 
         try {
             existingReminder = reminderRepository.findReminderByName(newReminder.getName());
@@ -143,7 +148,9 @@ public class ReminderServiceImpl implements ReminderService {
         updatedReminder.setName(catName
                 .substring(0, 1)
                 .toUpperCase() + catName.substring(1).toLowerCase());
-        updatedReminder.setDateUpdated(new Date(System.currentTimeMillis()));
+        updatedReminder.setDateUpdated(new Date(System.currentTimeMillis()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
 
         try {
             existingReminder = reminderRepository.findReminderById(reminderId);

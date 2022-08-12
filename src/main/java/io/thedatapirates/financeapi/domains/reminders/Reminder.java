@@ -5,14 +5,14 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.Customer;
-import io.thedatapirates.financeapi.domains.entity.BaseEntity;
+import io.thedatapirates.financeapi.domains.entities.BaseEntity;
 import io.thedatapirates.financeapi.domains.expenses.Expense;
 import io.thedatapirates.financeapi.domains.frequencies.Frequency;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -26,7 +26,7 @@ public class Reminder extends BaseEntity {
 
     private String description;
 
-    private Date reminderTime;
+    private LocalDateTime reminderTime;
 
     @ManyToOne
     @JoinColumn(name = StringConstants.CUSTOMER_ID, nullable = false)
@@ -45,8 +45,8 @@ public class Reminder extends BaseEntity {
     }
 
     public Reminder(
-            Date dateCreated, Date dateUpdated, String name, String description,
-            Date reminderTime, Customer customer, Frequency frequency, Expense expense
+            LocalDateTime dateCreated, LocalDateTime dateUpdated, String name, String description,
+            LocalDateTime reminderTime, Customer customer, Frequency frequency, Expense expense
     ) {
         super(dateCreated, dateUpdated);
         this.name = name;
@@ -58,8 +58,8 @@ public class Reminder extends BaseEntity {
     }
 
     public Reminder(
-            Long id, Date dateCreated, Date dateUpdated, String name, String description,
-            Date reminderTime, Customer customer, Frequency frequency, Expense expense
+            Long id, LocalDateTime dateCreated, LocalDateTime dateUpdated, String name, String description,
+            LocalDateTime reminderTime, Customer customer, Frequency frequency, Expense expense
     ) {
         super(id, dateCreated, dateUpdated);
         this.name = name;
@@ -86,11 +86,11 @@ public class Reminder extends BaseEntity {
         this.description = description;
     }
 
-    public Date getReminderTime() {
+    public LocalDateTime getReminderTime() {
         return reminderTime;
     }
 
-    public void setReminderTime(Date reminderTime) {
+    public void setReminderTime(LocalDateTime reminderTime) {
         this.reminderTime = reminderTime;
     }
 

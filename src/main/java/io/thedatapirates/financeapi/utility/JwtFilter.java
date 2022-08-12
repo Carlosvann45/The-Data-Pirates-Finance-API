@@ -4,7 +4,6 @@ import io.micrometer.core.lang.NonNullApi;
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.CustomerServiceImpl;
-import io.thedatapirates.financeapi.exceptions.BadRequest;
 import io.thedatapirates.financeapi.exceptions.Unauthorized;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -64,8 +63,9 @@ public class JwtFilter extends OncePerRequestFilter {
                 Paths.CUSTOMERS_PATH.concat(Paths.LOGIN_PATH),
                 Paths.CUSTOMERS_PATH.concat(Paths.REFRESH_TOKEN_PATH),
                 Paths.CUSTOMERS_PATH.concat((Paths.CREATE_PATH)),
-                Paths.FREQUENCY_PATH.concat(Paths.ALL_EXTENSIONS),
-                Paths.PRIORITY_LEVEL_PATH.concat(Paths.ALL_EXTENSIONS)
+                Paths.FREQUENCY_PATH,
+                Paths.PRIORITY_LEVEL_PATH,
+                Paths.VERIFICATION_PATH
         };
 
         try {

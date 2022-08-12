@@ -84,6 +84,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
 
         security.authorizeRequests()
+                .antMatchers(Paths.VERIFICATION_PATH.concat(Paths.ALL_EXTENSIONS))
+                .permitAll();
+
+        security.authorizeRequests()
                 .antMatchers(AUTH_WHITELIST)
                 .permitAll();
 

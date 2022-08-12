@@ -2,7 +2,7 @@ package io.thedatapirates.financeapi.domains.customers;
 
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
-import io.thedatapirates.financeapi.domains.jwt.JwtResponse;
+import io.thedatapirates.financeapi.domains.jwts.JwtResponse;
 import io.thedatapirates.financeapi.utility.MapperExtensions;
 import lombok.experimental.ExtensionMethod;
 import org.apache.logging.log4j.LogManager;
@@ -68,6 +68,13 @@ public class CustomerController {
         );
 
         return new ResponseEntity<>(jwtResponse, HttpStatus.OK);
+    }
+
+    @GetMapping(Paths.FORGOT_PASS_PATH)
+    public ResponseEntity<?> customerForgotPassword(@PathVariable String email) {
+
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /**

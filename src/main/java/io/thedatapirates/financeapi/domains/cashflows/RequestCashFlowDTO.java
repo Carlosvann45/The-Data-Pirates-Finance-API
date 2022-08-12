@@ -1,12 +1,11 @@
 package io.thedatapirates.financeapi.domains.cashflows;
 
 import io.thedatapirates.financeapi.constants.StringConstants;
-import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
+import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Date;
 
 /**
  * An object to represent a request Data Transfer Object for cash flow items
@@ -24,18 +23,6 @@ public class RequestCashFlowDTO extends BaseEntityDTO {
     private Long frequencyId;
 
     public RequestCashFlowDTO() {
-    }
-
-    public RequestCashFlowDTO(Date dateCreated, Date dateUpdated) {
-        super(dateCreated, dateUpdated);
-    }
-
-    public RequestCashFlowDTO(Long id, Date dateCreated, Date dateUpdated, String name, double amount,
-                              Long frequencyId) {
-        super(id, dateCreated, dateUpdated);
-        this.name = name;
-        this.amount = amount;
-        this.frequencyId = frequencyId;
     }
 
     public String getName() {

@@ -1,18 +1,21 @@
 package io.thedatapirates.financeapi.domains.customers;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.cashflows.CashFlow;
 import io.thedatapirates.financeapi.domains.categories.Category;
-import io.thedatapirates.financeapi.domains.entity.BaseEntity;
+import io.thedatapirates.financeapi.domains.entities.BaseEntity;
 import io.thedatapirates.financeapi.domains.expenses.Expense;
 import io.thedatapirates.financeapi.domains.investments.Investment;
 import io.thedatapirates.financeapi.domains.reminders.Reminder;
+import io.thedatapirates.financeapi.domains.verifications.Verification;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,6 +23,7 @@ import java.util.Objects;
  * This class that represents a customer entity in the database
  */
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = StringConstants.ID)
 public class Customer extends BaseEntity {
 
     private String firstName;
@@ -50,6 +54,9 @@ public class Customer extends BaseEntity {
     @JsonManagedReference
     private List<Expense> expenses = new ArrayList<>();
 
+    @OneToMany(mappedBy = StringConstants.CUSTOMER)
+    private List<Verification> verifications = new ArrayList<>();
+
     public Customer() {
     }
 
@@ -66,7 +73,7 @@ public class Customer extends BaseEntity {
     }
 
     public Customer(
-            Long id, Date dateCreated, Date dateUpdated, String username, String password,
+            Long id, LocalDateTime dateCreated, LocalDateTime dateUpdated, String username, String password,
             List<Category> categories, List<Investment> investments, List<CashFlow> cashFlowItems,
             List<Reminder> reminders, List<Expense> expenses
     ) {
@@ -152,18 +159,26 @@ public class Customer extends BaseEntity {
         this.lastName = lastName;
     }
 
+    public List<Verification> getVerifications() {
+        return verifications;
+    }
+
+    public void setVerifications(List<Verification> verifications) {
+        this.verifications = verifications;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Customer customer = (Customer) o;
-        return Objects.equals(firstName, customer.firstName) && Objects.equals(lastName, customer.lastName) && Objects.equals(username, customer.username) && Objects.equals(password, customer.password) && Objects.equals(categories, customer.categories) && Objects.equals(investments, customer.investments) && Objects.equals(cashFlowItems, customer.cashFlowItems) && Objects.equals(reminders, customer.reminders) && Objects.equals(expenses, customer.expenses);
+        return Objects.equals(firstName, customer.firstName) && Objects.equals(lastName, customer.lastName) && Objects.equals(username, customer.username) && Objects.equals(password, customer.password) && Objects.equals(categories, customer.categories) && Objects.equals(investments, customer.investments) && Objects.equals(cashFlowItems, customer.cashFlowItems) && Objects.equals(reminders, customer.reminders) && Objects.equals(expenses, customer.expenses) && Objects.equals(verifications, customer.verifications);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), firstName, lastName, username, password, categories, investments, cashFlowItems, reminders, expenses);
+        return Objects.hash(super.hashCode(), firstName, lastName, username, password, categories, investments, cashFlowItems, reminders, expenses, verifications);
     }
 
     @Override
@@ -178,6 +193,7 @@ public class Customer extends BaseEntity {
                 ", cashFlowItems=" + cashFlowItems +
                 ", reminders=" + reminders +
                 ", expenses=" + expenses +
+                ", verifications=" + verifications +
                 '}';
     }
 }

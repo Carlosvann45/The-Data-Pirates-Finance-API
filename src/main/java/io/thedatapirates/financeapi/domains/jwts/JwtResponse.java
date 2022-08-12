@@ -1,4 +1,4 @@
-package io.thedatapirates.financeapi.domains.jwt;
+package io.thedatapirates.financeapi.domains.jwts;
 
 public class JwtResponse {
 
