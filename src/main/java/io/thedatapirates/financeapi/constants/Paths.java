@@ -38,6 +38,11 @@ public class Paths {
     public static final String EXPENSE_PATH = "/expenses";
     public static final String EXPENSE_ID = "{expenseId}";
 
+    // Verification
+    public static final String VERIFICATION_PATH = "/verifications";
+    public static final String FORGOT_PASS_PATH = "/password/forgot/{email}";
+    public static final String CHANGE_PASS_PATH = "/password/reset";
+
     // Misc
     public static final String CREATE_PATH = "/create";
     public static final String ALL_EXTENSIONS = "/**";

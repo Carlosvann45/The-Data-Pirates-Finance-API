@@ -2,12 +2,11 @@ package io.thedatapirates.financeapi.domains.investments;
 
 
 import io.thedatapirates.financeapi.constants.StringConstants;
-import io.thedatapirates.financeapi.domains.entity.BaseEntityDTO;
+import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Date;
 
 /**
  * An object to represent a Data Transfer Object for a investments
@@ -27,24 +26,6 @@ public class InvestmentDTO extends BaseEntityDTO {
     private double buyPrice;
 
     public InvestmentDTO() {
-    }
-
-    public InvestmentDTO(Date dateCreated, Date dateUpdated, String investmentType, String name,
-                         double amount, double buyPrice) {
-        super(dateCreated, dateUpdated);
-        this.investmentType = investmentType;
-        this.name = name;
-        this.amount = amount;
-        this.buyPrice = buyPrice;
-    }
-
-    public InvestmentDTO(Long id, Date dateCreated, Date dateUpdated, String investmentType,
-                         String name, double amount, double buyPrice) {
-        super(id, dateCreated, dateUpdated);
-        this.investmentType = investmentType;
-        this.name = name;
-        this.amount = amount;
-        this.buyPrice = buyPrice;
     }
 
     public String getInvestmentType() {

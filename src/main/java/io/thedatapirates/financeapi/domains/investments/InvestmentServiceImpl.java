@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -71,8 +72,12 @@ public class InvestmentServiceImpl implements InvestmentService {
         newInvestment.setName(catName
                 .substring(0, 1)
                 .toUpperCase() + catName.substring(1).toLowerCase());
-        newInvestment.setDateCreated(new Date(System.currentTimeMillis()));
-        newInvestment.setDateUpdated(new Date(System.currentTimeMillis()));
+        newInvestment.setDateCreated(new Date(System.currentTimeMillis()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
+        newInvestment.setDateUpdated(new Date(System.currentTimeMillis()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
         newInvestment.setInvestmentType(StringConstants.STOCK);
 
         try {
@@ -116,7 +121,9 @@ public class InvestmentServiceImpl implements InvestmentService {
         updatedInvestment.setName(catName
                 .substring(0, 1)
                 .toUpperCase() + catName.substring(1).toLowerCase());
-        updatedInvestment.setDateUpdated(new Date(System.currentTimeMillis()));
+        updatedInvestment.setDateUpdated(new Date(System.currentTimeMillis()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
         updatedInvestment.setInvestmentType(StringConstants.STOCK);
 
         try {

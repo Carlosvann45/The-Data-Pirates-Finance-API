@@ -2,7 +2,7 @@ package io.thedatapirates.financeapi.utility;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.thedatapirates.financeapi.constants.StringConstants;
-import io.thedatapirates.financeapi.domains.jwt.JwtResponse;
+import io.thedatapirates.financeapi.domains.jwts.JwtResponse;
 import io.thedatapirates.financeapi.exceptions.BadRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
