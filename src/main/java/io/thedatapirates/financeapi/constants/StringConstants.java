@@ -67,6 +67,8 @@ public class StringConstants {
     public static final String CATEGORY_DIFF_CUSTOMER = "The supplied category id does not belong to customer from the token";
     public static final String NAME_REQUIRED = "Name is a required field.";
     public static final String NAME_MIN = "Name must be at least 3 characters long.";
+    public static final String SECTOR_REQUIRED = "Sector is a required field.";
+    public static final String SECTOR_MIN = "Sector must be at least 3 characters long.";
     public static final String FREQUENCY_NOT_FOUND = "Frequency with given id does not exist.";
     public static final String PRIORITY_LEVEL_NOT_FOUND = "Priority Level with given id does not exist.";
     public static final String INVESTMENT_NOT_FOUND = "Investment with given id does not exist.";
@@ -116,7 +118,7 @@ public class StringConstants {
 
     // Links
     public static String CREATE_FORGOT_PASSWORD_LINK(String token) {
-        return "http://localhost:8085" + Paths.VERIFICATION_PATH + Paths.CHANGE_PASS_PATH + "?token=" + token;
+        return "https://the-data-pirates-cash-plan.herokuapp.com" + Paths.VERIFICATION_PATH + Paths.CHANGE_PASS_PATH + "?token=" + token;
     }
 
     // Email Templates

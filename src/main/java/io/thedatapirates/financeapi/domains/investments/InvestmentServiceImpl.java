@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
@@ -64,33 +65,14 @@ public class InvestmentServiceImpl implements InvestmentService {
      */
     @Override
     public Investment createInvestmentForCustomer(String token, Investment newInvestment) {
-        Investment existingInvestment;
         Customer existingCustomer = getCustomerFromToken(token);
         String catName = newInvestment.getName();
 
         newInvestment.setCustomer(existingCustomer);
-        newInvestment.setName(catName
-                .substring(0, 1)
-                .toUpperCase() + catName.substring(1).toLowerCase());
-        newInvestment.setDateCreated(new Date(System.currentTimeMillis()).toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime());
-        newInvestment.setDateUpdated(new Date(System.currentTimeMillis()).toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime());
+        newInvestment.setName(catName.toUpperCase());
+        newInvestment.setDateCreated(LocalDateTime.now());
+        newInvestment.setDateUpdated(LocalDateTime.now());
         newInvestment.setInvestmentType(StringConstants.STOCK);
-
-        try {
-            existingInvestment = investmentRepository.findInvestmentByName(newInvestment.getName());
-        } catch (DataAccessException e) {
-            logger.error(e.getMessage());
-
-            throw new ServerUnavailable(e.getMessage());
-        }
-
-        if (existingInvestment != null) {
-            throw new Conflict(StringConstants.INVESTMENT_NAME_CONFLICT);
-        }
 
         try {
             return investmentRepository.save(newInvestment);
@@ -114,21 +96,17 @@ public class InvestmentServiceImpl implements InvestmentService {
     public Investment updateInvestmentForCustomer(String token, Long investmentId,
                                                   Investment updatedInvestment) {
         Investment existingInvestment;
-        Investment existingName;
         Customer existingCustomer = getCustomerFromToken(token);
         String catName = updatedInvestment.getName();
 
-        updatedInvestment.setName(catName
-                .substring(0, 1)
-                .toUpperCase() + catName.substring(1).toLowerCase());
-        updatedInvestment.setDateUpdated(new Date(System.currentTimeMillis()).toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime());
+
+        updatedInvestment.setName(catName.toUpperCase());
+        updatedInvestment.setDateCreated(LocalDateTime.now());
+        updatedInvestment.setDateUpdated(LocalDateTime.now());
         updatedInvestment.setInvestmentType(StringConstants.STOCK);
 
         try {
             existingInvestment = investmentRepository.findInvestmentById(investmentId);
-            existingName = investmentRepository.findInvestmentByName(updatedInvestment.getName());
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
 
@@ -137,10 +115,6 @@ public class InvestmentServiceImpl implements InvestmentService {
 
         if (existingInvestment == null) {
             throw new NotFound(StringConstants.INVESTMENT_NOT_FOUND);
-        } else if (existingName != null) {
-            if (!Objects.equals(existingInvestment.getName(), updatedInvestment.getName())) {
-                throw new Conflict(StringConstants.INVESTMENT_NAME_CONFLICT);
-            }
         } else if (!existingCustomer.getInvestments().contains(existingInvestment)) {
             throw new BadRequest(
                     StringConstants.INVESTMENT_DIFF_CUSTOMER
