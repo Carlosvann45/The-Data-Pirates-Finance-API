@@ -114,6 +114,7 @@ public class MapperExtensions {
         investmentDTO.setDateUpdated(investment.getDateUpdated());
         investmentDTO.setInvestmentType(investment.getInvestmentType());
         investmentDTO.setName(investment.getName());
+        investmentDTO.setSector(investment.getSector());
         investmentDTO.setAmount(investment.getAmount());
         investmentDTO.setBuyPrice(investment.getBuyPrice());
 
@@ -134,6 +135,7 @@ public class MapperExtensions {
         investment.setDateUpdated(investmentDTO.getDateUpdated());
         investment.setInvestmentType(investmentDTO.getInvestmentType());
         investment.setName(investmentDTO.getName());
+        investment.setSector(investmentDTO.getSector());
         investment.setAmount(investmentDTO.getAmount());
         investment.setBuyPrice(investmentDTO.getBuyPrice());
 
