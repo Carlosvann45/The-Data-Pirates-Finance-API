@@ -16,7 +16,6 @@ public class InvestmentDTO extends BaseEntityDTO {
     private String investmentType;
 
     @NotBlank(message = StringConstants.NAME_REQUIRED)
-    @Size(min = 3, message = StringConstants.NAME_MIN)
     private String name;
 
     @NotBlank(message = StringConstants.SECTOR_REQUIRED)
