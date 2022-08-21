@@ -20,6 +20,8 @@ public class Investment extends BaseEntity {
 
     private String name;
 
+    private String sector;
+
     private double amount;
 
     private double buyPrice;
@@ -72,26 +74,26 @@ public class Investment extends BaseEntity {
         this.customer = customer;
     }
 
+    public String getSector() {
+        return sector;
+    }
+
+    public void setSector(String sector) {
+        this.sector = sector;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         Investment that = (Investment) o;
-        return Double.compare(that.amount, amount) == 0 && Double.compare(that.buyPrice, buyPrice) == 0
-                && Objects.equals(investmentType, that.investmentType) && Objects.equals(name, that.name)
-                && Objects.equals(customer, that.customer);
+        return Double.compare(that.amount, amount) == 0 && Double.compare(that.buyPrice, buyPrice) == 0 && Objects.equals(investmentType, that.investmentType) && Objects.equals(name, that.name) && Objects.equals(sector, that.sector) && Objects.equals(customer, that.customer);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), investmentType, name, amount, buyPrice, customer);
+        return Objects.hash(super.hashCode(), investmentType, name, sector, amount, buyPrice, customer);
     }
 
     @Override
@@ -99,6 +101,7 @@ public class Investment extends BaseEntity {
         return "Investment{" +
                 "investmentType='" + investmentType + '\'' +
                 ", name='" + name + '\'' +
+                ", sector='" + sector + '\'' +
                 ", amount=" + amount +
                 ", buyPrice=" + buyPrice +
                 ", customer=" + customer +
