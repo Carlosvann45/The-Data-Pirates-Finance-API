@@ -22,10 +22,10 @@ public class InvestmentDTO extends BaseEntityDTO {
     @Size(min = 3, message = StringConstants.SECTOR_MIN)
     private String sector;
 
-    @Range(min = 0)
+    @NotBlank(message = StringConstants.AMOUNT_REQUIRED)
     private double amount;
 
-    @Range(min = 0)
+    @NotBlank(message = StringConstants.BUY_PRICE_REQUIRED)
     private double buyPrice;
 
     public InvestmentDTO() {

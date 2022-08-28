@@ -69,6 +69,8 @@ public class StringConstants {
     public static final String NAME_MIN = "Name must be at least 3 characters long.";
     public static final String SECTOR_REQUIRED = "Sector is a required field.";
     public static final String SECTOR_MIN = "Sector must be at least 3 characters long.";
+    public static final String AMOUNT_REQUIRED = "Amount is a required field.";
+    public static final String BUY_PRICE_REQUIRED = "Buy Price is a required field.";
     public static final String FREQUENCY_NOT_FOUND = "Frequency with given id does not exist.";
     public static final String PRIORITY_LEVEL_NOT_FOUND = "Priority Level with given id does not exist.";
     public static final String INVESTMENT_NOT_FOUND = "Investment with given id does not exist.";
