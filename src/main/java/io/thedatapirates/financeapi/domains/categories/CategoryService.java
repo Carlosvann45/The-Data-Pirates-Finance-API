@@ -7,11 +7,5 @@ import java.util.List;
  */
 public interface CategoryService {
 
-    List<Category> getCategoriesByCustomer(String token);
-
-    Category createCategoryForCustomer(String token, Category newCategory);
-
-    Category updateCategoryForCustomer(String token, Long categoryId, Category updatedCategory);
-
-    void deleteCategoryForCustomer(String token, Long categoryId);
+    List<Category> getCategoriesByCustomer();
 }

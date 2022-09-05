@@ -48,6 +48,8 @@ public class StringConstants {
     public static final String LOG_SEND_PASSWORD_VERIFICATION_EMAIL = "Request received for sendVerificationEmailForPassword.";
     public static final String LOG_CHANGE_PASSWORD_VERIFICATION = "Request received for changePasswordWithToken.";
     public static final String LOG_POST_CHANGE_PASSWORD_VERIFICATION = "Request received for updatePasswordOnCustomer.";
+    public static final String LOG_WITHDRAWAL_CASH_FLOW_CUSTOMER = "Request received for depositCashFlowForCustomer.";
+    public static final String LOG_WITHDRAWAL_EXPENSE_CUSTOMER = "Request received for depositCashFlowForCustomer.";
 
 
     // Error Messages
@@ -69,6 +71,8 @@ public class StringConstants {
     public static final String NAME_MIN = "Name must be at least 3 characters long.";
     public static final String SECTOR_REQUIRED = "Sector is a required field.";
     public static final String SECTOR_MIN = "Sector must be at least 3 characters long.";
+    public static final String START_DATE_REQUIRED = "Start date is a required field.";
+    public static final String BUY_PRICE_REQUIRED = "Buy Price is a required field.";
     public static final String FREQUENCY_NOT_FOUND = "Frequency with given id does not exist.";
     public static final String PRIORITY_LEVEL_NOT_FOUND = "Priority Level with given id does not exist.";
     public static final String INVESTMENT_NOT_FOUND = "Investment with given id does not exist.";
@@ -103,6 +107,8 @@ public class StringConstants {
     public static final String FREQUENCY = "frequency";
     public static final String CATEGORY_ID = "category_id";
     public static final String CATEGORY = "category";
+    public static final String CASH_FLOW = "cashFlow";
+    public static final String CASH_FLOW_ID = "cash_flow_id";
     public static final String REMINDER = "reminder";
     public static final String REMINDER_ID = "reminder_id";
     public static final String PRIORITY_LEVEL = "priorityLevel";
@@ -115,6 +121,7 @@ public class StringConstants {
     public static final String HEADER = "header";
     public static final String ACCESS_TOKEN = "Access Token";
     public static final String FORGOT_PASSWORD_SUBJECT = "Here's your link to change your password.";
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm";
 
     // Links
     public static String CREATE_FORGOT_PASSWORD_LINK(String token) {

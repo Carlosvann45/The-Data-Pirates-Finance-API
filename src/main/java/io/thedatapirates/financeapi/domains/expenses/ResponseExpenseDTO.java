@@ -4,8 +4,12 @@ import io.thedatapirates.financeapi.domains.categories.CategoryDTO;
 import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyDTO;
 import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevelDTO;
+import io.thedatapirates.financeapi.domains.withdrawals.Withdrawal;
+import io.thedatapirates.financeapi.domains.withdrawals.WithdrawalDTO;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A Data Transfer Object to represent an expense response
@@ -14,9 +18,9 @@ public class ResponseExpenseDTO extends BaseEntityDTO {
 
     private String name;
 
-    private double amount;
+    private LocalDateTime startDate;
 
-    private LocalDateTime dueDate;
+    private LocalDateTime endDate;
 
     private CategoryDTO category;
 
@@ -24,36 +28,9 @@ public class ResponseExpenseDTO extends BaseEntityDTO {
 
     private PriorityLevelDTO priorityLevel;
 
+    private List<WithdrawalDTO> withdrawals = new ArrayList<>();
+
     public ResponseExpenseDTO() {
-    }
-
-    public ResponseExpenseDTO(
-            LocalDateTime dateCreated, LocalDateTime dateUpdated, String name, double amount,
-            LocalDateTime dueDate, CategoryDTO category, FrequencyDTO frequency,
-            PriorityLevelDTO priorityLevel
-    ) {
-        super(dateCreated, dateUpdated);
-        this.name = name;
-        this.amount = amount;
-        this.dueDate = dueDate;
-        this.category = category;
-        this.frequency = frequency;
-        this.priorityLevel = priorityLevel;
-    }
-
-    public ResponseExpenseDTO(
-            Long id, LocalDateTime dateCreated, LocalDateTime dateUpdated,
-            String name, double amount, LocalDateTime dueDate,
-            CategoryDTO category, FrequencyDTO frequency,
-            PriorityLevelDTO priorityLevel
-    ) {
-        super(id, dateCreated, dateUpdated);
-        this.name = name;
-        this.amount = amount;
-        this.dueDate = dueDate;
-        this.category = category;
-        this.frequency = frequency;
-        this.priorityLevel = priorityLevel;
     }
 
     public String getName() {
@@ -64,20 +41,20 @@ public class ResponseExpenseDTO extends BaseEntityDTO {
         this.name = name;
     }
 
-    public double getAmount() {
-        return amount;
+    public LocalDateTime getStartDate() {
+        return startDate;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
     }
 
-    public LocalDateTime getDueDate() {
-        return dueDate;
+    public LocalDateTime getEndDate() {
+        return endDate;
     }
 
-    public void setDueDate(LocalDateTime dueDate) {
-        this.dueDate = dueDate;
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
     }
 
     public CategoryDTO getCategory() {
@@ -102,5 +79,13 @@ public class ResponseExpenseDTO extends BaseEntityDTO {
 
     public void setPriorityLevel(PriorityLevelDTO priorityLevel) {
         this.priorityLevel = priorityLevel;
+    }
+
+    public List<WithdrawalDTO> getWithdrawals() {
+        return withdrawals;
+    }
+
+    public void setWithdrawals(List<WithdrawalDTO> withdrawals) {
+        this.withdrawals = withdrawals;
     }
 }

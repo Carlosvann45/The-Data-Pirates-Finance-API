@@ -29,196 +29,21 @@ public class CategoryServiceImpl implements CategoryService {
     private final Logger logger = LogManager.getLogger(CustomerServiceImpl.class);
 
     @Autowired
-    private JWTUtility jwtUtility;
-
-    @Autowired
-    private CustomerRepository customerRepository;
-
-    @Autowired
     private CategoryRepository categoryRepository;
 
     /**
-     * Calls repository to get a customer and retrieves all categories based on that customers id
+     * Gets all categories from the repository
      *
-     * @param token token to get username for customer
-     * @return all categories related to a specified customer
+     * @return a list of categories
      */
     @Override
-    public List<Category> getCategoriesByCustomer(String token) {
-        Customer existingCustomer = getCustomerFromToken(token);
-
+    public List<Category> getCategoriesByCustomer() {
         try {
-            return categoryRepository.findAllByCustomerId(existingCustomer.getId());
+            return categoryRepository.findAll();
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
 
             throw new ServerUnavailable(e.getMessage());
         }
-    }
-
-    /**
-     * Creates a category for a give customer from a give bearer token
-     *
-     * @param token       token to get customer from
-     * @param newCategory category to create
-     * @return newly created category
-     */
-    @Override
-    public Category createCategoryForCustomer(String token, Category newCategory) {
-        Category existingCategory;
-        Customer existingCustomer = getCustomerFromToken(token);
-        String catName = newCategory.getName();
-
-        newCategory.setCustomer(existingCustomer);
-        newCategory.setName(catName
-                .substring(0, 1)
-                .toUpperCase() + catName.substring(1).toLowerCase());
-        newCategory.setDateCreated(new Date(System.currentTimeMillis()).toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime());
-        newCategory.setDateUpdated(new Date(System.currentTimeMillis()).toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime());
-
-        try {
-            existingCategory = categoryRepository.findCategoryByName(newCategory.getName());
-        } catch (DataAccessException e) {
-            logger.error(e.getMessage());
-
-            throw new ServerUnavailable(e.getMessage());
-        }
-
-        if (existingCategory != null) {
-            throw new Conflict(StringConstants.CATEGORY_NAME_CONFLICT);
-        }
-
-        try {
-            return categoryRepository.save(newCategory);
-        } catch (DataAccessException e) {
-            logger.error(e.getMessage());
-
-            throw new ServerUnavailable(e.getMessage());
-        }
-    }
-
-    /**
-     * Updates a category for a customer from a token id customer and category exist in the database
-     *
-     * @param token           token to get customer from
-     * @param categoryId      category id to retrieve category
-     * @param updatedCategory updated category
-     * @return newly updated category
-     */
-    @Override
-    public Category updateCategoryForCustomer(String token, Long categoryId,
-                                              Category updatedCategory) {
-        Category existingCategory;
-        Category existingName;
-        Customer existingCustomer = getCustomerFromToken(token);
-        String catName = updatedCategory.getName();
-
-        updatedCategory.setName(catName
-                .substring(0, 1)
-                .toUpperCase() + catName.substring(1).toLowerCase());
-        updatedCategory.setDateUpdated(new Date(System.currentTimeMillis()).toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime());
-
-        try {
-            existingCategory = categoryRepository.findCategoryById(categoryId);
-            existingName = categoryRepository.findCategoryByName(updatedCategory.getName());
-        } catch (DataAccessException e) {
-            logger.error(e.getMessage());
-
-            throw new ServerUnavailable(e.getMessage());
-        }
-
-        if (existingCategory == null) {
-            throw new NotFound(StringConstants.CATEGORY_NOT_FOUND);
-        } else if (existingName != null) {
-            if (!Objects.equals(existingCategory.getName(), updatedCategory.getName())) {
-                throw new Conflict(StringConstants.CATEGORY_NAME_CONFLICT);
-            }
-        } else if (!existingCustomer.getCategories().contains(existingCategory)) {
-            throw new BadRequest(
-                    StringConstants.CATEGORY_DIFF_CUSTOMER
-            );
-        }
-
-        updatedCategory.setId(categoryId);
-        updatedCategory.setDateCreated(existingCategory.getDateCreated());
-        updatedCategory.setCustomer(existingCustomer);
-
-        try {
-            return categoryRepository.save(updatedCategory);
-        } catch (DataAccessException e) {
-            logger.error(e.getMessage());
-
-            throw new ServerUnavailable(e.getMessage());
-        }
-    }
-
-    /**
-     * Deletes a given category if it exists on a customer
-     *
-     * @param token      token to get customer from
-     * @param categoryId category id for category to delete
-     */
-    @Override
-    public void deleteCategoryForCustomer(String token, Long categoryId) {
-        Category existingCategory;
-        Customer existingCustomer = getCustomerFromToken(token);
-
-        try {
-            existingCategory = categoryRepository.findCategoryById(categoryId);
-        } catch (DataAccessException e) {
-            logger.error(e.getMessage());
-
-            throw new ServerUnavailable(e.getMessage());
-        }
-
-        if (existingCategory == null) {
-            throw new NotFound(StringConstants.CATEGORY_NOT_FOUND);
-        } else if (!existingCustomer.getCategories().contains(existingCategory)) {
-            throw new BadRequest(
-                    StringConstants.CATEGORY_DIFF_CUSTOMER
-            );
-        }
-
-        try {
-            categoryRepository.deleteById(categoryId);
-        } catch (DataAccessException e) {
-            logger.error(e.getMessage());
-
-            throw new ServerUnavailable(e.getMessage());
-        }
-    }
-
-    /**
-     * Helper method to retrieve customer from token
-     *
-     * @param token token to get customer from
-     * @return customer from token
-     */
-    private Customer getCustomerFromToken(String token) {
-        // removes bearer from the token
-        token = token.substring(7).trim();
-
-        Customer existingCustomer;
-        String customerUsername = jwtUtility.getUsernameFromToken(token);
-
-        try {
-            existingCustomer = customerRepository.findCustomerByUsername(customerUsername);
-        } catch (DataAccessException e) {
-            logger.error(e.getMessage());
-
-            throw new ServerUnavailable(e.getMessage());
-        }
-
-        if (existingCustomer == null) {
-            throw new NotFound(StringConstants.CUSTOMER_NOT_FOUND);
-        }
-
-        return existingCustomer;
     }
 }

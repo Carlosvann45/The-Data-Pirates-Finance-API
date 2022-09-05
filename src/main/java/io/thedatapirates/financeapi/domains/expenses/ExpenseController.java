@@ -2,6 +2,8 @@ package io.thedatapirates.financeapi.domains.expenses;
 
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
+import io.thedatapirates.financeapi.domains.withdrawals.Withdrawal;
+import io.thedatapirates.financeapi.domains.withdrawals.WithdrawalDTO;
 import io.thedatapirates.financeapi.utility.MapperExtensions;
 import lombok.experimental.ExtensionMethod;
 import org.apache.logging.log4j.LogManager;
@@ -76,6 +78,32 @@ public class ExpenseController {
 
         return new ResponseEntity<>(newExpenseDTO, HttpStatus.CREATED);
     }
+
+    /**
+     * Creates a new withdrawal item for an expense
+     *
+     * @param token token to get customer
+     * @param expenseId expense d to find expense
+     * @param withdrawalDTO withdrawal to create
+     * @return updated expense
+     */
+    @PutMapping(Paths.WITHDRAWAL_FOR_EXPENSE + Paths.EXPENSE_ID)
+    public ResponseEntity<ResponseExpenseDTO> withdrawalExpenseForCustomer(
+            @RequestHeader(AUTHORIZATION) String token,
+            @PathVariable Long expenseId,
+            @Valid @RequestBody WithdrawalDTO withdrawalDTO
+            ) {
+        logger.info(StringConstants.LOG_WITHDRAWAL_EXPENSE_CUSTOMER);
+
+        Withdrawal withdrawal = withdrawalDTO.mapDTOToWithdrawal();
+
+        Expense updatedExpense = expenseService.withdrawalExpenseForCustomer(token, expenseId, withdrawal);
+
+        ResponseExpenseDTO expenseDTO = updatedExpense.mapExpenseToDTO();
+
+        return new ResponseEntity<>(expenseDTO, HttpStatus.OK);
+    }
+
 
     /**
      * Updates an existing expense from a customer bearer token
