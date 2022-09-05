@@ -1,19 +1,23 @@
 package io.thedatapirates.financeapi.domains.cashflows;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * An object to represent a request Data Transfer Object for cash flow items
  */
 public class RequestCashFlowDTO extends BaseEntityDTO {
 
-    @NotBlank(message = StringConstants.START_DATE_REQUIRED)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", shape = JsonFormat.Shape.STRING)
     private LocalDateTime startDate;
 
     private LocalDateTime endDate;

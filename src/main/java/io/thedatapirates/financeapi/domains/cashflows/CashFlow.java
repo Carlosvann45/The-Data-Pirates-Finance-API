@@ -2,6 +2,7 @@ package io.thedatapirates.financeapi.domains.cashflows;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.Customer;
@@ -41,6 +42,7 @@ public class CashFlow extends BaseEntity {
     private Frequency frequency;
 
     @OneToMany(mappedBy = StringConstants.CASH_FLOW)
+    @JsonManagedReference
     private List<Deposit> deposits = new ArrayList<>();
 
     public CashFlow() {

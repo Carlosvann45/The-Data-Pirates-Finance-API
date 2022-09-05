@@ -119,6 +119,7 @@ public class StringConstants {
     public static final String HEADER = "header";
     public static final String ACCESS_TOKEN = "Access Token";
     public static final String FORGOT_PASSWORD_SUBJECT = "Here's your link to change your password.";
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm";
 
     // Links
     public static String CREATE_FORGOT_PASSWORD_LINK(String token) {
