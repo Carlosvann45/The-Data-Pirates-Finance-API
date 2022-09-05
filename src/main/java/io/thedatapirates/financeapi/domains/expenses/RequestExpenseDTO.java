@@ -1,5 +1,6 @@
 package io.thedatapirates.financeapi.domains.expenses;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 import org.hibernate.validator.constraints.Range;
@@ -18,11 +19,13 @@ public class RequestExpenseDTO extends BaseEntityDTO {
     @Size(min = 3, message = StringConstants.NAME_MIN)
     private String name;
 
-    @Range(min = 0)
-    private double amount;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", shape = JsonFormat.Shape.STRING)
+    private LocalDateTime startDate;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDateTime dueDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", shape = JsonFormat.Shape.STRING)
+    private LocalDateTime endDate;
 
     @Range(min = 0)
     private Long categoryId;
@@ -36,54 +39,12 @@ public class RequestExpenseDTO extends BaseEntityDTO {
     public RequestExpenseDTO() {
     }
 
-    public RequestExpenseDTO(
-            LocalDateTime dateCreated, LocalDateTime dateUpdated, String name, double amount,
-            LocalDateTime dueDate, Long categoryId, Long frequencyId, Long priorityLevelId
-    ) {
-        super(dateCreated, dateUpdated);
-        this.name = name;
-        this.amount = amount;
-        this.dueDate = dueDate;
-        this.categoryId = categoryId;
-        this.frequencyId = frequencyId;
-        this.priorityLevelId = priorityLevelId;
-    }
-
-    public RequestExpenseDTO(
-            Long id, LocalDateTime dateCreated, LocalDateTime dateUpdated, String name, double amount,
-            LocalDateTime dueDate, Long categoryId, Long frequencyId, Long priorityLevelId
-    ) {
-        super(id, dateCreated, dateUpdated);
-        this.name = name;
-        this.amount = amount;
-        this.dueDate = dueDate;
-        this.categoryId = categoryId;
-        this.frequencyId = frequencyId;
-        this.priorityLevelId = priorityLevelId;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public LocalDateTime getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(LocalDateTime dueDate) {
-        this.dueDate = dueDate;
     }
 
     public Long getCategoryId() {
@@ -108,5 +69,21 @@ public class RequestExpenseDTO extends BaseEntityDTO {
 
     public void setPriorityLevelId(Long priorityLevelId) {
         this.priorityLevelId = priorityLevelId;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
     }
 }

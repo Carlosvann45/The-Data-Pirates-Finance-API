@@ -2,10 +2,12 @@ package io.thedatapirates.financeapi.domains.customers;
 
 import io.thedatapirates.financeapi.domains.cashflows.ResponseCashFlowDTO;
 import io.thedatapirates.financeapi.domains.categories.CategoryDTO;
+import io.thedatapirates.financeapi.domains.deposits.DepositDTO;
 import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 import io.thedatapirates.financeapi.domains.expenses.ResponseExpenseDTO;
 import io.thedatapirates.financeapi.domains.investments.InvestmentDTO;
 import io.thedatapirates.financeapi.domains.reminders.ResponseReminderDTO;
+import io.thedatapirates.financeapi.domains.withdrawals.Withdrawal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +25,6 @@ public class ResponseCustomerDTO extends BaseEntityDTO {
 
     private String password;
 
-    private List<CategoryDTO> categories = new ArrayList<>();
-
     private List<InvestmentDTO> investments = new ArrayList<>();
 
     private List<ResponseCashFlowDTO> cashFlowItems = new ArrayList<>();
@@ -32,6 +32,10 @@ public class ResponseCustomerDTO extends BaseEntityDTO {
     private List<ResponseReminderDTO> reminders = new ArrayList<>();
 
     private List<ResponseExpenseDTO> expenses = new ArrayList<>();
+
+    private List<DepositDTO> deposits = new ArrayList<>();
+
+    private List<Withdrawal> withdrawals = new ArrayList<>();
 
     public ResponseCustomerDTO() {
     }
@@ -50,14 +54,6 @@ public class ResponseCustomerDTO extends BaseEntityDTO {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public List<CategoryDTO> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(List<CategoryDTO> categories) {
-        this.categories = categories;
     }
 
     public List<InvestmentDTO> getInvestments() {
@@ -106,5 +102,21 @@ public class ResponseCustomerDTO extends BaseEntityDTO {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public List<DepositDTO> getDeposits() {
+        return deposits;
+    }
+
+    public void setDeposits(List<DepositDTO> deposits) {
+        this.deposits = deposits;
+    }
+
+    public List<Withdrawal> getWithdrawals() {
+        return withdrawals;
+    }
+
+    public void setWithdrawals(List<Withdrawal> withdrawals) {
+        this.withdrawals = withdrawals;
     }
 }

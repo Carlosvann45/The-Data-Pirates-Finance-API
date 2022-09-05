@@ -1,5 +1,7 @@
 package io.thedatapirates.financeapi.domains.expenses;
 
+import io.thedatapirates.financeapi.domains.withdrawals.Withdrawal;
+
 import java.util.List;
 
 /**
@@ -11,6 +13,8 @@ public interface ExpenseService {
 
     Expense createExpenseForCustomer(String token, Long categoryId, Long frequencyId,
                                      Long priorityLevelId, Expense newExpense);
+
+    Expense withdrawalExpenseForCustomer(String token, Long expenseId, Withdrawal newWithdrawal);
 
     Expense updateExpenseForCustomer(String token, Long categoryId, Long frequencyId,
                                      Long priorityLevelId, Long expenseId, Expense updatedExpense);
