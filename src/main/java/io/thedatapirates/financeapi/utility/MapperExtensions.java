@@ -23,6 +23,8 @@ import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevelDTO;
 import io.thedatapirates.financeapi.domains.reminders.Reminder;
 import io.thedatapirates.financeapi.domains.reminders.RequestReminderDTO;
 import io.thedatapirates.financeapi.domains.reminders.ResponseReminderDTO;
+import io.thedatapirates.financeapi.domains.withdrawals.Withdrawal;
+import io.thedatapirates.financeapi.domains.withdrawals.WithdrawalDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -278,11 +280,18 @@ public class MapperExtensions {
         expenseDTO.setDateCreated(expense.getDateCreated());
         expenseDTO.setDateUpdated(expense.getDateUpdated());
         expenseDTO.setName(expense.getName());
-        expenseDTO.setAmount(expense.getAmount());
-        expenseDTO.setDueDate(expense.getDueDate());
+        expenseDTO.setStartDate(expense.getStartDate());
+        expenseDTO.setEndDate(expense.getEndDate());
         expenseDTO.setCategory(mapCategoryToDTO(expense.getCategory()));
         expenseDTO.setFrequency(mapFrequencyToDTO(expense.getFrequency()));
         expenseDTO.setPriorityLevel(mapPriorityLevelToDTO(expense.getPriorityLevel()));
+
+        List<WithdrawalDTO> withdrawals = expense.getWithdrawals()
+                .stream()
+                .map(MapperExtensions::mapWithdrawalToDTO)
+                .collect(Collectors.toList());
+
+        expenseDTO.setWithdrawals(withdrawals);
 
         return expenseDTO;
     }
@@ -299,9 +308,9 @@ public class MapperExtensions {
         expense.setId(expenseDTO.getId());
         expense.setDateCreated(expenseDTO.getDateCreated());
         expense.setDateUpdated(expenseDTO.getDateUpdated());
+        expense.setStartDate(expenseDTO.getStartDate());
+        expense.setEndDate(expenseDTO.getEndDate());
         expense.setName(expenseDTO.getName());
-        expense.setAmount(expenseDTO.getAmount());
-        expense.setDueDate(expenseDTO.getDueDate());
 
         return expense;
     }
@@ -322,11 +331,6 @@ public class MapperExtensions {
         customerDTO.setLastName(customer.getLastName());
         customerDTO.setUsername(customer.getUsername());
         customerDTO.setPassword(customer.getPassword());
-
-        List<CategoryDTO> categories = customer.getCategories()
-                .stream()
-                .map(MapperExtensions::mapCategoryToDTO)
-                .collect(Collectors.toList());
 
         List<InvestmentDTO> investments = customer.getInvestments()
                 .stream()
@@ -355,8 +359,6 @@ public class MapperExtensions {
                 .map(MapperExtensions::mapDepositToDTO)
                 .collect(Collectors.toList());
 
-
-        customerDTO.setCategories(categories);
         customerDTO.setInvestments(investments);
         customerDTO.setCashFlowItems(cashFlowItems);
         customerDTO.setReminders(reminders);
@@ -418,5 +420,39 @@ public class MapperExtensions {
         depositDTO.setAmount(deposit.getAmount());
 
         return depositDTO;
+    }
+
+    /**
+     * Maps withdrawal dto to withdrawal
+     *
+     * @param withdrawalDTO withdrawal dto to map
+     * @return newly created withdrawal
+     */
+    public static Withdrawal mapDTOToWithdrawal(WithdrawalDTO withdrawalDTO) {
+        Withdrawal withdrawal = new Withdrawal();
+
+        withdrawal.setId(withdrawalDTO.getId());
+        withdrawal.setDateCreated(withdrawalDTO.getDateCreated());
+        withdrawal.setDateUpdated(withdrawalDTO.getDateUpdated());
+        withdrawal.setAmount(withdrawalDTO.getAmount());
+
+        return withdrawal;
+    }
+
+    /**
+     * Maps withdrawal to withdrawal dto
+     *
+     * @param withdrawal withdrawal to map
+     * @return newly created withdrawal dto
+     */
+    public static WithdrawalDTO mapWithdrawalToDTO(Withdrawal withdrawal) {
+        WithdrawalDTO withdrawalDTO = new WithdrawalDTO();
+
+        withdrawalDTO.setId(withdrawal.getId());
+        withdrawalDTO.setDateCreated(withdrawal.getDateCreated());
+        withdrawalDTO.setDateUpdated(withdrawal.getDateUpdated());
+        withdrawalDTO.setAmount(withdrawal.getAmount());
+
+        return withdrawalDTO;
     }
 }

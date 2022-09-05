@@ -10,6 +10,7 @@ import io.thedatapirates.financeapi.domains.entities.BaseEntity;
 import io.thedatapirates.financeapi.domains.frequencies.Frequency;
 import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevel;
 import io.thedatapirates.financeapi.domains.reminders.Reminder;
+import io.thedatapirates.financeapi.domains.withdrawals.Withdrawal;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -29,9 +30,9 @@ public class Expense extends BaseEntity {
 
     private String name;
 
-    private double amount;
+    private LocalDateTime startDate;
 
-    private LocalDateTime dueDate;
+    private LocalDateTime endDate;
 
     @ManyToOne
     @JoinColumn(name = StringConstants.CUSTOMER_ID, nullable = false)
@@ -53,39 +54,10 @@ public class Expense extends BaseEntity {
     @OneToMany(mappedBy = StringConstants.EXPENSE)
     private List<Reminder> reminders = new ArrayList<>();
 
+    @OneToMany(mappedBy = StringConstants.EXPENSE)
+    private  List<Withdrawal> withdrawals = new ArrayList<>();
+
     public Expense() {
-    }
-
-    public Expense(
-            LocalDateTime dateCreated, LocalDateTime dateUpdated, String name, double amount,
-            LocalDateTime dueDate, Customer customer, Category category, Frequency frequency,
-            PriorityLevel priorityLevel, List<Reminder> reminders
-    ) {
-        super(dateCreated, dateUpdated);
-        this.name = name;
-        this.amount = amount;
-        this.dueDate = dueDate;
-        this.customer = customer;
-        this.category = category;
-        this.frequency = frequency;
-        this.priorityLevel = priorityLevel;
-        this.reminders = reminders;
-    }
-
-    public Expense(
-            Long id, LocalDateTime dateCreated, LocalDateTime dateUpdated,
-            String name, double amount, LocalDateTime dueDate, Customer customer,
-            Category category, Frequency frequency, PriorityLevel priorityLevel, List<Reminder> reminders
-    ) {
-        super(id, dateCreated, dateUpdated);
-        this.name = name;
-        this.amount = amount;
-        this.dueDate = dueDate;
-        this.customer = customer;
-        this.category = category;
-        this.frequency = frequency;
-        this.priorityLevel = priorityLevel;
-        this.reminders = reminders;
     }
 
     public String getName() {
@@ -94,22 +66,6 @@ public class Expense extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public LocalDateTime getDueDate() {
-        return dueDate;
-    }
-
-    public void setDueDate(LocalDateTime dueDate) {
-        this.dueDate = dueDate;
     }
 
     public Customer getCustomer() {
@@ -152,43 +108,56 @@ public class Expense extends BaseEntity {
         this.reminders = reminders;
     }
 
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
+    }
+
+    public List<Withdrawal> getWithdrawals() {
+        return withdrawals;
+    }
+
+    public void setWithdrawals(List<Withdrawal> withdrawals) {
+        this.withdrawals = withdrawals;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         Expense expense = (Expense) o;
-        return Double.compare(expense.amount, amount) == 0 && Objects.equals(name, expense.name)
-                && Objects.equals(dueDate, expense.dueDate) && Objects.equals(customer, expense.customer)
-                && Objects.equals(category, expense.category)
-                && Objects.equals(frequency, expense.frequency)
-                && Objects.equals(priorityLevel, expense.priorityLevel) && Objects.equals(reminders,
-                expense.reminders);
+        return Objects.equals(name, expense.name) && Objects.equals(startDate, expense.startDate) && Objects.equals(endDate, expense.endDate) && Objects.equals(customer, expense.customer) && Objects.equals(category, expense.category) && Objects.equals(frequency, expense.frequency) && Objects.equals(priorityLevel, expense.priorityLevel) && Objects.equals(reminders, expense.reminders) && Objects.equals(withdrawals, expense.withdrawals);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, amount, dueDate, customer, category, frequency,
-                priorityLevel, reminders);
+        return Objects.hash(super.hashCode(), name, startDate, endDate, customer, category, frequency, priorityLevel, reminders, withdrawals);
     }
 
     @Override
     public String toString() {
         return "Expense{" +
                 "name='" + name + '\'' +
-                ", amount=" + amount +
-                ", dueDate=" + dueDate +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
                 ", customer=" + customer +
                 ", category=" + category +
                 ", frequency=" + frequency +
                 ", priorityLevel=" + priorityLevel +
                 ", reminders=" + reminders +
+                ", withdrawals=" + withdrawals +
                 '}';
     }
 }

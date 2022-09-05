@@ -9,6 +9,8 @@ import io.thedatapirates.financeapi.domains.frequencies.Frequency;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyRepository;
 import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevel;
 import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevelRepository;
+import io.thedatapirates.financeapi.domains.withdrawals.Withdrawal;
+import io.thedatapirates.financeapi.domains.withdrawals.WithdrawalRepository;
 import io.thedatapirates.financeapi.exceptions.BadRequest;
 import io.thedatapirates.financeapi.exceptions.Conflict;
 import io.thedatapirates.financeapi.exceptions.NotFound;
@@ -20,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +47,9 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private WithdrawalRepository withdrawalRepository;
 
     @Autowired
     private PriorityLevelRepository priorityLevelRepository;
@@ -95,12 +101,8 @@ public class ExpenseServiceImpl implements ExpenseService {
         newExpense.setName(catName
                 .substring(0, 1)
                 .toUpperCase() + catName.substring(1).toLowerCase());
-        newExpense.setDateCreated(new Date(System.currentTimeMillis()).toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime());
-        newExpense.setDateUpdated(new Date(System.currentTimeMillis()).toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime());
+        newExpense.setDateCreated(LocalDateTime.now());
+        newExpense.setDateUpdated(LocalDateTime.now());
 
         try {
             existingExpense = expenseRepository.findExpenseByName(newExpense.getName());
@@ -137,6 +139,47 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     /**
+     * Adds withdrawal for a specified expense if customer and expense exist
+     *
+     * @param token token to get customer
+     * @param expenseId id for expense to find
+     * @param newWithdrawal withdrawal to create
+     * @return updated expense
+     */
+    @Override
+    public Expense withdrawalExpenseForCustomer(String token, Long expenseId, Withdrawal newWithdrawal) {
+        Expense existingExpense;
+        Customer existingCustomer = getCustomerFromToken(token);
+
+        try {
+            existingExpense = expenseRepository.findExpenseById(expenseId);
+        } catch (DataAccessException e) {
+            logger.error(e.getMessage());
+
+            throw new ServerUnavailable(e.getMessage());
+        }
+
+        if (existingExpense == null) {
+            throw new NotFound(StringConstants.EXPENSE_NOT_FOUND);
+        }
+
+        newWithdrawal.setDateCreated(LocalDateTime.now());
+        newWithdrawal.setDateUpdated(LocalDateTime.now());
+        newWithdrawal.setCustomer(existingCustomer);
+        newWithdrawal.setExpense(existingExpense);
+
+        try {
+            withdrawalRepository.save(newWithdrawal);
+
+            return existingExpense;
+        } catch (DataAccessException e) {
+            logger.error(e.getMessage());
+
+            throw new ServerUnavailable(e.getMessage());
+        }
+    }
+
+    /**
      * Updates an existing expense if the customer exist and frequency exist
      *
      * @param token           token to get customer from
@@ -163,9 +206,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         updatedExpense.setName(catName
                 .substring(0, 1)
                 .toUpperCase() + catName.substring(1).toLowerCase());
-        updatedExpense.setDateUpdated(new Date(System.currentTimeMillis()).toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime());
+        updatedExpense.setDateUpdated(LocalDateTime.now());
 
         try {
             existingExpense = expenseRepository.findExpenseById(expenseId);

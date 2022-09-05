@@ -83,6 +83,7 @@ public class CashFlowController {
             @PathVariable Long cashFlowId,
             @Valid @RequestBody DepositDTO depositDTO
             ) {
+        logger.info(StringConstants.LOG_WITHDRAWAL_CASH_FLOW_CUSTOMER);
 
         Deposit deposit = depositDTO.mapDTOToDeposit();
 

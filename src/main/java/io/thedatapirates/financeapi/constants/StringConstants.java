@@ -48,6 +48,8 @@ public class StringConstants {
     public static final String LOG_SEND_PASSWORD_VERIFICATION_EMAIL = "Request received for sendVerificationEmailForPassword.";
     public static final String LOG_CHANGE_PASSWORD_VERIFICATION = "Request received for changePasswordWithToken.";
     public static final String LOG_POST_CHANGE_PASSWORD_VERIFICATION = "Request received for updatePasswordOnCustomer.";
+    public static final String LOG_WITHDRAWAL_CASH_FLOW_CUSTOMER = "Request received for depositCashFlowForCustomer.";
+    public static final String LOG_WITHDRAWAL_EXPENSE_CUSTOMER = "Request received for depositCashFlowForCustomer.";
 
 
     // Error Messages

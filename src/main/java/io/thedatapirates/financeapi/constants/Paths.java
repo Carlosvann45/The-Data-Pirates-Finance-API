@@ -38,6 +38,7 @@ public class Paths {
     // Expense
     public static final String EXPENSE_PATH = "/expenses";
     public static final String EXPENSE_ID = "{expenseId}";
+    public static final String WITHDRAWAL_FOR_EXPENSE = "/withdrawal/for/";
 
     // Verification
     public static final String VERIFICATION_PATH = "/verifications";
