@@ -9,6 +9,8 @@ import io.thedatapirates.financeapi.domains.categories.CategoryDTO;
 import io.thedatapirates.financeapi.domains.customers.Customer;
 import io.thedatapirates.financeapi.domains.customers.RequestCustomerDTO;
 import io.thedatapirates.financeapi.domains.customers.ResponseCustomerDTO;
+import io.thedatapirates.financeapi.domains.deposits.Deposit;
+import io.thedatapirates.financeapi.domains.deposits.DepositDTO;
 import io.thedatapirates.financeapi.domains.expenses.Expense;
 import io.thedatapirates.financeapi.domains.expenses.RequestExpenseDTO;
 import io.thedatapirates.financeapi.domains.expenses.ResponseExpenseDTO;
@@ -186,11 +188,19 @@ public class MapperExtensions {
         ResponseCashFlowDTO cashFlowDTO = new ResponseCashFlowDTO();
 
         cashFlowDTO.setId(cashFlow.getId());
+        cashFlowDTO.setStartDate(cashFlow.getStartDate());
+        cashFlowDTO.setEndDate(cashFlowDTO.getEndDate());
         cashFlowDTO.setDateCreated(cashFlow.getDateCreated());
         cashFlowDTO.setDateUpdated(cashFlow.getDateUpdated());
         cashFlowDTO.setName(cashFlow.getName());
-        cashFlowDTO.setAmount(cashFlow.getAmount());
         cashFlowDTO.setFrequency(mapFrequencyToDTO(cashFlow.getFrequency()));
+
+        List<DepositDTO> deposits = cashFlow.getDeposits()
+                .stream()
+                .map(MapperExtensions::mapDepositToDTO)
+                .collect(Collectors.toList());
+
+        cashFlowDTO.setDeposits(deposits);
 
         return cashFlowDTO;
     }
@@ -205,10 +215,12 @@ public class MapperExtensions {
         CashFlow cashFlow = new CashFlow();
 
         cashFlow.setId(cashFlowDTO.getId());
+        cashFlow.setStartDate(cashFlowDTO.getStartDate());
+        cashFlow.setEndDate(cashFlowDTO.getEndDate());
+        cashFlow.setId(cashFlowDTO.getId());
         cashFlow.setDateCreated(cashFlowDTO.getDateCreated());
         cashFlow.setDateUpdated(cashFlowDTO.getDateUpdated());
         cashFlow.setName(cashFlowDTO.getName());
-        cashFlow.setAmount(cashFlowDTO.getAmount());
 
         return cashFlow;
     }
@@ -338,11 +350,18 @@ public class MapperExtensions {
                 .map(MapperExtensions::mapExpenseToDTO)
                 .collect(Collectors.toList());
 
+        List<DepositDTO> deposits = customer.getDeposits()
+                .stream()
+                .map(MapperExtensions::mapDepositToDTO)
+                .collect(Collectors.toList());
+
+
         customerDTO.setCategories(categories);
         customerDTO.setInvestments(investments);
         customerDTO.setCashFlowItems(cashFlowItems);
         customerDTO.setReminders(reminders);
         customerDTO.setExpenses(expenses);
+        customerDTO.setDeposits(deposits);
 
         return customerDTO;
     }
@@ -365,5 +384,39 @@ public class MapperExtensions {
         customer.setPassword(customerDTO.getPassword());
 
         return customer;
+    }
+
+    /**
+     * Maps deposit dto to deposit
+     *
+     * @param depositDTO deposit dto to map
+     * @return newly created deposit
+     */
+    public static Deposit mapDTOToDeposit(DepositDTO depositDTO) {
+        Deposit deposit = new Deposit();
+
+        deposit.setId(depositDTO.getId());
+        deposit.setDateCreated(depositDTO.getDateCreated());
+        deposit.setDateUpdated(depositDTO.getDateUpdated());
+        deposit.setAmount(depositDTO.getAmount());
+
+        return deposit;
+    }
+
+    /**
+     * Maps deposit to deposit dto
+     *
+     * @param deposit deposit to map
+     * @return newly created deposit dto
+     */
+    public static DepositDTO mapDepositToDTO(Deposit deposit) {
+        DepositDTO depositDTO = new DepositDTO();
+
+        depositDTO.setId(deposit.getId());
+        depositDTO.setDateCreated(deposit.getDateCreated());
+        depositDTO.setDateUpdated(deposit.getDateUpdated());
+        depositDTO.setAmount(deposit.getAmount());
+
+        return depositDTO;
     }
 }

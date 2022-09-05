@@ -6,18 +6,21 @@ import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 /**
  * An object to represent a request Data Transfer Object for cash flow items
  */
 public class RequestCashFlowDTO extends BaseEntityDTO {
 
+    @NotBlank(message = StringConstants.START_DATE_REQUIRED)
+    private LocalDateTime startDate;
+
+    private LocalDateTime endDate;
+
     @NotBlank(message = StringConstants.NAME_REQUIRED)
     @Size(min = 3, message = StringConstants.NAME_MIN)
     private String name;
-
-    @Range(min = 0)
-    private double amount;
 
     @Range(min = 1, max = 4)
     private Long frequencyId;
@@ -33,19 +36,27 @@ public class RequestCashFlowDTO extends BaseEntityDTO {
         this.name = name;
     }
 
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
     public Long getFrequencyId() {
         return frequencyId;
     }
 
     public void setFrequencyId(Long frequencyId) {
         this.frequencyId = frequencyId;
+    }
+
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDateTime endDate) {
+        this.endDate = endDate;
     }
 }

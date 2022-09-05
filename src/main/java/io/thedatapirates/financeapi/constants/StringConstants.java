@@ -69,7 +69,7 @@ public class StringConstants {
     public static final String NAME_MIN = "Name must be at least 3 characters long.";
     public static final String SECTOR_REQUIRED = "Sector is a required field.";
     public static final String SECTOR_MIN = "Sector must be at least 3 characters long.";
-    public static final String AMOUNT_REQUIRED = "Amount is a required field.";
+    public static final String START_DATE_REQUIRED = "Start date is a required field.";
     public static final String BUY_PRICE_REQUIRED = "Buy Price is a required field.";
     public static final String FREQUENCY_NOT_FOUND = "Frequency with given id does not exist.";
     public static final String PRIORITY_LEVEL_NOT_FOUND = "Priority Level with given id does not exist.";
@@ -105,6 +105,8 @@ public class StringConstants {
     public static final String FREQUENCY = "frequency";
     public static final String CATEGORY_ID = "category_id";
     public static final String CATEGORY = "category";
+    public static final String CASH_FLOW = "cashFlow";
+    public static final String CASH_FLOW_ID = "cash_flow_id";
     public static final String REMINDER = "reminder";
     public static final String REMINDER_ID = "reminder_id";
     public static final String PRIORITY_LEVEL = "priorityLevel";

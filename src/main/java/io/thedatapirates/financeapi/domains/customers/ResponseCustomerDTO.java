@@ -2,6 +2,7 @@ package io.thedatapirates.financeapi.domains.customers;
 
 import io.thedatapirates.financeapi.domains.cashflows.ResponseCashFlowDTO;
 import io.thedatapirates.financeapi.domains.categories.CategoryDTO;
+import io.thedatapirates.financeapi.domains.deposits.DepositDTO;
 import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 import io.thedatapirates.financeapi.domains.expenses.ResponseExpenseDTO;
 import io.thedatapirates.financeapi.domains.investments.InvestmentDTO;
@@ -32,6 +33,8 @@ public class ResponseCustomerDTO extends BaseEntityDTO {
     private List<ResponseReminderDTO> reminders = new ArrayList<>();
 
     private List<ResponseExpenseDTO> expenses = new ArrayList<>();
+
+    private List<DepositDTO> deposits = new ArrayList<>();
 
     public ResponseCustomerDTO() {
     }
@@ -106,5 +109,13 @@ public class ResponseCustomerDTO extends BaseEntityDTO {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public List<DepositDTO> getDeposits() {
+        return deposits;
+    }
+
+    public void setDeposits(List<DepositDTO> deposits) {
+        this.deposits = deposits;
     }
 }

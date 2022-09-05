@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.cashflows.CashFlow;
 import io.thedatapirates.financeapi.domains.categories.Category;
+import io.thedatapirates.financeapi.domains.deposits.Deposit;
 import io.thedatapirates.financeapi.domains.entities.BaseEntity;
 import io.thedatapirates.financeapi.domains.expenses.Expense;
 import io.thedatapirates.financeapi.domains.investments.Investment;
@@ -56,6 +57,9 @@ public class Customer extends BaseEntity {
 
     @OneToMany(mappedBy = StringConstants.CUSTOMER)
     private List<Verification> verifications = new ArrayList<>();
+
+    @OneToMany(mappedBy = StringConstants.CUSTOMER)
+    private List<Deposit> deposits = new ArrayList<>();
 
     public Customer() {
     }
@@ -167,18 +171,26 @@ public class Customer extends BaseEntity {
         this.verifications = verifications;
     }
 
+    public List<Deposit> getDeposits() {
+        return deposits;
+    }
+
+    public void setDeposits(List<Deposit> deposits) {
+        this.deposits = deposits;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Customer customer = (Customer) o;
-        return Objects.equals(firstName, customer.firstName) && Objects.equals(lastName, customer.lastName) && Objects.equals(username, customer.username) && Objects.equals(password, customer.password) && Objects.equals(categories, customer.categories) && Objects.equals(investments, customer.investments) && Objects.equals(cashFlowItems, customer.cashFlowItems) && Objects.equals(reminders, customer.reminders) && Objects.equals(expenses, customer.expenses) && Objects.equals(verifications, customer.verifications);
+        return Objects.equals(firstName, customer.firstName) && Objects.equals(lastName, customer.lastName) && Objects.equals(username, customer.username) && Objects.equals(password, customer.password) && Objects.equals(categories, customer.categories) && Objects.equals(investments, customer.investments) && Objects.equals(cashFlowItems, customer.cashFlowItems) && Objects.equals(reminders, customer.reminders) && Objects.equals(expenses, customer.expenses) && Objects.equals(verifications, customer.verifications) && Objects.equals(deposits, customer.deposits);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), firstName, lastName, username, password, categories, investments, cashFlowItems, reminders, expenses, verifications);
+        return Objects.hash(super.hashCode(), firstName, lastName, username, password, categories, investments, cashFlowItems, reminders, expenses, verifications, deposits);
     }
 
     @Override
@@ -194,6 +206,7 @@ public class Customer extends BaseEntity {
                 ", reminders=" + reminders +
                 ", expenses=" + expenses +
                 ", verifications=" + verifications +
+                ", deposits=" + deposits +
                 '}';
     }
 }
