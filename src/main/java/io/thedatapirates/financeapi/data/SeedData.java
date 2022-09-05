@@ -159,6 +159,13 @@ public class SeedData implements CommandLineRunner {
                         "Yearly"));
             }
 
+            if (frequencyRepository.findFrequencyById(5L) == null) {
+                frequencyList.add(new Frequency(
+                        currentDate,
+                        currentDate,
+                        "Biweekly"));
+            }
+
             frequencyRepository.saveAll(frequencyList);
 
             logger.info("Loading priority levels...");
