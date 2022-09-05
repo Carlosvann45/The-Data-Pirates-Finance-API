@@ -1,5 +1,7 @@
 package io.thedatapirates.financeapi.data;
 
+import io.thedatapirates.financeapi.domains.categories.Category;
+import io.thedatapirates.financeapi.domains.categories.CategoryRepository;
 import io.thedatapirates.financeapi.domains.customers.Customer;
 import io.thedatapirates.financeapi.domains.customers.CustomerRepository;
 import io.thedatapirates.financeapi.domains.frequencies.Frequency;
@@ -32,6 +34,9 @@ public class SeedData implements CommandLineRunner {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private FrequencyRepository frequencyRepository;
@@ -73,9 +78,7 @@ public class SeedData implements CommandLineRunner {
      * Seeds database into the repositories with randomly generated data
      */
     private void seedDatabase() {
-        LocalDateTime currentDate = new Date(System.currentTimeMillis()).toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
+        LocalDateTime currentDate = LocalDateTime.now();
 
         // Persist user to database
         logger.info("Loading " + 5 + " customer(s)...");
@@ -127,6 +130,100 @@ public class SeedData implements CommandLineRunner {
                 customerRepository.save(customer5);
             }
 
+            logger.info("Loading categories...");
+
+            List<Category> categories = new ArrayList<>();
+
+            if (categoryRepository.findCategoryById(1L) == null) {
+                categories.add(new Category(
+                        currentDate,
+                        currentDate,
+                        "Housing"
+                ));
+            }
+
+            if (categoryRepository.findCategoryById(2L) == null) {
+                categories.add(new Category(
+                        currentDate,
+                        currentDate,
+                        "Transportation"
+                ));
+            }
+
+            if (categoryRepository.findCategoryById(3L) == null) {
+                categories.add(new Category(
+                        currentDate,
+                        currentDate,
+                        "Food"
+                ));
+            }
+
+            if (categoryRepository.findCategoryById(4L) == null) {
+                categories.add(new Category(
+                        currentDate,
+                        currentDate,
+                        "Utilities"
+                ));
+            }
+
+            if (categoryRepository.findCategoryById(5L) == null) {
+                categories.add(new Category(
+                        currentDate,
+                        currentDate,
+                        "Insurance"
+                ));
+            }
+
+            if (categoryRepository.findCategoryById(6L) == null) {
+                categories.add(new Category(
+                        currentDate,
+                        currentDate,
+                        "Medical"
+                ));
+            }
+
+            if (categoryRepository.findCategoryById(7L) == null) {
+                categories.add(new Category(
+                        currentDate,
+                        currentDate,
+                        "Savings"
+                ));
+            }
+
+            if (categoryRepository.findCategoryById(8L) == null) {
+                categories.add(new Category(
+                        currentDate,
+                        currentDate,
+                        "Personal"
+                ));
+            }
+
+            if (categoryRepository.findCategoryById(9L) == null) {
+                categories.add(new Category(
+                        currentDate,
+                        currentDate,
+                        "Personal"
+                ));
+            }
+
+            if (categoryRepository.findCategoryById(10L) == null) {
+                categories.add(new Category(
+                        currentDate,
+                        currentDate,
+                        "Recreation"
+                ));
+            }
+
+            if (categoryRepository.findCategoryById(11L) == null) {
+                categories.add(new Category(
+                        currentDate,
+                        currentDate,
+                        "Miscellaneous"
+                ));
+            }
+
+            categoryRepository.saveAll(categories);
+
             logger.info("Loading frequencies...");
 
             List<Frequency> frequencyList = new ArrayList<>();
@@ -157,6 +254,13 @@ public class SeedData implements CommandLineRunner {
                         currentDate,
                         currentDate,
                         "Yearly"));
+            }
+
+            if (frequencyRepository.findFrequencyById(5L) == null) {
+                frequencyList.add(new Frequency(
+                        currentDate,
+                        currentDate,
+                        "Biweekly"));
             }
 
             frequencyRepository.saveAll(frequencyList);

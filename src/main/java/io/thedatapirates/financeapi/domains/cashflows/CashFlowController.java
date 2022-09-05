@@ -2,6 +2,8 @@ package io.thedatapirates.financeapi.domains.cashflows;
 
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
+import io.thedatapirates.financeapi.domains.deposits.Deposit;
+import io.thedatapirates.financeapi.domains.deposits.DepositDTO;
 import io.thedatapirates.financeapi.utility.MapperExtensions;
 import lombok.experimental.ExtensionMethod;
 import org.apache.logging.log4j.LogManager;
@@ -73,6 +75,23 @@ public class CashFlowController {
         ResponseCashFlowDTO newCashFlowDTO = newCashFlow.mapCashFlowToDTO();
 
         return new ResponseEntity<>(newCashFlowDTO, HttpStatus.CREATED);
+    }
+
+    @PutMapping(Paths.DEPOSIT_TO_CASH_FLOW + Paths.CASH_FLOW_ID)
+    public ResponseEntity<ResponseCashFlowDTO> depositCashFlowForCustomer(
+            @RequestHeader(AUTHORIZATION) String token,
+            @PathVariable Long cashFlowId,
+            @Valid @RequestBody DepositDTO depositDTO
+            ) {
+        logger.info(StringConstants.LOG_WITHDRAWAL_CASH_FLOW_CUSTOMER);
+
+        Deposit deposit = depositDTO.mapDTOToDeposit();
+
+        CashFlow updatedCashFlow = cashFlowService.depositCashFlowForCustomer(token, cashFlowId, deposit);
+
+        ResponseCashFlowDTO updatedCashFlowDTO = updatedCashFlow.mapCashFlowToDTO();
+
+        return new ResponseEntity<>(updatedCashFlowDTO, HttpStatus.OK);
     }
 
     /**

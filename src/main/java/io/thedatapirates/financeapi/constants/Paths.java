@@ -29,6 +29,7 @@ public class Paths {
     // Cash Flow
     public static final String CASH_FLOW_PATH = "/cashFlows";
     public static final String CASH_FLOW_ID = "{cashFlowId}";
+    public static final String DEPOSIT_TO_CASH_FLOW = "/deposit/to/";
 
     // Reminder
     public static final String REMINDER_PATH = "/reminders";
@@ -37,6 +38,7 @@ public class Paths {
     // Expense
     public static final String EXPENSE_PATH = "/expenses";
     public static final String EXPENSE_ID = "{expenseId}";
+    public static final String WITHDRAWAL_FOR_EXPENSE = "/withdrawal/for/";
 
     // Verification
     public static final String VERIFICATION_PATH = "/verifications";

@@ -65,7 +65,8 @@ public class JwtFilter extends OncePerRequestFilter {
                 Paths.CUSTOMERS_PATH.concat((Paths.CREATE_PATH)),
                 Paths.FREQUENCY_PATH,
                 Paths.PRIORITY_LEVEL_PATH,
-                Paths.VERIFICATION_PATH
+                Paths.VERIFICATION_PATH,
+                Paths.CATEGORY_PATH
         };
 
         try {
