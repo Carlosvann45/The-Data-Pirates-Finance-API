@@ -24,10 +24,10 @@ public class RequestExpenseDTO extends BaseEntityDTO {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDateTime dueDate;
 
-    @Range(min = 0)
+    @Range(min = 1, max = 11)
     private Long categoryId;
 
-    @Range(min = 1, max = 4)
+    @Range(min = 1, max = 5)
     private Long frequencyId;
 
     @Range(min = 1, max = 4)

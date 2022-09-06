@@ -12,14 +12,29 @@ import javax.validation.constraints.Size;
  */
 public class RequestCashFlowDTO extends BaseEntityDTO {
 
+<<<<<<< Updated upstream
+=======
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", shape = JsonFormat.Shape.STRING)
+    private LocalDateTime startDate;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", shape = JsonFormat.Shape.STRING)
+    private LocalDateTime endDate;
+
+>>>>>>> Stashed changes
     @NotBlank(message = StringConstants.NAME_REQUIRED)
     @Size(min = 3, message = StringConstants.NAME_MIN)
     private String name;
 
+<<<<<<< Updated upstream
     @Range(min = 0)
     private double amount;
 
     @Range(min = 1, max = 4)
+=======
+    @Range(min = 1, max = 5)
+>>>>>>> Stashed changes
     private Long frequencyId;
 
     public RequestCashFlowDTO() {
