@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,15 +26,15 @@ public class Category extends BaseEntity {
 
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = StringConstants.CUSTOMER_ID, nullable = false)
-    @JsonBackReference
-    private Customer customer;
-
     @OneToMany(mappedBy = StringConstants.CATEGORY)
     private List<Expense> expenses = new ArrayList<>();
 
     public Category() {
+    }
+
+    public Category(LocalDateTime dateCreated, LocalDateTime dateUpdated, String name) {
+        super(dateCreated, dateUpdated);
+        this.name = name;
     }
 
     public String getName() {
@@ -42,14 +43,6 @@ public class Category extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
     }
 
     public List<Expense> getExpenses() {
@@ -72,20 +65,18 @@ public class Category extends BaseEntity {
             return false;
         }
         Category category = (Category) o;
-        return Objects.equals(name, category.name) && Objects.equals(customer, category.customer)
-                && Objects.equals(expenses, category.expenses);
+        return Objects.equals(name, category.name) && Objects.equals(expenses, category.expenses);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, customer, expenses);
+        return Objects.hash(super.hashCode(), name, expenses);
     }
 
     @Override
     public String toString() {
         return "Category{" +
                 "name='" + name + '\'' +
-                ", customer=" + customer +
                 ", expenses=" + expenses +
                 '}';
     }

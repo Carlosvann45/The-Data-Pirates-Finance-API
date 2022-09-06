@@ -1,5 +1,7 @@
 package io.thedatapirates.financeapi.domains.cashflows;
 
+import io.thedatapirates.financeapi.domains.deposits.Deposit;
+
 import java.util.List;
 
 /**
@@ -10,6 +12,8 @@ public interface CashFlowService {
     List<CashFlow> getCashFlowByCustomer(String token);
 
     CashFlow createCashFlowForCustomer(String token, Long frequencyId, CashFlow newCashFlowItem);
+
+    CashFlow depositCashFlowForCustomer(String token, Long cashFlowId, Deposit deposit);
 
     CashFlow updateCashFlowForCustomer(String token, Long frequencyId, Long cashFlowId,
                                        CashFlow updatedCashFlowItem);

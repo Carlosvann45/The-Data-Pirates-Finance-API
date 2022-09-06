@@ -10,10 +10,5 @@ import java.util.List;
  */
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-
-    List<Category> findAllByCustomerId(Long customerId);
-
-    Category findCategoryByName(String name);
-
     Category findCategoryById(Long id);
 }
