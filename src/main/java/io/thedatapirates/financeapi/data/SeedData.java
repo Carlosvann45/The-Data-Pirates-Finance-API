@@ -195,7 +195,7 @@ public class SeedData implements CommandLineRunner {
                 ));
             }
 
-            if (categoryRepository.findCategoryById(10L) == null) {
+            if (categoryRepository.findCategoryById(9L) == null) {
                 categories.add(new Category(
                         currentDate,
                         currentDate,
@@ -203,7 +203,7 @@ public class SeedData implements CommandLineRunner {
                 ));
             }
 
-            if (categoryRepository.findCategoryById(11L) == null) {
+            if (categoryRepository.findCategoryById(10L) == null) {
                 categories.add(new Category(
                         currentDate,
                         currentDate,
