@@ -109,9 +109,7 @@ public class ReminderServiceImpl implements ReminderService {
             throw new BadRequest(StringConstants.EXPENSE_BAD_ID);
         } else if (existingFrequency == null) {
             throw new BadRequest(StringConstants.BAD_FREQUENCY);
-        } else if (existingExpense.getReminders().size() >= 1) throw new BadRequest(
-                StringConstants.EXPENSE_HAS_REMINDER
-        );
+        }
 
         newReminder.setFrequency(existingFrequency);
         newReminder.setExpense(existingExpense);
