@@ -38,6 +38,7 @@ public class Reminder extends BaseEntity {
     private Frequency frequency;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = StringConstants.EXPENSE_ID, nullable = false)
     private Expense expense;
 

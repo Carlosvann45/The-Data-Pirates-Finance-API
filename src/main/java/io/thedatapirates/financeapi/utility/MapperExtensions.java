@@ -291,7 +291,13 @@ public class MapperExtensions {
                 .map(MapperExtensions::mapWithdrawalToDTO)
                 .collect(Collectors.toList());
 
+        List<ResponseReminderDTO> reminders = expense.getReminders()
+                .stream()
+                .map(MapperExtensions::mapReminderToDTO)
+                .collect(Collectors.toList());
+
         expenseDTO.setWithdrawals(withdrawals);
+        expenseDTO.setReminders(reminders);
 
         return expenseDTO;
     }

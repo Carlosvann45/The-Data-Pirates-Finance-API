@@ -4,6 +4,7 @@ import io.thedatapirates.financeapi.domains.categories.CategoryDTO;
 import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyDTO;
 import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevelDTO;
+import io.thedatapirates.financeapi.domains.reminders.ResponseReminderDTO;
 import io.thedatapirates.financeapi.domains.withdrawals.Withdrawal;
 import io.thedatapirates.financeapi.domains.withdrawals.WithdrawalDTO;
 
@@ -29,6 +30,8 @@ public class ResponseExpenseDTO extends BaseEntityDTO {
     private PriorityLevelDTO priorityLevel;
 
     private List<WithdrawalDTO> withdrawals = new ArrayList<>();
+
+    private List<ResponseReminderDTO> reminders = new ArrayList<>();
 
     public ResponseExpenseDTO() {
     }
@@ -87,5 +90,13 @@ public class ResponseExpenseDTO extends BaseEntityDTO {
 
     public void setWithdrawals(List<WithdrawalDTO> withdrawals) {
         this.withdrawals = withdrawals;
+    }
+
+    public List<ResponseReminderDTO> getReminders() {
+        return reminders;
+    }
+
+    public void setReminders(List<ResponseReminderDTO> reminders) {
+        this.reminders = reminders;
     }
 }
