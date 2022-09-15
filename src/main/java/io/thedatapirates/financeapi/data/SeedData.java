@@ -9,6 +9,9 @@ import io.thedatapirates.financeapi.domains.frequencies.FrequencyRepository;
 import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevel;
 import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevelRepository;
 import io.thedatapirates.financeapi.exceptions.ServerUnavailable;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +20,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * This class handles Seeding selected data into the database depending on the application.yml
@@ -202,19 +199,11 @@ public class SeedData implements CommandLineRunner {
                 categories.add(new Category(
                         currentDate,
                         currentDate,
-                        "Personal"
-                ));
-            }
-
-            if (categoryRepository.findCategoryById(10L) == null) {
-                categories.add(new Category(
-                        currentDate,
-                        currentDate,
                         "Recreation"
                 ));
             }
 
-            if (categoryRepository.findCategoryById(11L) == null) {
+            if (categoryRepository.findCategoryById(10L) == null) {
                 categories.add(new Category(
                         currentDate,
                         currentDate,
