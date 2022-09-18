@@ -1,5 +1,6 @@
 package io.thedatapirates.financeapi.domains.reminders;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 import org.hibernate.validator.constraints.Range;
@@ -23,6 +24,7 @@ public class RequestReminderDTO extends BaseEntityDTO {
     private String description;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", shape = JsonFormat.Shape.STRING)
     private LocalDateTime reminderTime;
 
     @Range(min = 1, max = 5)
