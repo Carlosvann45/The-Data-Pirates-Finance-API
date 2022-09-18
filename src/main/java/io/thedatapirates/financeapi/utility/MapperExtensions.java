@@ -243,7 +243,6 @@ public class MapperExtensions {
         reminderDTO.setDescription(reminder.getDescription());
         reminderDTO.setReminderTime(reminder.getReminderTime());
         reminderDTO.setFrequency(mapFrequencyToDTO(reminder.getFrequency()));
-        reminderDTO.setExpense(mapExpenseToDTO(reminder.getExpense()));
 
         return reminderDTO;
     }

@@ -19,8 +19,6 @@ public class ResponseReminderDTO extends BaseEntityDTO {
 
     private FrequencyDTO frequency;
 
-    private ResponseExpenseDTO expense;
-
     public ResponseReminderDTO() {
     }
 
@@ -54,13 +52,5 @@ public class ResponseReminderDTO extends BaseEntityDTO {
 
     public void setFrequency(FrequencyDTO frequency) {
         this.frequency = frequency;
-    }
-
-    public ResponseExpenseDTO getExpense() {
-        return expense;
-    }
-
-    public void setExpense(ResponseExpenseDTO expense) {
-        this.expense = expense;
     }
 }
