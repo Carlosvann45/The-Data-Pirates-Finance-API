@@ -76,7 +76,6 @@ public class ReminderServiceImpl implements ReminderService {
     @Override
     public Reminder createReminderForCustomer(String token, Long frequencyId, Long expenseId,
                                               Reminder newReminder) {
-        Reminder existingReminder;
         Frequency existingFrequency;
         Expense existingExpense;
         Customer existingCustomer = getCustomerFromToken(token);
@@ -94,7 +93,6 @@ public class ReminderServiceImpl implements ReminderService {
                 .toLocalDateTime());
 
         try {
-            existingReminder = reminderRepository.findReminderByName(newReminder.getName());
             existingFrequency = frequencyRepository.findFrequencyById(frequencyId);
             existingExpense = expenseRepository.findExpenseById(expenseId);
         } catch (DataAccessException e) {
@@ -103,9 +101,7 @@ public class ReminderServiceImpl implements ReminderService {
             throw new ServerUnavailable(e.getMessage());
         }
 
-        if (existingReminder != null) {
-            throw new Conflict(StringConstants.REMINDER_NAME_CONFLICT);
-        } else if (existingExpense == null) {
+        if (existingExpense == null) {
             throw new BadRequest(StringConstants.EXPENSE_BAD_ID);
         } else if (existingFrequency == null) {
             throw new BadRequest(StringConstants.BAD_FREQUENCY);
