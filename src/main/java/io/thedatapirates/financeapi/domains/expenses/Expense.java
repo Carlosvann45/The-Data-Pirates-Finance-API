@@ -2,6 +2,7 @@ package io.thedatapirates.financeapi.domains.expenses;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.categories.Category;
@@ -52,6 +53,7 @@ public class Expense extends BaseEntity {
     private PriorityLevel priorityLevel;
 
     @OneToMany(mappedBy = StringConstants.EXPENSE)
+    @JsonManagedReference
     private List<Reminder> reminders = new ArrayList<>();
 
     @OneToMany(mappedBy = StringConstants.EXPENSE)
