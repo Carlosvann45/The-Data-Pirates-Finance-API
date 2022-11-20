@@ -26,8 +26,9 @@ public class Verification extends BaseEntity {
     private VerificationTypes type;
 
     @ManyToOne
-    @JoinColumn(name = StringConstants.CUSTOMER_ID, nullable = false)
+    @JoinColumn(name = StringConstants.CUSTOMER_ID)
     private Customer customer;
+
 
     public Verification() {
     }

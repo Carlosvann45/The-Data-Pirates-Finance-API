@@ -55,7 +55,7 @@ public class Expense extends BaseEntity {
     private List<Reminder> reminders = new ArrayList<>();
 
     @OneToMany(mappedBy = StringConstants.EXPENSE)
-    private  List<Withdrawal> withdrawals = new ArrayList<>();
+    private List<Withdrawal> withdrawals = new ArrayList<>();
 
     public Expense() {
     }

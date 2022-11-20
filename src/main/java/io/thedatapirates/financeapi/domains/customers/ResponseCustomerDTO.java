@@ -1,7 +1,6 @@
 package io.thedatapirates.financeapi.domains.customers;
 
 import io.thedatapirates.financeapi.domains.cashflows.ResponseCashFlowDTO;
-import io.thedatapirates.financeapi.domains.categories.CategoryDTO;
 import io.thedatapirates.financeapi.domains.deposits.DepositDTO;
 import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 import io.thedatapirates.financeapi.domains.expenses.ResponseExpenseDTO;
@@ -21,7 +20,7 @@ public class ResponseCustomerDTO extends BaseEntityDTO {
 
     private String lastName;
 
-    private String username;
+    private String email;
 
     private String password;
 
@@ -40,12 +39,12 @@ public class ResponseCustomerDTO extends BaseEntityDTO {
     public ResponseCustomerDTO() {
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

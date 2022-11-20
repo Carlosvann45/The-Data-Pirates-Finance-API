@@ -20,7 +20,7 @@ public class StringConstants {
     // Logger
     public static final String LOG_GET_CUSTOMER = "Request received for getCustomers.";
     public static final String LOG_REFRESH_CUSTOMER_TOKEN = "Request received for refreshCustomerToken.";
-    public static final String LOG_CREATE_CUSTOMER = "Request received for createCustomer.";
+    public static final String LOG_REGISTER_CUSTOMER = "Request received for registerCustomer.";
     public static final String LOG_GET_CATEGORIES_CUSTOMER = "Request received for getCategoriesByCustomer.";
     public static final String LOG_CREATE_CATEGORIES_CUSTOMER = "Request received for createCategoryForCustomer.";
     public static final String LOG_UPDATE_CATEGORIES_CUSTOMER = "Request received for updateCategoryForCustomer.";
@@ -47,6 +47,7 @@ public class StringConstants {
     public static final String LOG_CREATE_EXPENSE_CUSTOMER = "Request received for createExpenseForCustomer.";
     public static final String LOG_SEND_PASSWORD_VERIFICATION_EMAIL = "Request received for sendVerificationEmailForPassword.";
     public static final String LOG_CHANGE_PASSWORD_VERIFICATION = "Request received for changePasswordWithToken.";
+    public static final String LOG_CONFIRMATION_VERIFICATION = "Request received for confirmAccountWithToken.";
     public static final String LOG_POST_CHANGE_PASSWORD_VERIFICATION = "Request received for updatePasswordOnCustomer.";
     public static final String LOG_WITHDRAWAL_CASH_FLOW_CUSTOMER = "Request received for depositCashFlowForCustomer.";
     public static final String LOG_WITHDRAWAL_EXPENSE_CUSTOMER = "Request received for depositCashFlowForCustomer.";
@@ -56,12 +57,13 @@ public class StringConstants {
     public static final String CUSTOMER_NOT_FOUND = "Customer with given username does not exist.";
     public static final String INVALID_LOGIN = "Invalid Credentials. Please try again.";
     public static final String BAD_TOKEN = "Invalid token.";
-    public static final String USERNAME_CONFLICT = "Username is a required field.";
-    public static final String USERNAME_MISMATCH = "Username in pathway does not match username from token";
+    public static final String CUSTOMER_EMAIL_CONFLICT = "Account with email already exist. Please use another email.";
+    public static final String EMAIL_MISMATCH = "Email in pathway does not match username from token";
     public static final String JWT_ERROR_BEGINNING = "Jwt token error: ";
+    public static final String ERROR_BEGINNING = "Jwt token Error: ";
     public static final String JWT_CREDENTIAL_BEGINNING = "Bad credentials error: ";
-    public static final String USERNAME_NULL = "Username is a required field.";
-    public static final String USERNAME_BAD_EMAIL = "Username for customer must follow proper email format.";
+    public static final String EMAIL_NULL = "Email is a required field.";
+    public static final String BAD_EMAIL = "Email must follow proper email format: example123@abc.com";
     public static final String PASSWORD_NULL = "Password for customer can not be null or empty.";
     public static final String PASSWORD_BAD_SIZE = "Password must be between 8 and 20 characters long.";
     public static final String CATEGORY_NAME_CONFLICT = "Category with name already exist.";
@@ -97,6 +99,7 @@ public class StringConstants {
     public static final String FIRST_NAME_NULL = "First name for customer can not be null or empty.";
     public static final String LAST_NAME_NULL = "Last name for customer can not be null or empty.";
     public static final String EMAIL_INVALID = "The email in the path parameter should follow email format: example@example.com";
+    public static final String REGISTRATION_NOT_FOUND = "Registration could not be found";
 
     // Misc
     public static final String EMPTY_STRING = " ";
@@ -121,11 +124,16 @@ public class StringConstants {
     public static final String HEADER = "header";
     public static final String ACCESS_TOKEN = "Access Token";
     public static final String FORGOT_PASSWORD_SUBJECT = "Here's your link to change your password.";
+    public static final String CONFIRMATION_SUBJECT = "Click Here to finish creating your account!";
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm";
 
     // Links
     public static String CREATE_FORGOT_PASSWORD_LINK(String token) {
         return "https://the-data-pirates-cash-plan.herokuapp.com" + Paths.VERIFICATION_PATH + Paths.CHANGE_PASS_PATH + "?token=" + token;
+    }
+
+    public static String CREATE_CONFIRMATION_LINK(String token, String email) {
+        return "http://localhost:8085" + Paths.VERIFICATION_PATH + Paths.CONFIRM_ACCOUNT_PATH + "?token=" + token + "&email=" + email;
     }
 
     // Email Templates
@@ -184,7 +192,7 @@ public class StringConstants {
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
                 "      <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:19px;line-height:1.315789474;max-width:560px\">\n" +
                 "        \n" +
-                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Please click on the below link to activate your account: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Change Password</a> </p></blockquote>\n Link will expire in 15 minutes. <p>See you soon!</p>" +
+                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Please click on the below link to change your password: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Change Password</a> </p></blockquote>\n Link will expire in 15 minutes. <p>See you soon!</p>" +
                 "        \n" +
                 "      </td>\n" +
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
@@ -197,5 +205,72 @@ public class StringConstants {
                 "</div></div>";
     }
 
+    public static String GET_CONFIRMATION_TEMPLATE(String name, String link) {
+        return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
+                "\n" +
+                "<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" +
+                "\n" +
+                "  <table role=\"presentation\" width=\"100%\" style=\"border-collapse:collapse;min-width:100%;width:100%!important\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n" +
+                "    <tbody><tr>\n" +
+                "      <td width=\"100%\" height=\"53\" bgcolor=\"#0b0c0c\">\n" +
+                "        \n" +
+                "        <table role=\"presentation\" width=\"100%\" style=\"border-collapse:collapse;max-width:580px\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" align=\"center\">\n" +
+                "          <tbody><tr>\n" +
+                "            <td width=\"70\" bgcolor=\"#0b0c0c\" valign=\"middle\">\n" +
+                "                <table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-collapse:collapse\">\n" +
+                "                  <tbody><tr>\n" +
+                "                    <td style=\"padding-left:10px\">\n" +
+                "                  \n" +
+                "                    </td>\n" +
+                "                    <td style=\"font-size:28px;line-height:1.315789474;Margin-top:4px;padding-left:10px\">\n" +
+                "                      <span style=\"font-family:Helvetica,Arial,sans-serif;font-weight:700;color:#ffffff;text-decoration:none;vertical-align:top;display:inline-block\">Confirm Account Request</span>\n" +
+                "                    </td>\n" +
+                "                  </tr>\n" +
+                "                </tbody></table>\n" +
+                "              </a>\n" +
+                "            </td>\n" +
+                "          </tr>\n" +
+                "        </tbody></table>\n" +
+                "        \n" +
+                "      </td>\n" +
+                "    </tr>\n" +
+                "  </tbody></table>\n" +
+                "  <table role=\"presentation\" class=\"m_-6186904992287805515content\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-collapse:collapse;max-width:580px;width:100%!important\" width=\"100%\">\n" +
+                "    <tbody><tr>\n" +
+                "      <td width=\"10\" height=\"10\" valign=\"middle\"></td>\n" +
+                "      <td>\n" +
+                "        \n" +
+                "                <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-collapse:collapse\">\n" +
+                "                  <tbody><tr>\n" +
+                "                  </tr>\n" +
+                "                </tbody></table>\n" +
+                "        \n" +
+                "      </td>\n" +
+                "      <td width=\"10\" valign=\"middle\" height=\"10\"></td>\n" +
+                "    </tr>\n" +
+                "  </tbody></table>\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "  <table role=\"presentation\" class=\"m_-6186904992287805515content\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"border-collapse:collapse;max-width:580px;width:100%!important\" width=\"100%\">\n" +
+                "    <tbody><tr>\n" +
+                "      <td height=\"30\"><br></td>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
+                "      <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:19px;line-height:1.315789474;max-width:560px\">\n" +
+                "        \n" +
+                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Please click on the below link to activate your account: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Confirm Account</a> </p></blockquote>\n Link will expire in 15 minutes. <p>See you soon!</p>" +
+                "        \n" +
+                "      </td>\n" +
+                "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
+                "    </tr>\n" +
+                "    <tr>\n" +
+                "      <td height=\"30\"><br></td>\n" +
+                "    </tr>\n" +
+                "  </tbody></table><div class=\"yj6qo\"></div><div class=\"adL\">\n" +
+                "\n" +
+                "</div></div>";
+    }
 
 }

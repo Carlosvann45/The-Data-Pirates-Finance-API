@@ -2,7 +2,7 @@ package io.thedatapirates.financeapi.domains.verifications;
 
 import io.thedatapirates.financeapi.constants.Paths;
 import io.thedatapirates.financeapi.constants.StringConstants;
-import io.thedatapirates.financeapi.domains.customers.Customer;
+import io.thedatapirates.financeapi.domains.registration.RegistrationService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +27,9 @@ public class VerificationController {
     @Autowired
     private VerificationService verificationService;
 
+    @Autowired
+    private RegistrationService registrationService;
+
     /**
      * Request to get an email to reset password to an existing account
      *
@@ -49,6 +52,7 @@ public class VerificationController {
 
     /**
      * Handles showing user the reset password
+     *
      * @param token token to verify verification object
      * @param model model for displaying html
      * @return html page for customer to fill out
@@ -73,11 +77,10 @@ public class VerificationController {
      * Updates the customer's password after form is filled out
      *
      * @param request request to get parameters from
-     * @param model model for displaying next screen
      * @return html page for cusotmer to view
      */
     @PostMapping(Paths.CHANGE_PASS_PATH)
-    public String updatePasswordOnCustomer(HttpServletRequest request, Model model) {
+    public String updatePasswordOnCustomer(HttpServletRequest request) {
         logger.info(StringConstants.LOG_POST_CHANGE_PASSWORD_VERIFICATION);
 
         String token = request.getParameter("token");
@@ -90,5 +93,26 @@ public class VerificationController {
         }
 
         return "confirmation_page";
+    }
+
+    /**
+     * Handles showing user confirmation page and registering account
+     *
+     * @param token token to verify verification object
+     * @return html page for customer to fill out
+     */
+    @GetMapping(Paths.CONFIRM_ACCOUNT_PATH)
+    public String confirmAccountWithToken(@RequestParam String token, @RequestParam String email) {
+        logger.info(StringConstants.LOG_CONFIRMATION_VERIFICATION);
+
+        try {
+           Boolean registrationAlreadyCompleted = verificationService.confirmAccountWithToken(token);
+
+            if (!registrationAlreadyCompleted) registrationService.finishCustomerRegistration(email);
+        } catch (Exception ex) {
+            return "error_page";
+        }
+
+        return "confirmation";
     }
 }

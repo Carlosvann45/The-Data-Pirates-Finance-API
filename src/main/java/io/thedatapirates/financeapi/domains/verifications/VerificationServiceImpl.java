@@ -4,17 +4,15 @@ import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.Customer;
 import io.thedatapirates.financeapi.domains.customers.CustomerRepository;
 import io.thedatapirates.financeapi.domains.email.EmailService;
+import io.thedatapirates.financeapi.domains.registration.Registration;
 import io.thedatapirates.financeapi.exceptions.BadRequest;
 import io.thedatapirates.financeapi.exceptions.ServerUnavailable;
-import io.thedatapirates.financeapi.exceptions.Unauthorized;
 import io.thedatapirates.financeapi.utility.VerificationTypes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -50,7 +48,7 @@ public class VerificationServiceImpl implements VerificationService {
         Customer existingCustomer;
 
         try {
-            existingCustomer = customerRepository.findCustomerByUsername(email);
+            existingCustomer = customerRepository.findCustomerByEmail(email);
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
 
@@ -77,7 +75,7 @@ public class VerificationServiceImpl implements VerificationService {
                 throw new ServerUnavailable(e.getMessage());
             }
 
-            emailService.sendEmail(existingCustomer.getUsername(),
+            emailService.sendEmail(existingCustomer.getEmail(),
                     StringConstants.FORGOT_PASSWORD_SUBJECT,
                     StringConstants.GET_PASSWORD_TEMPLATE(
                             existingCustomer.getFirstName(), StringConstants.CREATE_FORGOT_PASSWORD_LINK(token)
@@ -86,10 +84,79 @@ public class VerificationServiceImpl implements VerificationService {
     }
 
     /**
+     * Sends an email for a customer to confirm there account creation
+     *
+     * @param registration registration to create
+     */
+    @Override
+    public void sendVerificationEmailForCustomerAccount(Registration registration) {
+        String token = UUID.randomUUID().toString();
+
+        Verification verification = new Verification();
+
+        verification.setDateCreated(LocalDateTime.now());
+        verification.setDateUpdated(LocalDateTime.now());
+        verification.setDateExpires(LocalDateTime.now().plusMinutes(15));
+        verification.setToken(token);
+        verification.setType(VerificationTypes.AccountConfirmation);
+
+        try {
+            verificationRepository.save(verification);
+        } catch (DataAccessException e) {
+            logger.error(e.getMessage());
+
+            throw new ServerUnavailable(e.getMessage());
+        }
+
+        emailService.sendEmail(registration.getEmail(),
+                StringConstants.CONFIRMATION_SUBJECT,
+                StringConstants.GET_CONFIRMATION_TEMPLATE(
+                        registration.getFirstName(), StringConstants.CREATE_CONFIRMATION_LINK(token, registration.getEmail())
+                ));
+    }
+
+    /**
+     * Confirms token for account creation
+     *
+     * @param token token for verification
+     */
+    @Override
+    public Boolean confirmAccountWithToken(String token) {
+        Verification existingVerification;
+
+        try {
+            existingVerification = verificationRepository.findVerificationByToken(token);
+        } catch (DataAccessException e) {
+            logger.error(e.getMessage());
+
+            throw new ServerUnavailable(e.getMessage());
+        }
+
+        if (existingVerification == null)
+            throw new BadRequest();
+        else if (LocalDateTime.now().isAfter(existingVerification.getDateExpires()))
+            throw new BadRequest();
+        else if (existingVerification.getDateConfirmed() != null)
+            return true;
+
+        existingVerification.setDateUpdated(LocalDateTime.now());
+        existingVerification.setDateConfirmed(LocalDateTime.now());
+
+        try {
+            verificationRepository.save(existingVerification);
+
+            return false;
+        } catch (DataAccessException e) {
+            logger.error(e.getMessage());
+
+            throw new ServerUnavailable(e.getMessage());
+        }
+    }
+
+    /**
      * Searches for verification with a token
      *
      * @param token token to search for
-     * @return customer from verification
      */
     @Override
     public void changePasswordWithToken(String token) {
@@ -107,14 +174,14 @@ public class VerificationServiceImpl implements VerificationService {
             throw new BadRequest();
         else if (existingVerification.getDateConfirmed() != null)
             throw new BadRequest();
-        else if(LocalDateTime.now().isAfter(existingVerification.getDateExpires()))
+        else if (LocalDateTime.now().isAfter(existingVerification.getDateExpires()))
             throw new BadRequest();
     }
 
     /**
      * Handles updating the customer information with the new password.
      *
-     * @param token token to get verification for
+     * @param token    token to get verification for
      * @param password new password for customer
      */
     @Override
@@ -133,7 +200,7 @@ public class VerificationServiceImpl implements VerificationService {
             throw new BadRequest();
         else if (existingVerification.getDateConfirmed() != null)
             throw new BadRequest();
-        else if(LocalDateTime.now().isAfter(existingVerification.getDateExpires()))
+        else if (LocalDateTime.now().isAfter(existingVerification.getDateExpires()))
             throw new BadRequest();
 
         Customer updatedCustomer = existingVerification.getCustomer();

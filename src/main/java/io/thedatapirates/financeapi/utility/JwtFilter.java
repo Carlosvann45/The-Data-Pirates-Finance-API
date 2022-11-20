@@ -62,7 +62,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String[] pathArray = new String[]{
                 Paths.CUSTOMERS_PATH.concat(Paths.LOGIN_PATH),
                 Paths.CUSTOMERS_PATH.concat(Paths.REFRESH_TOKEN_PATH),
-                Paths.CUSTOMERS_PATH.concat((Paths.CREATE_PATH)),
+                Paths.REGISTRATION_PATH,
                 Paths.FREQUENCY_PATH,
                 Paths.PRIORITY_LEVEL_PATH,
                 Paths.VERIFICATION_PATH,
@@ -117,7 +117,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (Exception e) {
-            logger.error(StringConstants.JWT_ERROR_BEGINNING.concat(e.getMessage()));
+            logger.error(StringConstants.ERROR_BEGINNING.concat(e.getMessage()));
 
             resolver.resolveException(request, response, null, e);
         }

@@ -1,9 +1,6 @@
 package io.thedatapirates.financeapi.domains.withdrawals;
 
-import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
-
-import javax.validation.constraints.NotBlank;
 
 /**
  * An object to represent a response Data Transfer Object for a withdrawal

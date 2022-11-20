@@ -4,7 +4,6 @@ import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.customers.Customer;
 import io.thedatapirates.financeapi.domains.customers.CustomerRepository;
 import io.thedatapirates.financeapi.exceptions.BadRequest;
-import io.thedatapirates.financeapi.exceptions.Conflict;
 import io.thedatapirates.financeapi.exceptions.NotFound;
 import io.thedatapirates.financeapi.exceptions.ServerUnavailable;
 import io.thedatapirates.financeapi.utility.JWTUtility;
@@ -15,10 +14,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * A class to implement all methods from the investment service interface
@@ -184,7 +180,7 @@ public class InvestmentServiceImpl implements InvestmentService {
         String customerUsername = jwtUtility.getUsernameFromToken(token);
 
         try {
-            existingCustomer = customerRepository.findCustomerByUsername(customerUsername);
+            existingCustomer = customerRepository.findCustomerByEmail(customerUsername);
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
 

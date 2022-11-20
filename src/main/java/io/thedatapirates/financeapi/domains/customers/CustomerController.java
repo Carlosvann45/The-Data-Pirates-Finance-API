@@ -33,18 +33,18 @@ public class CustomerController {
     /**
      * Get request to get a customer by username
      *
-     * @param username username to search for
+     * @param email username to search for
      * @return a user with the given username
      */
     @GetMapping(Paths.USERNAME_PATH)
     public ResponseEntity<ResponseCustomerDTO> getCustomer(
-            @RequestHeader(AUTHORIZATION) String token, @PathVariable String username
+            @RequestHeader(AUTHORIZATION) String token, @PathVariable String email
     ) {
         logger.info(StringConstants.LOG_GET_CUSTOMER);
 
         token = token.substring(7).trim();
 
-        Customer customer = customerService.getCustomer(username, token);
+        Customer customer = customerService.getCustomer(email, token);
 
         ResponseCustomerDTO customerDTO = customer.mapCustomerToDTO();
 
@@ -68,32 +68,5 @@ public class CustomerController {
         );
 
         return new ResponseEntity<>(jwtResponse, HttpStatus.OK);
-    }
-
-    @GetMapping(Paths.FORGOT_PASS_PATH)
-    public ResponseEntity<?> customerForgotPassword(@PathVariable String email) {
-
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    /**
-     * Creates a customer in the database
-     *
-     * @param customerDTO customer to create
-     * @return newly created customer
-     */
-    @PostMapping(Paths.CREATE_PATH)
-    public ResponseEntity<ResponseCustomerDTO> createCustomer(
-            @Valid @RequestBody RequestCustomerDTO customerDTO) {
-        logger.info(StringConstants.LOG_CREATE_CUSTOMER);
-
-        Customer newCustomer = customerDTO.mapDTOToCustomer();
-
-        Customer createdCustomer = customerService.createCustomer(newCustomer);
-
-        ResponseCustomerDTO createdCustomerDTO = createdCustomer.mapCustomerToDTO();
-
-        return new ResponseEntity<>(createdCustomerDTO, HttpStatus.CREATED);
     }
 }

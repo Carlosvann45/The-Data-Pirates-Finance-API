@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.cashflows.CashFlow;
-import io.thedatapirates.financeapi.domains.categories.Category;
 import io.thedatapirates.financeapi.domains.deposits.Deposit;
 import io.thedatapirates.financeapi.domains.entities.BaseEntity;
 import io.thedatapirates.financeapi.domains.expenses.Expense;
@@ -32,7 +31,7 @@ public class Customer extends BaseEntity {
 
     private String lastName;
 
-    private String username;
+    private String email;
 
     private String password;
 
@@ -59,30 +58,30 @@ public class Customer extends BaseEntity {
     private List<Deposit> deposits = new ArrayList<>();
 
     @OneToMany(mappedBy = StringConstants.CUSTOMER)
-    private  List<Withdrawal> withdrawals = new ArrayList<>();
+    private List<Withdrawal> withdrawals = new ArrayList<>();
 
     public Customer() {
     }
 
-    public Customer(String username, String password) {
-        this.username = username;
+    public Customer(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
-    public Customer(String firstName, String lastName, String username, String password) {
+    public Customer(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.username = username;
+        this.email = email;
         this.password = password;
     }
 
     public Customer(
-            Long id, LocalDateTime dateCreated, LocalDateTime dateUpdated, String username, String password,
+            Long id, LocalDateTime dateCreated, LocalDateTime dateUpdated, String email, String password,
             List<Investment> investments, List<CashFlow> cashFlowItems,
             List<Reminder> reminders, List<Expense> expenses
     ) {
         super(id, dateCreated, dateUpdated);
-        this.username = username;
+        this.email = email;
         this.password = password;
         this.investments = investments;
         this.cashFlowItems = cashFlowItems;
@@ -90,12 +89,12 @@ public class Customer extends BaseEntity {
         this.expenses = expenses;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String username) {
+        this.email = username;
     }
 
     public String getPassword() {
@@ -184,12 +183,12 @@ public class Customer extends BaseEntity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Customer customer = (Customer) o;
-        return Objects.equals(firstName, customer.firstName) && Objects.equals(lastName, customer.lastName) && Objects.equals(username, customer.username) && Objects.equals(password, customer.password) && Objects.equals(investments, customer.investments) && Objects.equals(cashFlowItems, customer.cashFlowItems) && Objects.equals(reminders, customer.reminders) && Objects.equals(expenses, customer.expenses) && Objects.equals(verifications, customer.verifications) && Objects.equals(deposits, customer.deposits) && Objects.equals(withdrawals, customer.withdrawals);
+        return Objects.equals(firstName, customer.firstName) && Objects.equals(lastName, customer.lastName) && Objects.equals(email, customer.email) && Objects.equals(password, customer.password) && Objects.equals(investments, customer.investments) && Objects.equals(cashFlowItems, customer.cashFlowItems) && Objects.equals(reminders, customer.reminders) && Objects.equals(expenses, customer.expenses) && Objects.equals(verifications, customer.verifications) && Objects.equals(deposits, customer.deposits) && Objects.equals(withdrawals, customer.withdrawals);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), firstName, lastName, username, password, investments, cashFlowItems, reminders, expenses, verifications, deposits, withdrawals);
+        return Objects.hash(super.hashCode(), firstName, lastName, email, password, investments, cashFlowItems, reminders, expenses, verifications, deposits, withdrawals);
     }
 
     @Override
@@ -197,7 +196,7 @@ public class Customer extends BaseEntity {
         return "Customer{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", username='" + username + '\'' +
+                ", username='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", investments=" + investments +
                 ", cashFlowItems=" + cashFlowItems +

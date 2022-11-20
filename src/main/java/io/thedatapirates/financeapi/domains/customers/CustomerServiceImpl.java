@@ -44,31 +44,32 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
     /**
      * Gets a customer from the customer repository by username
      *
-     * @param username username to search for
+     * @param email username to search for
      * @return customer with given username
      */
     @Override
-    public Customer getCustomer(String username, String token) {
+    public Customer getCustomer(String email, String token) {
         Customer customer;
 
         try {
-            customer = customerRepository.findCustomerByUsername(username);
+            customer = customerRepository.findCustomerByEmail(email);
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
 
             throw new ServerUnavailable(e.getMessage());
         }
 
-        String actualUsername = jwtUtility.getUsernameFromToken(token);
+        String actualEmail = jwtUtility.getUsernameFromToken(token);
 
         if (customer == null) {
             throw new NotFound(StringConstants.CUSTOMER_NOT_FOUND);
-        } else if (!Objects.equals(customer.getUsername(), actualUsername)) {
-            throw new BadRequest(StringConstants.USERNAME_MISMATCH);
+        } else if (!Objects.equals(customer.getEmail(), actualEmail)) {
+            throw new BadRequest(StringConstants.EMAIL_MISMATCH);
         }
 
         return customer;
     }
+
 
     /**
      * Validates refresh token and generates new access token
@@ -116,45 +117,6 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
     }
 
     /**
-     * Creates customer in database if username doesn't exist
-     *
-     * @param newCustomer customer to add to database
-     * @return new customer created
-     */
-    @Override
-    public Customer createCustomer(Customer newCustomer) {
-        Customer existingCustomer;
-
-        try {
-            existingCustomer = customerRepository.findCustomerByUsername(newCustomer.getUsername());
-        } catch (DataAccessException e) {
-            logger.error(e.getMessage());
-
-            throw new ServerUnavailable(e.getMessage());
-        }
-
-        if (existingCustomer != null) {
-            throw new Conflict(StringConstants.USERNAME_CONFLICT);
-        }
-
-        newCustomer.setPassword(passwordEncoder.encode(newCustomer.getPassword()));
-        newCustomer.setDateCreated(new Date(System.currentTimeMillis()).toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime());
-        newCustomer.setDateUpdated(new Date(System.currentTimeMillis()).toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime());
-
-        try {
-            return customerRepository.save(newCustomer);
-        } catch (DataAccessException e) {
-            logger.error(e.getMessage());
-
-            throw new ServerUnavailable(e.getMessage());
-        }
-    }
-
-    /**
      * Loads a user by a given username
      *
      * @param username username to search for
@@ -165,7 +127,7 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
         Customer customer;
 
         try {
-            customer = customerRepository.findCustomerByUsername(username);
+            customer = customerRepository.findCustomerByEmail(username);
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
 
@@ -176,6 +138,6 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
             customer = new Customer(StringConstants.EMPTY_STRING, StringConstants.EMPTY_STRING);
         }
 
-        return new User(customer.getUsername(), customer.getPassword(), new ArrayList<>());
+        return new User(customer.getEmail(), customer.getPassword(), new ArrayList<>());
     }
 }

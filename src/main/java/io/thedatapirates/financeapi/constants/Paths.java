@@ -44,9 +44,13 @@ public class Paths {
     public static final String VERIFICATION_PATH = "/verifications";
     public static final String FORGOT_PASS_PATH = "/password/forgot/{email}";
     public static final String CHANGE_PASS_PATH = "/password/reset";
+    public static final String CONFIRM_ACCOUNT_PATH = "/account/confirmation";
+
+    // Registration
+    public static final String REGISTRATION_PATH = "/registrations";
 
     // Misc
-    public static final String CREATE_PATH = "/create";
+    public static final String REGISTER_PATH = "/register";
     public static final String ALL_EXTENSIONS = "/**";
     public static final String USERNAME_PATH = "/{username}";
 }

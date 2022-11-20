@@ -82,8 +82,8 @@ public class ExpenseController {
     /**
      * Creates a new withdrawal item for an expense
      *
-     * @param token token to get customer
-     * @param expenseId expense d to find expense
+     * @param token         token to get customer
+     * @param expenseId     expense d to find expense
      * @param withdrawalDTO withdrawal to create
      * @return updated expense
      */
@@ -92,7 +92,7 @@ public class ExpenseController {
             @RequestHeader(AUTHORIZATION) String token,
             @PathVariable Long expenseId,
             @Valid @RequestBody WithdrawalDTO withdrawalDTO
-            ) {
+    ) {
         logger.info(StringConstants.LOG_WITHDRAWAL_EXPENSE_CUSTOMER);
 
         Withdrawal withdrawal = withdrawalDTO.mapDTOToWithdrawal();

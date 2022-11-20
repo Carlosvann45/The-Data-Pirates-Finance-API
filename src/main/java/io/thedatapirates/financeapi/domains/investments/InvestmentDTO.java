@@ -3,7 +3,6 @@ package io.thedatapirates.financeapi.domains.investments;
 
 import io.thedatapirates.financeapi.constants.StringConstants;
 import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
-import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

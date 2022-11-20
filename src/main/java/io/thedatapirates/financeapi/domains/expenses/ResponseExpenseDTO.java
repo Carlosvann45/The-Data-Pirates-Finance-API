@@ -4,7 +4,6 @@ import io.thedatapirates.financeapi.domains.categories.CategoryDTO;
 import io.thedatapirates.financeapi.domains.entities.BaseEntityDTO;
 import io.thedatapirates.financeapi.domains.frequencies.FrequencyDTO;
 import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevelDTO;
-import io.thedatapirates.financeapi.domains.withdrawals.Withdrawal;
 import io.thedatapirates.financeapi.domains.withdrawals.WithdrawalDTO;
 
 import java.time.LocalDateTime;

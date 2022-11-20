@@ -240,7 +240,7 @@ public class ReminderServiceImpl implements ReminderService {
         String customerUsername = jwtUtility.getUsernameFromToken(token);
 
         try {
-            existingCustomer = customerRepository.findCustomerByUsername(customerUsername);
+            existingCustomer = customerRepository.findCustomerByEmail(customerUsername);
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
 

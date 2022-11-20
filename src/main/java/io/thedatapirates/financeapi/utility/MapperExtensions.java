@@ -20,6 +20,8 @@ import io.thedatapirates.financeapi.domains.investments.Investment;
 import io.thedatapirates.financeapi.domains.investments.InvestmentDTO;
 import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevel;
 import io.thedatapirates.financeapi.domains.prioritylevels.PriorityLevelDTO;
+import io.thedatapirates.financeapi.domains.registration.Registration;
+import io.thedatapirates.financeapi.domains.registration.RegistrationDTO;
 import io.thedatapirates.financeapi.domains.reminders.Reminder;
 import io.thedatapirates.financeapi.domains.reminders.RequestReminderDTO;
 import io.thedatapirates.financeapi.domains.reminders.ResponseReminderDTO;
@@ -329,7 +331,7 @@ public class MapperExtensions {
         customerDTO.setDateUpdated(customer.getDateUpdated());
         customerDTO.setFirstName(customer.getFirstName());
         customerDTO.setLastName(customer.getLastName());
-        customerDTO.setUsername(customer.getUsername());
+        customerDTO.setEmail(customer.getEmail());
         customerDTO.setPassword(customer.getPassword());
 
         List<InvestmentDTO> investments = customer.getInvestments()
@@ -382,7 +384,7 @@ public class MapperExtensions {
         customer.setDateUpdated(customer.getDateUpdated());
         customer.setFirstName(customerDTO.getFirstName());
         customer.setLastName(customerDTO.getLastName());
-        customer.setUsername(customerDTO.getUsername());
+        customer.setEmail(customerDTO.getEmail());
         customer.setPassword(customerDTO.getPassword());
 
         return customer;
@@ -454,5 +456,36 @@ public class MapperExtensions {
         withdrawalDTO.setAmount(withdrawal.getAmount());
 
         return withdrawalDTO;
+    }
+
+    /**
+     * Maps registration to registration dto
+     *
+     * @param registrationDTO registration to map
+     * @return newly created registration dto
+     */
+    public static Registration mapDTOToRegistration(RegistrationDTO registrationDTO) {
+        Registration registration = new Registration();
+
+        registration.setId(registrationDTO.getId());
+        registration.setDateCreated(registrationDTO.getDateCreated());
+        registration.setDateUpdated(registrationDTO.getDateUpdated());
+        registration.setFirstName(registrationDTO.getFirstName());
+        registration.setLastName(registrationDTO.getLastName());
+        registration.setEmail(registrationDTO.getEmail());
+        registration.setPassword(registrationDTO.getPassword());
+
+        return registration;
+    }
+
+    public static Customer mapRegistrationToCustomer(Registration registration) {
+        Customer customer = new Customer();
+
+        customer.setFirstName(registration.getFirstName());
+        customer.setLastName(registration.getLastName());
+        customer.setEmail(registration.getEmail());
+        customer.setPassword(registration.getPassword());
+
+        return customer;
     }
 }

@@ -23,8 +23,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -141,8 +139,8 @@ public class ExpenseServiceImpl implements ExpenseService {
     /**
      * Adds withdrawal for a specified expense if customer and expense exist
      *
-     * @param token token to get customer
-     * @param expenseId id for expense to find
+     * @param token         token to get customer
+     * @param expenseId     id for expense to find
      * @param newWithdrawal withdrawal to create
      * @return updated expense
      */
@@ -300,7 +298,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         String customerUsername = jwtUtility.getUsernameFromToken(token);
 
         try {
-            existingCustomer = customerRepository.findCustomerByUsername(customerUsername);
+            existingCustomer = customerRepository.findCustomerByEmail(customerUsername);
         } catch (DataAccessException e) {
             logger.error(e.getMessage());
 

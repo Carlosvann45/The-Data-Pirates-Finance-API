@@ -68,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         security.csrf().disable();
 
         security.authorizeRequests()
-                .antMatchers(POST, Paths.CUSTOMERS_PATH.concat(Paths.CREATE_PATH))
+                .antMatchers(POST, Paths.REGISTRATION_PATH)
                 .permitAll();
 
         security.authorizeRequests()
@@ -94,6 +94,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         security.authorizeRequests()
                 .antMatchers(AUTH_WHITELIST)
                 .permitAll();
+
+         security.authorizeRequests()
+                .antMatchers( "/images/**", "/css/**").permitAll();
 
         security.authorizeRequests()
                 .anyRequest()

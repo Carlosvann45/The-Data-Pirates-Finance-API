@@ -19,9 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -110,23 +108,23 @@ public class SeedData implements CommandLineRunner {
         customer5.setDateUpdated(currentDate);
 
         try {
-            if (customerRepository.findCustomerByUsername(customer1.getUsername()) == null) {
-                customerRepository.save(customer1);
+            if (customerRepository.findCustomerByEmail(customer1.getEmail()) == null) {
+                // customerRepository.save(customer1);
             }
 
-            if (customerRepository.findCustomerByUsername(customer2.getUsername()) == null) {
+            if (customerRepository.findCustomerByEmail(customer2.getEmail()) == null) {
                 customerRepository.save(customer2);
             }
 
-            if (customerRepository.findCustomerByUsername(customer3.getUsername()) == null) {
+            if (customerRepository.findCustomerByEmail(customer3.getEmail()) == null) {
                 customerRepository.save(customer3);
             }
 
-            if (customerRepository.findCustomerByUsername(customer4.getUsername()) == null) {
+            if (customerRepository.findCustomerByEmail(customer4.getEmail()) == null) {
                 customerRepository.save(customer4);
             }
 
-            if (customerRepository.findCustomerByUsername(customer5.getUsername()) == null) {
+            if (customerRepository.findCustomerByEmail(customer5.getEmail()) == null) {
                 customerRepository.save(customer5);
             }
 

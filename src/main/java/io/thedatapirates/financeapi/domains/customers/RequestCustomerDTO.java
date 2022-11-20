@@ -18,9 +18,9 @@ public class RequestCustomerDTO extends BaseEntityDTO {
     @NotBlank(message = StringConstants.LAST_NAME_NULL)
     private String lastName;
 
-    @NotBlank(message = StringConstants.USERNAME_NULL)
-    @Email(message = StringConstants.USERNAME_BAD_EMAIL)
-    private String username;
+    @NotBlank(message = StringConstants.EMAIL_NULL)
+    @Email(message = StringConstants.BAD_EMAIL)
+    private String email;
 
     @NotBlank(message = StringConstants.PASSWORD_NULL)
     @Size(min = 8, max = 20, message = StringConstants.PASSWORD_BAD_SIZE)
@@ -29,12 +29,12 @@ public class RequestCustomerDTO extends BaseEntityDTO {
     public RequestCustomerDTO() {
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
