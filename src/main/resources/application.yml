@@ -17,7 +17,7 @@ spring:
     import: optional:file:.env[.properties]
   jpa:
     database: POSTGRESQL
-    hibernate:re
+    hibernate:
       ddl-auto: update
   datasource:
     platform: postgres
