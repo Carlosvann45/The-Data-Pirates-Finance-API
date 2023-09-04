@@ -13,13 +13,15 @@ logging:
     org.hibernate.engine.jdbc.env.internal.LobCreatorBuilderImpl: ERROR
 
 spring:
+  config:
+    import: optional:file:.env[.properties]
   jpa:
     database: POSTGRESQL
-    hibernate:
+    hibernate:re
       ddl-auto: update
   datasource:
     platform: postgres
-    url: jdbc:${DATABASE_URL}
+    url: ${DATABASE_URL}
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
     driverClassName: org.postgresql.Driver
